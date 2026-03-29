@@ -28,7 +28,7 @@ export function generateStaticParams() {
 export const metadata: Metadata = {
   title: {
     template: "%s | Psyopedia",
-    default: "Psyopedia — PsyOps Encyclopedia",
+    default: "Psyopedia",
   },
   description:
     "A comprehensive bilingual encyclopedia of psychological operations throughout history.",
