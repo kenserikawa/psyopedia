@@ -210,6 +210,45 @@ export async function getIcebergData() {
   }));
 }
 
+// ─── Admin Queries ────────────────────────────────────
+
+export async function getAdminStats() {
+  const [pendingContributions, pendingComments, totalOperations, totalUsers] =
+    await Promise.all([
+      prisma.contribution.count({ where: { status: "PENDING" } }),
+      prisma.comment.count({ where: { status: "PENDING" } }),
+      prisma.operation.count(),
+      prisma.user.count(),
+    ]);
+
+  return { pendingContributions, pendingComments, totalOperations, totalUsers };
+}
+
+export async function getPendingContributions() {
+  return prisma.contribution.findMany({
+    where: { status: "PENDING" },
+    include: { submittedBy: true, operation: true },
+    orderBy: { createdAt: "desc" },
+  });
+}
+
+export async function getAllOperationsAdmin() {
+  return prisma.operation.findMany({
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      icebergLevel: true,
+      era: true,
+      status: true,
+      moderationStatus: true,
+      viewCount: true,
+      createdAt: true,
+    },
+  });
+}
+
 // ─── Filter Helpers ───────────────────────────────────
 
 export async function getDistinctActors(): Promise<string[]> {
