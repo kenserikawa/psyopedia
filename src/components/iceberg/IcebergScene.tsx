@@ -58,7 +58,7 @@ export default function IcebergScene({ operations, locale, className, height = 6
         {/* Canvas */}
         <div className="w-full md:w-[60%] md:shrink-0 lg:w-[65%] relative h-[500px] md:h-[600px] lg:h-[650px]">
           <Canvas
-            camera={{ position: [1.2, 0.6, 2.8], fov: 55 }}
+            camera={{ position: [2.5, 1.2, 5.0], fov: 50 }}
             gl={{ antialias: true, alpha: true }}
             dpr={[1, 2]}
             style={{ background: 'transparent' }}
