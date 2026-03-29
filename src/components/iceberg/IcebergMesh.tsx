@@ -1,7 +1,8 @@
 'use client'
 
-import { useMemo, useState, useCallback } from 'react'
+import { useMemo, useState, useCallback, useEffect } from 'react'
 import * as THREE from 'three'
+import { useGLTF } from '@react-three/drei'
 import OperationDot from './OperationDot'
 import type { IcebergOperation } from './IcebergScene'
 
@@ -10,113 +11,16 @@ interface IcebergMeshProps {
   locale: string
 }
 
-// Y ranges per iceberg level
-const LEVEL_Y: Record<number, { min: number; max: number }> = {
-  1: { min: 1.0, max: 4.5 },
-  2: { min: -1.5, max: 0.5 },
-  3: { min: -4.0, max: -2.0 },
-  4: { min: -6.5, max: -4.5 },
-  5: { min: -9.5, max: -7.0 },
-}
+// Preload the model
+useGLTF.preload('/iceberg.glb')
 
-// More realistic iceberg profile — angular, asymmetric
-function generateIcebergProfile(): THREE.Vector2[] {
-  return [
-    // Peak — sharp, craggy
-    new THREE.Vector2(0, 5.2),
-    new THREE.Vector2(0.15, 5.0),
-    new THREE.Vector2(0.35, 4.6),
-    new THREE.Vector2(0.55, 4.2),
-    new THREE.Vector2(0.45, 3.9),
-    new THREE.Vector2(0.7, 3.5),
-    new THREE.Vector2(0.9, 3.0),
-    new THREE.Vector2(0.75, 2.6),
-    new THREE.Vector2(1.05, 2.2),
-    new THREE.Vector2(1.2, 1.8),
-    new THREE.Vector2(1.1, 1.4),
-    new THREE.Vector2(1.35, 1.0),
-    new THREE.Vector2(1.5, 0.5),
-    new THREE.Vector2(1.65, 0.0),    // waterline
-
-    // Underwater — massive, smooth, widening
-    new THREE.Vector2(1.9, -0.3),
-    new THREE.Vector2(2.3, -0.8),
-    new THREE.Vector2(2.7, -1.3),
-    new THREE.Vector2(3.1, -1.8),
-    new THREE.Vector2(3.4, -2.3),
-    new THREE.Vector2(3.7, -2.8),
-    new THREE.Vector2(3.9, -3.3),
-    new THREE.Vector2(4.05, -3.8),
-    new THREE.Vector2(4.1, -4.3),
-    new THREE.Vector2(4.05, -4.8),
-    new THREE.Vector2(3.9, -5.3),
-    new THREE.Vector2(3.75, -5.8),
-    new THREE.Vector2(3.55, -6.3),
-    new THREE.Vector2(3.3, -6.8),
-    new THREE.Vector2(3.0, -7.3),
-    new THREE.Vector2(2.65, -7.8),
-    new THREE.Vector2(2.25, -8.3),
-    new THREE.Vector2(1.8, -8.8),
-    new THREE.Vector2(1.3, -9.3),
-    new THREE.Vector2(0.75, -9.7),
-    new THREE.Vector2(0, -10.0),
-  ]
-}
-
-function getRadiusAtY(profile: THREE.Vector2[], y: number): number {
-  for (let i = 0; i < profile.length - 1; i++) {
-    const p1 = profile[i]
-    const p2 = profile[i + 1]
-    if (p1.y >= y && p2.y <= y) {
-      const t = (p1.y - y) / (p1.y - p2.y)
-      return p1.x + t * (p2.x - p1.x)
-    }
-  }
-  return 1
-}
-
-// Distribute dots evenly around the iceberg at a given Y level
-function computeDotPositions(
-  operations: IcebergOperation[],
-  profile: THREE.Vector2[]
-): { op: IcebergOperation; position: [number, number, number] }[] {
-  const result: { op: IcebergOperation; position: [number, number, number] }[] = []
-
-  // Group by level
-  const byLevel = new Map<number, IcebergOperation[]>()
-  for (const op of operations) {
-    const arr = byLevel.get(op.icebergLevel) || []
-    arr.push(op)
-    byLevel.set(op.icebergLevel, arr)
-  }
-
-  for (const [level, ops] of byLevel) {
-    const range = LEVEL_Y[level]
-    if (!range) continue
-
-    ops.forEach((op, i) => {
-      // Spread vertically within the level range
-      const yFraction = ops.length > 1 ? i / (ops.length - 1) : 0.5
-      const y = range.max - yFraction * (range.max - range.min)
-
-      // Get iceberg radius at this y and place dot just outside
-      const iceRadius = getRadiusAtY(profile, y)
-      const dotRadius = iceRadius + 0.6
-
-      // Spread around the circumference with some randomness based on id
-      const hash = op.id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
-      const angleBase = (i / ops.length) * Math.PI * 2
-      const angleJitter = ((hash % 100) / 100 - 0.5) * 0.4
-      const angle = angleBase + angleJitter
-
-      const x = Math.cos(angle) * dotRadius
-      const z = Math.sin(angle) * dotRadius
-
-      result.push({ op, position: [x, y, z] })
-    })
-  }
-
-  return result
+// Y ranges per level as fraction of iceberg height (0 = top, 1 = bottom)
+const LEVEL_FRACTIONS: Record<number, { min: number; max: number }> = {
+  1: { min: 0.0, max: 0.15 },
+  2: { min: 0.15, max: 0.35 },
+  3: { min: 0.35, max: 0.55 },
+  4: { min: 0.55, max: 0.75 },
+  5: { min: 0.75, max: 1.0 },
 }
 
 // Dot glow colors per level
@@ -128,11 +32,131 @@ const LEVEL_DOT_COLOR: Record<number, string> = {
   5: '#0e3870',
 }
 
+interface ModelBounds {
+  yMin: number
+  yMax: number
+  height: number
+  center: THREE.Vector3
+  // Approximate radius at a given Y by sampling the geometry
+  radiusAtY: (y: number) => number
+}
+
+function computeModelBounds(scene: THREE.Group): ModelBounds {
+  const box = new THREE.Box3().setFromObject(scene)
+  const center = new THREE.Vector3()
+  box.getCenter(center)
+
+  const yMin = box.min.y
+  const yMax = box.max.y
+  const height = yMax - yMin
+
+  // Build a radius lookup by sampling all mesh vertices
+  const radiusSamples = new Map<number, number>() // bucketed Y -> max radius
+  scene.traverse((child) => {
+    if (child instanceof THREE.Mesh && child.geometry) {
+      const pos = child.geometry.getAttribute('position')
+      if (!pos) return
+      const worldMatrix = child.matrixWorld
+      const v = new THREE.Vector3()
+      for (let i = 0; i < pos.count; i++) {
+        v.set(pos.getX(i), pos.getY(i), pos.getZ(i))
+        v.applyMatrix4(worldMatrix)
+        const bucket = Math.round(v.y * 2) / 2 // bucket to 0.5 increments
+        const r = Math.sqrt((v.x - center.x) ** 2 + (v.z - center.z) ** 2)
+        const current = radiusSamples.get(bucket) ?? 0
+        if (r > current) radiusSamples.set(bucket, r)
+      }
+    }
+  })
+
+  const radiusAtY = (y: number): number => {
+    const bucket = Math.round(y * 2) / 2
+    // Check nearby buckets
+    for (const offset of [0, 0.5, -0.5, 1, -1]) {
+      const val = radiusSamples.get(bucket + offset)
+      if (val !== undefined) return val
+    }
+    // Fallback: rough estimate from bounding box
+    const xRange = (box.max.x - box.min.x) / 2
+    const zRange = (box.max.z - box.min.z) / 2
+    return Math.max(xRange, zRange)
+  }
+
+  return { yMin, yMax, height, center, radiusAtY }
+}
+
+function computeDotPositions(
+  operations: IcebergOperation[],
+  bounds: ModelBounds
+): { op: IcebergOperation; position: [number, number, number] }[] {
+  const result: { op: IcebergOperation; position: [number, number, number] }[] = []
+
+  const byLevel = new Map<number, IcebergOperation[]>()
+  for (const op of operations) {
+    const arr = byLevel.get(op.icebergLevel) || []
+    arr.push(op)
+    byLevel.set(op.icebergLevel, arr)
+  }
+
+  for (const [level, ops] of byLevel) {
+    const frac = LEVEL_FRACTIONS[level]
+    if (!frac) continue
+
+    // Convert fractions to actual Y positions (top of model = yMax, bottom = yMin)
+    const levelYMax = bounds.yMax - frac.min * bounds.height
+    const levelYMin = bounds.yMax - frac.max * bounds.height
+
+    ops.forEach((op, i) => {
+      const yFraction = ops.length > 1 ? i / (ops.length - 1) : 0.5
+      const y = levelYMax - yFraction * (levelYMax - levelYMin)
+
+      const iceRadius = bounds.radiusAtY(y)
+      const dotRadius = iceRadius + 0.8
+
+      // Spread around circumference
+      const hash = op.id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
+      const angleBase = (i / ops.length) * Math.PI * 2
+      const angleJitter = ((hash % 100) / 100 - 0.5) * 0.4
+      const angle = angleBase + angleJitter
+
+      const x = bounds.center.x + Math.cos(angle) * dotRadius
+      const z = bounds.center.z + Math.sin(angle) * dotRadius
+
+      result.push({ op, position: [x, y, z] })
+    })
+  }
+
+  return result
+}
+
 export default function IcebergMesh({ operations, locale }: IcebergMeshProps) {
+  const { scene } = useGLTF('/iceberg.glb')
   const [hoveredId, setHoveredId] = useState<string | null>(null)
-  const profile = useMemo(() => generateIcebergProfile(), [])
-  const geometry = useMemo(() => new THREE.LatheGeometry(profile, 48), [profile])
-  const dots = useMemo(() => computeDotPositions(operations, profile), [operations, profile])
+
+  // Compute bounds once the model loads
+  const bounds = useMemo(() => {
+    scene.updateMatrixWorld(true)
+    return computeModelBounds(scene)
+  }, [scene])
+
+  // Make all materials in the GLB slightly transparent for the icy look
+  useEffect(() => {
+    scene.traverse((child) => {
+      if (child instanceof THREE.Mesh && child.material) {
+        const mat = child.material as THREE.MeshStandardMaterial
+        if (mat.isMeshStandardMaterial) {
+          mat.transparent = true
+          mat.opacity = 0.85
+          mat.roughness = Math.min(mat.roughness, 0.3)
+        }
+      }
+    })
+  }, [scene])
+
+  const dots = useMemo(
+    () => computeDotPositions(operations, bounds),
+    [operations, bounds]
+  )
 
   const handleHover = useCallback((id: string | null) => {
     setHoveredId(id)
@@ -141,29 +165,8 @@ export default function IcebergMesh({ operations, locale }: IcebergMeshProps) {
 
   return (
     <group>
-      {/* Iceberg — above water portion */}
-      <mesh geometry={geometry} renderOrder={1}>
-        <meshStandardMaterial
-          color="#d8ecf8"
-          roughness={0.15}
-          metalness={0.05}
-          transparent
-          opacity={0.88}
-          depthWrite
-        />
-      </mesh>
-
-      {/* Iceberg — underwater portion (darker, more transparent) */}
-      <mesh geometry={geometry} renderOrder={0}>
-        <meshStandardMaterial
-          color="#1a5a8a"
-          roughness={0.5}
-          metalness={0.1}
-          transparent
-          opacity={0.6}
-          side={THREE.BackSide}
-        />
-      </mesh>
+      {/* GLB iceberg model */}
+      <primitive object={scene} />
 
       {/* Operation dots */}
       {dots.map(({ op, position }) => (
