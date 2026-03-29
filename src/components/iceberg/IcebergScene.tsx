@@ -51,49 +51,52 @@ export default function IcebergScene({ operations, locale, className, height = 6
   }, [operations])
 
   return (
-    <div style={{ height }} className={`w-full relative flex ${className ?? ''}`}>
-      {/* Canvas */}
-      <div className="flex-1 relative">
-        <Canvas
-          camera={{ position: [0.5, 0.3, 1.2], fov: 55 }}
-          gl={{ antialias: true, alpha: true }}
-          dpr={[1, 2]}
-          style={{ background: 'transparent' }}
-        >
-          <Suspense fallback={null}>
-            <ambientLight intensity={1.5} />
-            <directionalLight position={[5, 10, 5]} intensity={2.5} />
-            <directionalLight position={[-5, 5, -5]} intensity={1.2} />
-            <directionalLight position={[0, -5, 5]} intensity={0.6} />
+    <div className={`container mx-auto px-4 ${className ?? ''}`}>
+      {/* Desktop/tablet: side by side. Mobile: stacked */}
+      <div className="flex flex-col md:flex-row md:items-center md:gap-8 lg:gap-12">
+        {/* Canvas */}
+        <div className="flex-1 relative" style={{ height }}>
+          <Canvas
+            camera={{ position: [0.5, 0.3, 1.2], fov: 55 }}
+            gl={{ antialias: true, alpha: true }}
+            dpr={[1, 2]}
+            style={{ background: 'transparent' }}
+          >
+            <Suspense fallback={null}>
+              <ambientLight intensity={1.5} />
+              <directionalLight position={[5, 10, 5]} intensity={2.5} />
+              <directionalLight position={[-5, 5, -5]} intensity={1.2} />
+              <directionalLight position={[0, -5, 5]} intensity={0.6} />
 
-            <Environment preset="city" />
+              <Environment preset="city" />
 
-            <IcebergMesh
-              operations={operations}
-              locale={locale}
-              hoveredId={selected?.id ?? null}
-              onDotHover={handleDotHover}
-            />
+              <IcebergMesh
+                operations={operations}
+                locale={locale}
+                hoveredId={selected?.id ?? null}
+                onDotHover={handleDotHover}
+              />
 
-            <OrbitControls
-              autoRotate
-              autoRotateSpeed={0.3}
-              enablePan={false}
-              minPolarAngle={Math.PI / 4}
-              maxPolarAngle={Math.PI / 1.8}
-              minDistance={0.8}
-              maxDistance={6}
-            />
+              <OrbitControls
+                autoRotate
+                autoRotateSpeed={0.3}
+                enablePan={false}
+                minPolarAngle={Math.PI / 4}
+                maxPolarAngle={Math.PI / 1.8}
+                minDistance={0.8}
+                maxDistance={6}
+              />
 
-            <EffectComposer>
-              <Bloom luminanceThreshold={0.7} intensity={0.4} radius={0.3} />
-            </EffectComposer>
-          </Suspense>
-        </Canvas>
+              <EffectComposer>
+                <Bloom luminanceThreshold={0.7} intensity={0.4} radius={0.3} />
+              </EffectComposer>
+            </Suspense>
+          </Canvas>
+        </div>
+
+        {/* Info panel: below on mobile, right side on md+ */}
+        <SidePanel selected={selected} />
       </div>
-
-      {/* Side panel */}
-      <SidePanel selected={selected} />
     </div>
   )
 }
@@ -125,56 +128,60 @@ function SidePanel({ selected }: { selected: IcebergOperation | null }) {
   }, [selected, display])
 
   return (
-    <div className="w-72 shrink-0 flex flex-col justify-center pl-6">
-      {display ? (
-        <div
-          className="transition-all duration-300 ease-out"
-          style={{
-            opacity: visible ? 1 : 0,
-            transform: visible ? 'translateY(0)' : 'translateY(8px)',
-          }}
-        >
-          {/* Level indicator */}
-          <div className="flex items-center gap-2 mb-3">
-            <div className="h-px flex-1 bg-border" />
-            <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-[0.15em]">
-              Level {display.icebergLevel}
-            </span>
-            <div className="h-px flex-1 bg-border" />
+    <div className="mt-6 px-2 md:mt-0 md:w-72 md:shrink-0 md:flex md:flex-col md:justify-center lg:w-80">
+      <div className="min-h-[120px] md:min-h-[200px]">
+        {display ? (
+          <div
+            className="transition-all duration-300 ease-out"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible
+                ? 'translateY(0)'
+                : 'translateY(6px)',
+            }}
+          >
+            {/* Level indicator */}
+            <div className="flex items-center gap-2 mb-3">
+              <div className="h-px flex-1 bg-border" />
+              <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-[0.15em]">
+                Level {display.icebergLevel}
+              </span>
+              <div className="h-px flex-1 bg-border" />
+            </div>
+
+            {/* Classification */}
+            <p className="text-[10px] text-muted-foreground uppercase tracking-[0.1em] mb-1">
+              {LEVEL_LABELS[display.icebergLevel]}
+            </p>
+
+            {/* Title */}
+            <h3 className="text-lg font-bold text-foreground leading-tight tracking-tight">
+              {display.title}
+            </h3>
+
+            {/* Meta */}
+            <div className="flex items-center gap-1.5 mt-2 text-[11px] text-muted-foreground">
+              <span>{ERA_LABELS[display.era] ?? display.era}</span>
+              <span className="text-border">|</span>
+              <span>{display.status.replace('_', ' ')}</span>
+            </div>
+
+            {/* Divider */}
+            <div className="h-px bg-border my-3" />
+
+            {/* Excerpt */}
+            <p className="text-[13px] text-muted-foreground leading-relaxed">
+              {display.excerpt.length > 220
+                ? display.excerpt.slice(0, 220) + '...'
+                : display.excerpt}
+            </p>
           </div>
-
-          {/* Classification line */}
-          <p className="text-[10px] text-muted-foreground uppercase tracking-[0.1em] mb-1">
-            {LEVEL_LABELS[display.icebergLevel]}
+        ) : (
+          <p className="text-xs text-muted-foreground/50 italic text-center md:text-left">
+            Hover over a point to inspect
           </p>
-
-          {/* Title */}
-          <h3 className="text-lg font-bold text-foreground leading-tight tracking-tight">
-            {display.title}
-          </h3>
-
-          {/* Meta row */}
-          <div className="flex items-center gap-1.5 mt-2 text-[11px] text-muted-foreground">
-            <span>{ERA_LABELS[display.era] ?? display.era}</span>
-            <span className="text-border">|</span>
-            <span>{display.status.replace('_', ' ')}</span>
-          </div>
-
-          {/* Divider */}
-          <div className="h-px bg-border my-3" />
-
-          {/* Excerpt */}
-          <p className="text-[13px] text-muted-foreground leading-relaxed">
-            {display.excerpt.length > 220
-              ? display.excerpt.slice(0, 220) + '...'
-              : display.excerpt}
-          </p>
-        </div>
-      ) : (
-        <p className="text-xs text-muted-foreground/50 italic">
-          Hover over a point to inspect
-        </p>
-      )}
+        )}
+      </div>
     </div>
   )
 }
