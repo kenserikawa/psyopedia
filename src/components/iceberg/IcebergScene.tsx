@@ -63,10 +63,11 @@ export default function IcebergScene({ operations, locale, className, height = 6
             style={{ background: 'transparent' }}
           >
             <Suspense fallback={null}>
-              <ambientLight intensity={1.5} />
-              <directionalLight position={[5, 10, 5]} intensity={2.5} />
-              <directionalLight position={[-5, 5, -5]} intensity={1.2} />
-              <directionalLight position={[0, -5, 5]} intensity={0.6} />
+              <ambientLight intensity={2.0} />
+              <directionalLight position={[5, 10, 5]} intensity={3.0} />
+              <directionalLight position={[-5, 5, -5]} intensity={1.8} />
+              <directionalLight position={[0, -5, 5]} intensity={1.0} />
+              <hemisphereLight args={['#ddeeff', '#88aacc', 0.8]} />
 
               <Environment preset="city" />
 
