@@ -111,7 +111,7 @@ function computeDotPositions(
       const y = levelYMax - yFraction * (levelYMax - levelYMin)
 
       const iceRadius = bounds.radiusAtY(y)
-      const dotRadius = iceRadius + 0.8
+      const dotRadius = iceRadius + 0.15
 
       // Spread around circumference
       const hash = op.id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
