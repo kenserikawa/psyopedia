@@ -15,13 +15,13 @@ export function Header({ locale }: { locale: string }) {
           Psyopedia
         </Link>
         <nav className="flex items-center gap-6 text-sm">
-          <Link href={`/${locale}/catalog`} className="text-muted-foreground hover:text-foreground transition-colors">
+          <Link href={`/${locale}/catalog`} className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
             {t("catalog")}
           </Link>
-          <Link href={`/${locale}/iceberg`} className="text-muted-foreground hover:text-foreground transition-colors">
+          <Link href={`/${locale}/iceberg`} className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
             {t("iceberg")}
           </Link>
-          <Link href={`/${locale}/contribute`} className="text-muted-foreground hover:text-foreground transition-colors">
+          <Link href={`/${locale}/contribute`} className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
             {t("contribute")}
           </Link>
           <Link
