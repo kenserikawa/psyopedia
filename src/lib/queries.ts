@@ -270,6 +270,36 @@ export async function getPendingComments() {
   });
 }
 
+// ─── Search ───────────────────────────────────────────
+
+export async function searchOperations(query: string, locale: string = "en") {
+  if (!query || query.trim().length < 2) {
+    return [];
+  }
+
+  const searchTerm = query.trim();
+
+  const operations = await prisma.operation.findMany({
+    where: {
+      moderationStatus: ModerationStatus.APPROVED,
+      OR: [
+        { title: { contains: searchTerm, mode: "insensitive" } },
+        { titleEs: { contains: searchTerm, mode: "insensitive" } },
+        { excerpt: { contains: searchTerm, mode: "insensitive" } },
+        { excerptEs: { contains: searchTerm, mode: "insensitive" } },
+        { aliases: { has: searchTerm } },
+        { actors: { has: searchTerm } },
+        { bodyEn: { contains: searchTerm, mode: "insensitive" } },
+        { bodyEs: { contains: searchTerm, mode: "insensitive" } },
+      ],
+    },
+    include: { tags: true },
+    take: 20,
+  });
+
+  return operations;
+}
+
 // ─── Filter Helpers ───────────────────────────────────
 
 export async function getDistinctActors(): Promise<string[]> {
