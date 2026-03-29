@@ -19,6 +19,9 @@ export function Header({ locale }: { locale: string }) {
           <Link href={`/${locale}/iceberg`} className="text-muted-foreground hover:text-foreground transition-colors">
             {t("iceberg")}
           </Link>
+          <Link href={`/${locale}/contribute`} className="text-muted-foreground hover:text-foreground transition-colors">
+            {t("contribute")}
+          </Link>
           <Link
             href={`/${otherLocale}`}
             className="rounded-md border px-2 py-1 text-xs font-medium uppercase hover:bg-accent transition-colors"

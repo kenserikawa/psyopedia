@@ -28,8 +28,19 @@ export function UserMenu({ locale }: UserMenuProps) {
     );
   }
 
+  const isModOrAdmin =
+    session.user.role === "MODERATOR" || session.user.role === "ADMIN";
+
   return (
     <div className="flex items-center gap-3">
+      {isModOrAdmin && (
+        <Link
+          href={`/${locale}/admin`}
+          className="rounded-md border px-3 py-1.5 text-xs font-medium hover:bg-accent transition-colors"
+        >
+          Admin
+        </Link>
+      )}
       <span className="hidden text-sm text-muted-foreground sm:block">
         {session.user.name ?? session.user.email}
       </span>
