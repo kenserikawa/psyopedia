@@ -15,6 +15,7 @@ export function HeroSection({ locale }: { locale: string }) {
           height={280}
           priority
           className="shrink-0"
+          style={{ width: 280, height: 'auto' }}
         />
         <div className="flex flex-col items-center text-center md:items-start md:text-left">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">

@@ -20,7 +20,7 @@ export function UserMenu({ locale }: UserMenuProps) {
   if (!session) {
     return (
       <Link
-        href={`/${locale}/api/auth/signin`}
+        href="/api/auth/signin"
         className="rounded-md border px-3 py-1.5 text-xs font-medium hover:bg-accent transition-colors"
       >
         Sign In
