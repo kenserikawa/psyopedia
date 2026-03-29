@@ -58,7 +58,7 @@ export default function IcebergScene({ operations, locale, className, height = 6
         {/* Canvas */}
         <div className="w-full md:w-[60%] md:shrink-0 lg:w-[65%] relative h-[500px] md:h-[600px] lg:h-[650px]">
           <Canvas
-            camera={{ position: [0.5, 0.3, 1.2], fov: 55 }}
+            camera={{ position: [1.2, 0.6, 2.8], fov: 55 }}
             gl={{ antialias: true, alpha: true }}
             dpr={[1, 2]}
             style={{ background: 'transparent' }}
@@ -85,7 +85,7 @@ export default function IcebergScene({ operations, locale, className, height = 6
                 enablePan={false}
                 minPolarAngle={Math.PI / 4}
                 maxPolarAngle={Math.PI / 1.8}
-                minDistance={0.8}
+                minDistance={1.5}
                 maxDistance={6}
               />
 
