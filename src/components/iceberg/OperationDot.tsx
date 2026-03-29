@@ -38,7 +38,7 @@ export default function OperationDot({
   return (
     <group position={position}>
       <mesh ref={glowRef}>
-        <sphereGeometry args={[0.02, 8, 8]} />
+        <sphereGeometry args={[0.014, 8, 8]} />
         <meshBasicMaterial
           color={color}
           transparent
@@ -54,7 +54,7 @@ export default function OperationDot({
           onHover(operation.id)
         }}
       >
-        <sphereGeometry args={[0.02, 8, 8]} />
+        <sphereGeometry args={[0.014, 8, 8]} />
         <meshStandardMaterial
           color={color}
           emissive={color}
