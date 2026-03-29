@@ -1,7 +1,7 @@
 'use client'
 
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import { OrbitControls, Environment } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import { Suspense } from 'react'
 import IcebergMesh from './IcebergMesh'
@@ -27,16 +27,19 @@ export default function IcebergScene({ operations, locale, className, height = 6
   return (
     <div style={{ height }} className={`w-full relative ${className ?? ''}`}>
       <Canvas
-        camera={{ position: [3, 1.5, 6], fov: 55 }}
+        camera={{ position: [2, 1, 4.5], fov: 55 }}
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]}
         style={{ background: 'transparent' }}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[8, 12, 6]} intensity={1.0} color="#c0e0ff" />
-          <pointLight position={[-4, -6, 2]} intensity={0.6} color="#1a4a8a" />
-          <pointLight position={[3, -10, -3]} intensity={0.3} color="#0a2a6a" />
+          {/* Strong neutral lighting so GLB textures render properly */}
+          <ambientLight intensity={1.2} />
+          <directionalLight position={[5, 10, 5]} intensity={2.0} />
+          <directionalLight position={[-5, 5, -5]} intensity={0.8} />
+
+          {/* Environment map for realistic reflections on the model */}
+          <Environment preset="city" />
 
           <IcebergMesh operations={operations} locale={locale} />
 
@@ -46,12 +49,12 @@ export default function IcebergScene({ operations, locale, className, height = 6
             enablePan={false}
             minPolarAngle={Math.PI / 4}
             maxPolarAngle={Math.PI / 1.8}
-            minDistance={4}
-            maxDistance={14}
+            minDistance={3}
+            maxDistance={12}
           />
 
           <EffectComposer>
-            <Bloom luminanceThreshold={0.5} intensity={0.6} radius={0.3} />
+            <Bloom luminanceThreshold={0.7} intensity={0.4} radius={0.3} />
           </EffectComposer>
         </Suspense>
       </Canvas>

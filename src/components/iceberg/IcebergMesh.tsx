@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState, useCallback, useEffect } from 'react'
+import { useMemo, useState, useCallback } from 'react'
 import * as THREE from 'three'
 import { useGLTF } from '@react-three/drei'
 import OperationDot from './OperationDot'
@@ -137,20 +137,6 @@ export default function IcebergMesh({ operations, locale }: IcebergMeshProps) {
   const bounds = useMemo(() => {
     scene.updateMatrixWorld(true)
     return computeModelBounds(scene)
-  }, [scene])
-
-  // Make all materials in the GLB slightly transparent for the icy look
-  useEffect(() => {
-    scene.traverse((child) => {
-      if (child instanceof THREE.Mesh && child.material) {
-        const mat = child.material as THREE.MeshStandardMaterial
-        if (mat.isMeshStandardMaterial) {
-          mat.transparent = true
-          mat.opacity = 0.85
-          mat.roughness = Math.min(mat.roughness, 0.3)
-        }
-      }
-    })
   }, [scene])
 
   const dots = useMemo(
