@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { auth } from "@/lib/auth";
 import type { Metadata } from "next";
+import { ContributionForm } from "@/components/contribute/ContributionForm";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -27,10 +28,12 @@ export default async function ContributePage({ params }: Props) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto max-w-3xl px-4 py-8">
       <h1 className="text-3xl font-bold">{t("title")}</h1>
       <p className="mt-2 text-muted-foreground">{t("subtitle")}</p>
-      <p className="mt-8 text-muted-foreground">Contribution form coming in Phase 5.</p>
+      <div className="mt-8">
+        <ContributionForm locale={locale} />
+      </div>
     </div>
   );
 }
