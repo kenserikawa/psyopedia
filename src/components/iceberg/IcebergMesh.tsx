@@ -1,164 +1,182 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useState, useCallback } from 'react'
 import * as THREE from 'three'
-import { useIcebergInteraction } from './useIcebergInteraction'
-import IcebergZoneLabel from './IcebergZoneLabel'
-
-interface LevelStat {
-  level: number
-  count: number
-  featured: string[]
-  label: string
-}
+import OperationDot from './OperationDot'
+import type { IcebergOperation } from './IcebergScene'
 
 interface IcebergMeshProps {
-  levelStats: LevelStat[]
-  onLevelClick: (level: number) => void
+  operations: IcebergOperation[]
+  locale: string
 }
 
-const ZONES = [
-  { level: 1, yMin: 0, yMax: 5, color: '#e0f4ff', glowColor: '#ffffff' },
-  { level: 2, yMin: -2, yMax: 0, color: '#a8d8ea', glowColor: '#00cfff' },
-  { level: 3, yMin: -4, yMax: -2, color: '#4a9fc4', glowColor: '#0088cc' },
-  { level: 4, yMin: -6, yMax: -4, color: '#1e5f8a', glowColor: '#0044aa' },
-  { level: 5, yMin: -10, yMax: -6, color: '#0a2a4a', glowColor: '#002288' },
-]
+// Y ranges per iceberg level
+const LEVEL_Y: Record<number, { min: number; max: number }> = {
+  1: { min: 1.0, max: 4.5 },
+  2: { min: -1.5, max: 0.5 },
+  3: { min: -4.0, max: -2.0 },
+  4: { min: -6.5, max: -4.5 },
+  5: { min: -9.5, max: -7.0 },
+}
 
-// Generate iceberg profile points for LatheGeometry
+// More realistic iceberg profile — angular, asymmetric
 function generateIcebergProfile(): THREE.Vector2[] {
-  const points: THREE.Vector2[] = []
+  return [
+    // Peak — sharp, craggy
+    new THREE.Vector2(0, 5.2),
+    new THREE.Vector2(0.15, 5.0),
+    new THREE.Vector2(0.35, 4.6),
+    new THREE.Vector2(0.55, 4.2),
+    new THREE.Vector2(0.45, 3.9),
+    new THREE.Vector2(0.7, 3.5),
+    new THREE.Vector2(0.9, 3.0),
+    new THREE.Vector2(0.75, 2.6),
+    new THREE.Vector2(1.05, 2.2),
+    new THREE.Vector2(1.2, 1.8),
+    new THREE.Vector2(1.1, 1.4),
+    new THREE.Vector2(1.35, 1.0),
+    new THREE.Vector2(1.5, 0.5),
+    new THREE.Vector2(1.65, 0.0),    // waterline
 
-  // Above water: narrow jagged peak (Y: 0 to 5)
-  points.push(new THREE.Vector2(0, 5))        // tip
-  points.push(new THREE.Vector2(0.3, 4.5))
-  points.push(new THREE.Vector2(0.5, 4.0))
-  points.push(new THREE.Vector2(0.8, 3.5))
-  points.push(new THREE.Vector2(0.6, 3.0))
-  points.push(new THREE.Vector2(1.0, 2.5))
-  points.push(new THREE.Vector2(1.2, 2.0))
-  points.push(new THREE.Vector2(1.0, 1.5))
-  points.push(new THREE.Vector2(1.4, 1.0))
-  points.push(new THREE.Vector2(1.6, 0.5))
-  points.push(new THREE.Vector2(1.8, 0.0))    // waterline
-
-  // Below water: wide bulbous shape (Y: 0 to -10)
-  points.push(new THREE.Vector2(2.2, -0.5))
-  points.push(new THREE.Vector2(2.8, -1.0))
-  points.push(new THREE.Vector2(3.2, -1.5))
-  points.push(new THREE.Vector2(3.5, -2.0))
-  points.push(new THREE.Vector2(3.8, -2.5))
-  points.push(new THREE.Vector2(4.0, -3.0))
-  points.push(new THREE.Vector2(4.1, -3.5))
-  points.push(new THREE.Vector2(4.0, -4.0))
-  points.push(new THREE.Vector2(3.8, -4.5))
-  points.push(new THREE.Vector2(3.6, -5.0))
-  points.push(new THREE.Vector2(3.5, -5.5))
-  points.push(new THREE.Vector2(3.3, -6.0))
-  points.push(new THREE.Vector2(3.0, -6.5))
-  points.push(new THREE.Vector2(2.7, -7.0))
-  points.push(new THREE.Vector2(2.3, -7.5))
-  points.push(new THREE.Vector2(2.0, -8.0))
-  points.push(new THREE.Vector2(1.6, -8.5))
-  points.push(new THREE.Vector2(1.2, -9.0))
-  points.push(new THREE.Vector2(0.7, -9.5))
-  points.push(new THREE.Vector2(0, -10))       // bottom
-
-  return points
+    // Underwater — massive, smooth, widening
+    new THREE.Vector2(1.9, -0.3),
+    new THREE.Vector2(2.3, -0.8),
+    new THREE.Vector2(2.7, -1.3),
+    new THREE.Vector2(3.1, -1.8),
+    new THREE.Vector2(3.4, -2.3),
+    new THREE.Vector2(3.7, -2.8),
+    new THREE.Vector2(3.9, -3.3),
+    new THREE.Vector2(4.05, -3.8),
+    new THREE.Vector2(4.1, -4.3),
+    new THREE.Vector2(4.05, -4.8),
+    new THREE.Vector2(3.9, -5.3),
+    new THREE.Vector2(3.75, -5.8),
+    new THREE.Vector2(3.55, -6.3),
+    new THREE.Vector2(3.3, -6.8),
+    new THREE.Vector2(3.0, -7.3),
+    new THREE.Vector2(2.65, -7.8),
+    new THREE.Vector2(2.25, -8.3),
+    new THREE.Vector2(1.8, -8.8),
+    new THREE.Vector2(1.3, -9.3),
+    new THREE.Vector2(0.75, -9.7),
+    new THREE.Vector2(0, -10.0),
+  ]
 }
 
-// Get iceberg radius at a given Y position from the profile
 function getRadiusAtY(profile: THREE.Vector2[], y: number): number {
   for (let i = 0; i < profile.length - 1; i++) {
     const p1 = profile[i]
     const p2 = profile[i + 1]
-    if ((p1.y >= y && p2.y <= y) || (p1.y <= y && p2.y >= y)) {
-      const t = (y - p1.y) / (p2.y - p1.y)
+    if (p1.y >= y && p2.y <= y) {
+      const t = (p1.y - y) / (p1.y - p2.y)
       return p1.x + t * (p2.x - p1.x)
     }
   }
   return 1
 }
 
-export default function IcebergMesh({ levelStats, onLevelClick }: IcebergMeshProps) {
-  const { hoveredLevel, handleHover, handleClick } = useIcebergInteraction(onLevelClick)
+// Distribute dots evenly around the iceberg at a given Y level
+function computeDotPositions(
+  operations: IcebergOperation[],
+  profile: THREE.Vector2[]
+): { op: IcebergOperation; position: [number, number, number] }[] {
+  const result: { op: IcebergOperation; position: [number, number, number] }[] = []
 
+  // Group by level
+  const byLevel = new Map<number, IcebergOperation[]>()
+  for (const op of operations) {
+    const arr = byLevel.get(op.icebergLevel) || []
+    arr.push(op)
+    byLevel.set(op.icebergLevel, arr)
+  }
+
+  for (const [level, ops] of byLevel) {
+    const range = LEVEL_Y[level]
+    if (!range) continue
+
+    ops.forEach((op, i) => {
+      // Spread vertically within the level range
+      const yFraction = ops.length > 1 ? i / (ops.length - 1) : 0.5
+      const y = range.max - yFraction * (range.max - range.min)
+
+      // Get iceberg radius at this y and place dot just outside
+      const iceRadius = getRadiusAtY(profile, y)
+      const dotRadius = iceRadius + 0.6
+
+      // Spread around the circumference with some randomness based on id
+      const hash = op.id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
+      const angleBase = (i / ops.length) * Math.PI * 2
+      const angleJitter = ((hash % 100) / 100 - 0.5) * 0.4
+      const angle = angleBase + angleJitter
+
+      const x = Math.cos(angle) * dotRadius
+      const z = Math.sin(angle) * dotRadius
+
+      result.push({ op, position: [x, y, z] })
+    })
+  }
+
+  return result
+}
+
+// Dot glow colors per level
+const LEVEL_DOT_COLOR: Record<number, string> = {
+  1: '#ffffff',
+  2: '#60d0ff',
+  3: '#3098dd',
+  4: '#1a6aaa',
+  5: '#0e3870',
+}
+
+export default function IcebergMesh({ operations, locale }: IcebergMeshProps) {
+  const [hoveredId, setHoveredId] = useState<string | null>(null)
   const profile = useMemo(() => generateIcebergProfile(), [])
+  const geometry = useMemo(() => new THREE.LatheGeometry(profile, 48), [profile])
+  const dots = useMemo(() => computeDotPositions(operations, profile), [operations, profile])
 
-  const geometry = useMemo(() => {
-    return new THREE.LatheGeometry(profile, 32)
-  }, [profile])
+  const handleHover = useCallback((id: string | null) => {
+    setHoveredId(id)
+    document.body.style.cursor = id ? 'pointer' : 'default'
+  }, [])
 
   return (
     <group>
-      {/* Above-water iceberg */}
-      <mesh geometry={geometry}>
+      {/* Iceberg — above water portion */}
+      <mesh geometry={geometry} renderOrder={1}>
         <meshStandardMaterial
-          color="#d4eeff"
-          roughness={0.2}
+          color="#d8ecf8"
+          roughness={0.15}
+          metalness={0.05}
+          transparent
+          opacity={0.88}
+          depthWrite
+        />
+      </mesh>
+
+      {/* Iceberg — underwater portion (darker, more transparent) */}
+      <mesh geometry={geometry} renderOrder={0}>
+        <meshStandardMaterial
+          color="#1a5a8a"
+          roughness={0.5}
           metalness={0.1}
           transparent
-          opacity={0.92}
+          opacity={0.6}
+          side={THREE.BackSide}
         />
       </mesh>
 
-      {/* Underwater overlay with different material */}
-      <mesh geometry={geometry}>
-        <meshStandardMaterial
-          color="#1a6a9a"
-          roughness={0.6}
-          transparent
-          opacity={0.75}
-          side={THREE.DoubleSide}
+      {/* Operation dots */}
+      {dots.map(({ op, position }) => (
+        <OperationDot
+          key={op.id}
+          operation={op}
+          position={position}
+          color={LEVEL_DOT_COLOR[op.icebergLevel] ?? '#3098dd'}
+          isHovered={hoveredId === op.id}
+          onHover={handleHover}
+          locale={locale}
         />
-      </mesh>
-
-      {/* Zone bands (glowing rings at boundaries) */}
-      {ZONES.map((zone) => {
-        const radius = getRadiusAtY(profile, zone.yMax) + 0.1
-        const isHovered = hoveredLevel === zone.level
-
-        return (
-          <group key={zone.level}>
-            {/* Glowing ring at zone boundary */}
-            <mesh position={[0, zone.yMax, 0]} rotation={[Math.PI / 2, 0, 0]}>
-              <torusGeometry args={[radius, 0.05, 8, 64]} />
-              <meshBasicMaterial
-                color={zone.glowColor}
-                transparent
-                opacity={isHovered ? 0.9 : 0.4}
-              />
-            </mesh>
-
-            {/* Invisible hit area for clicking */}
-            <mesh
-              position={[0, (zone.yMin + zone.yMax) / 2, 0]}
-              onPointerEnter={() => handleHover(zone.level)}
-              onPointerLeave={() => handleHover(null)}
-              onPointerDown={() => handleClick(zone.level)}
-            >
-              <cylinderGeometry args={[
-                getRadiusAtY(profile, zone.yMax) + 0.3,
-                getRadiusAtY(profile, zone.yMin) + 0.3,
-                Math.abs(zone.yMax - zone.yMin),
-                32
-              ]} />
-              <meshBasicMaterial visible={false} />
-            </mesh>
-
-            {/* Zone label */}
-            <IcebergZoneLabel
-              zone={{ ...zone, label: levelStats.find(s => s.level === zone.level)?.label ?? '' }}
-              stats={{
-                count: levelStats.find(s => s.level === zone.level)?.count ?? 0,
-                featured: levelStats.find(s => s.level === zone.level)?.featured ?? [],
-              }}
-              visible={hoveredLevel === zone.level}
-              onLevelClick={onLevelClick}
-            />
-          </group>
-        )
-      })}
+      ))}
     </group>
   )
 }

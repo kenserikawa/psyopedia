@@ -182,32 +182,24 @@ export async function getAllOperationSlugs() {
 // ─── Iceberg ─────────────────────────────────────────
 
 export async function getIcebergData() {
-  const levels = await prisma.operation.groupBy({
-    by: ["icebergLevel"],
-    where: { moderationStatus: ModerationStatus.APPROVED },
-    _count: true,
-    orderBy: { icebergLevel: "asc" },
-  });
-
-  const featured = await prisma.operation.findMany({
+  const operations = await prisma.operation.findMany({
     where: { moderationStatus: ModerationStatus.APPROVED },
     select: {
+      id: true,
       icebergLevel: true,
       title: true,
       titleEs: true,
       slug: true,
       slugEs: true,
+      excerpt: true,
+      excerptEs: true,
+      era: true,
+      status: true,
     },
     orderBy: { viewCount: "desc" },
   });
 
-  return levels.map((level) => ({
-    level: level.icebergLevel,
-    count: level._count,
-    operations: featured
-      .filter((op) => op.icebergLevel === level.icebergLevel)
-      .slice(0, 3),
-  }));
+  return operations;
 }
 
 // ─── Admin Queries ────────────────────────────────────

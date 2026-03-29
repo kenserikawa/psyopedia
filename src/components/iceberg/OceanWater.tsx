@@ -20,12 +20,15 @@ export default function OceanWater() {
       waterNormals,
       sunDirection: new THREE.Vector3(0.5, 0.5, 0.5),
       sunColor: 0xffffff,
-      waterColor: 0x006994,
-      distortionScale: 3.7,
+      waterColor: 0x0a2a4a,
+      distortionScale: 2.0,
       fog: true,
+      alpha: 0.15,
     })
     w.rotation.x = -Math.PI / 2
     w.position.y = 0
+    w.material.transparent = true
+    w.material.opacity = 0.18
     return w
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [waterNormals])
@@ -33,7 +36,7 @@ export default function OceanWater() {
   useFrame((_, delta) => {
     const mat = water.material as THREE.ShaderMaterial
     if (mat.uniforms) {
-      mat.uniforms['time'].value += delta * 0.5
+      mat.uniforms['time'].value += delta * 0.4
     }
   })
 

@@ -13,35 +13,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: t("title") };
 }
 
-const LEVEL_LABELS: Record<string, Record<number, string>> = {
-  en: {
-    1: "Well-Known & Declassified",
-    2: "Known but Underappreciated",
-    3: "Leaked / Partially Verified",
-    4: "Alleged",
-    5: "Deep Conspiracy",
-  },
-  es: {
-    1: "Conocidas y Desclasificadas",
-    2: "Conocidas pero Subestimadas",
-    3: "Filtradas / Parcialmente Verificadas",
-    4: "Alegadas",
-    5: "Conspiración Profunda",
-  },
-};
-
 export default async function IcebergPage({ params }: Props) {
   const { locale } = await params;
-  const data = await getIcebergData();
+  const rawOperations = await getIcebergData();
   const t = await getTranslations({ locale, namespace: "iceberg" });
 
-  const levelStats = data.map((d) => ({
-    level: d.level,
-    count: d.count,
-    featured: d.operations.map((op) =>
-      locale === "es" ? op.titleEs : op.title
-    ),
-    label: LEVEL_LABELS[locale]?.[d.level] ?? LEVEL_LABELS.en[d.level],
+  const operations = rawOperations.map((op) => ({
+    id: op.id,
+    title: locale === "es" ? op.titleEs : op.title,
+    excerpt: locale === "es" ? op.excerptEs : op.excerpt,
+    era: op.era,
+    status: op.status,
+    slug: locale === "es" ? op.slugEs : op.slug,
+    icebergLevel: op.icebergLevel,
   }));
 
   return (
@@ -50,7 +34,7 @@ export default async function IcebergPage({ params }: Props) {
         <h1 className="text-3xl font-bold sm:text-4xl">{t("title")}</h1>
         <p className="mt-2 text-lg text-muted-foreground">{t("subtitle")}</p>
       </div>
-      <IcebergClientWrapper levelStats={levelStats} locale={locale} />
+      <IcebergClientWrapper operations={operations} locale={locale} />
       <p className="mt-4 text-center text-sm text-muted-foreground">
         {t("clickToExplore")}
       </p>

@@ -1,43 +1,28 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import type { IcebergOperation } from "./IcebergScene";
 
 const IcebergScene = dynamic(() => import("./IcebergScene"), {
   ssr: false,
   loading: () => (
-    <div className="h-[600px] w-full bg-[#0a1628] animate-pulse rounded-xl flex items-center justify-center">
+    <div className="h-[650px] w-full bg-[#070f1e] animate-pulse rounded-xl flex items-center justify-center">
       <span className="text-blue-400">Loading...</span>
     </div>
   ),
 });
 
 interface Props {
-  levelStats: {
-    level: number;
-    count: number;
-    featured: string[];
-    label: string;
-  }[];
+  operations: IcebergOperation[];
   locale: string;
 }
 
-export default function IcebergClientWrapper({ levelStats, locale }: Props) {
-  const router = useRouter();
-
-  const handleLevelClick = useCallback(
-    (level: number) => {
-      router.push(`/${locale}/catalog?level=${level}`);
-    },
-    [router, locale]
-  );
-
+export default function IcebergClientWrapper({ operations, locale }: Props) {
   return (
     <IcebergScene
-      levelStats={levelStats}
-      onLevelClick={handleLevelClick}
-      height={600}
+      operations={operations}
+      locale={locale}
+      height={650}
     />
   );
 }
