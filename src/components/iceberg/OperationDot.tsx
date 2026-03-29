@@ -87,19 +87,19 @@ export default function OperationDot({
           style={{ pointerEvents: 'none' }}
           position={[0, 0.15, 0]}
         >
-          <div className="bg-[#0a1628]/95 border border-blue-500/30 rounded p-1.5 w-32 backdrop-blur-sm shadow-lg shadow-blue-900/40">
+          <div className="bg-card border border-border rounded-md p-1.5 w-32 shadow-sm">
             <div className="flex items-center gap-1 mb-0.5">
-              <span className="text-[6px] font-bold text-blue-400 uppercase tracking-wider">
+              <span className="text-[6px] font-semibold text-muted-foreground uppercase tracking-wider">
                 Lv{operation.icebergLevel}
               </span>
-              <span className="text-[6px] text-slate-500">
+              <span className="text-[6px] text-muted-foreground">
                 {ERA_LABELS[operation.era] ?? operation.era}
               </span>
             </div>
-            <p className="text-[7px] font-semibold text-blue-50 leading-tight">
+            <p className="text-[7px] font-semibold text-foreground leading-tight">
               {title}
             </p>
-            <p className="text-[6px] text-slate-400 mt-0.5 line-clamp-2 leading-tight">
+            <p className="text-[6px] text-muted-foreground mt-0.5 line-clamp-2 leading-tight">
               {excerpt.length > 80 ? excerpt.slice(0, 80) + '...' : excerpt}
             </p>
           </div>
