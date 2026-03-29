@@ -83,27 +83,24 @@ export default function OperationDot({
       {isHovered && (
         <Html
           center
-          distanceFactor={10}
+          distanceFactor={2}
           style={{ pointerEvents: 'none' }}
-          position={[0, 0.8, 0]}
+          position={[0, 0.15, 0]}
         >
-          <div className="bg-[#0a1628]/95 border border-blue-500/30 rounded-lg p-3 w-56 backdrop-blur-sm shadow-xl shadow-blue-900/40">
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="text-[10px] font-bold text-blue-400 uppercase tracking-wider">
-                Level {operation.icebergLevel}
+          <div className="bg-[#0a1628]/95 border border-blue-500/30 rounded p-1.5 w-32 backdrop-blur-sm shadow-lg shadow-blue-900/40">
+            <div className="flex items-center gap-1 mb-0.5">
+              <span className="text-[6px] font-bold text-blue-400 uppercase tracking-wider">
+                Lv{operation.icebergLevel}
               </span>
-              <span className="text-[10px] text-slate-500">
+              <span className="text-[6px] text-slate-500">
                 {ERA_LABELS[operation.era] ?? operation.era}
               </span>
-              <span className="text-[10px] text-slate-500">
-                {operation.status}
-              </span>
             </div>
-            <p className="text-xs font-semibold text-blue-50 leading-snug">
+            <p className="text-[7px] font-semibold text-blue-50 leading-tight">
               {title}
             </p>
-            <p className="text-[11px] text-slate-400 mt-1 line-clamp-3 leading-relaxed">
-              {excerpt.length > 140 ? excerpt.slice(0, 140) + '...' : excerpt}
+            <p className="text-[6px] text-slate-400 mt-0.5 line-clamp-2 leading-tight">
+              {excerpt.length > 80 ? excerpt.slice(0, 80) + '...' : excerpt}
             </p>
           </div>
         </Html>
