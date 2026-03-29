@@ -6,7 +6,7 @@ import type { IcebergOperation } from "./IcebergScene";
 const IcebergScene = dynamic(() => import("./IcebergScene"), {
   ssr: false,
   loading: () => (
-    <div className="h-[650px] w-full" />
+    <div className="h-[500px] md:h-[600px] lg:h-[650px] w-full" />
   ),
 });
 
