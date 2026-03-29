@@ -25,11 +25,11 @@ const LEVEL_FRACTIONS: Record<number, { min: number; max: number }> = {
 
 // Dot glow colors per level
 const LEVEL_DOT_COLOR: Record<number, string> = {
-  1: '#ffffff',
-  2: '#60d0ff',
-  3: '#3098dd',
-  4: '#1a6aaa',
-  5: '#0e3870',
+  1: '#8ba8c4',
+  2: '#6a9dbd',
+  3: '#5088aa',
+  4: '#3d7090',
+  5: '#2a5a78',
 }
 
 interface ModelBounds {

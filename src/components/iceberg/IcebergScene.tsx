@@ -34,9 +34,10 @@ export default function IcebergScene({ operations, locale, className, height = 6
       >
         <Suspense fallback={null}>
           {/* Strong neutral lighting so GLB textures render properly */}
-          <ambientLight intensity={1.2} />
-          <directionalLight position={[5, 10, 5]} intensity={2.0} />
-          <directionalLight position={[-5, 5, -5]} intensity={0.8} />
+          <ambientLight intensity={1.5} />
+          <directionalLight position={[5, 10, 5]} intensity={2.5} />
+          <directionalLight position={[-5, 5, -5]} intensity={1.2} />
+          <directionalLight position={[0, -5, 5]} intensity={0.6} />
 
           {/* Environment map for realistic reflections on the model */}
           <Environment preset="city" />
