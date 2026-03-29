@@ -56,7 +56,7 @@ export async function getCatalogOperations(filters: CatalogFilters = {}) {
   const { search, levels, eras, types, outcomes, statuses, actor, sort } =
     filters;
 
-  const where: Parameters<typeof prisma.operation.findMany>[0]["where"] = {
+  const where: NonNullable<Parameters<typeof prisma.operation.findMany>[0]>["where"] = {
     moderationStatus: ModerationStatus.APPROVED,
   };
 
@@ -93,9 +93,9 @@ export async function getCatalogOperations(filters: CatalogFilters = {}) {
     where.actors = { has: actor };
   }
 
-  type OrderBy = Parameters<
+  type OrderBy = NonNullable<Parameters<
     typeof prisma.operation.findMany
-  >[0]["orderBy"];
+  >[0]>["orderBy"];
 
   let orderBy: OrderBy;
   switch (sort) {
