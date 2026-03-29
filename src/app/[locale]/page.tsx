@@ -1,12 +1,21 @@
-import { useTranslations } from "next-intl";
+import { getHomepageData } from "@/lib/queries";
+import { HeroSection } from "@/components/home/HeroSection";
+import { StatsBar } from "@/components/home/StatsBar";
+import { FeaturedGrid } from "@/components/home/FeaturedGrid";
 
-export default function HomePage() {
-  const t = useTranslations("home");
+interface Props {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function HomePage({ params }: Props) {
+  const { locale } = await params;
+  const { featuredOperations, stats } = await getHomepageData();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold">{t("title")}</h1>
-      <p className="mt-4 text-xl text-muted-foreground">{t("subtitle")}</p>
-    </main>
+    <>
+      <HeroSection locale={locale} />
+      <StatsBar stats={stats} />
+      <FeaturedGrid operations={featuredOperations} locale={locale} />
+    </>
   );
 }
