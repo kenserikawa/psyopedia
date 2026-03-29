@@ -179,6 +179,37 @@ export async function getAllOperationSlugs() {
   });
 }
 
+// ─── Iceberg ─────────────────────────────────────────
+
+export async function getIcebergData() {
+  const levels = await prisma.operation.groupBy({
+    by: ["icebergLevel"],
+    where: { moderationStatus: ModerationStatus.APPROVED },
+    _count: true,
+    orderBy: { icebergLevel: "asc" },
+  });
+
+  const featured = await prisma.operation.findMany({
+    where: { moderationStatus: ModerationStatus.APPROVED },
+    select: {
+      icebergLevel: true,
+      title: true,
+      titleEs: true,
+      slug: true,
+      slugEs: true,
+    },
+    orderBy: { viewCount: "desc" },
+  });
+
+  return levels.map((level) => ({
+    level: level.icebergLevel,
+    count: level._count,
+    operations: featured
+      .filter((op) => op.icebergLevel === level.icebergLevel)
+      .slice(0, 3),
+  }));
+}
+
 // ─── Filter Helpers ───────────────────────────────────
 
 export async function getDistinctActors(): Promise<string[]> {
