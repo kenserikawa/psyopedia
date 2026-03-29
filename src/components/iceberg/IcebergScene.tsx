@@ -40,7 +40,8 @@ const LEVEL_LABELS: Record<number, string> = {
 }
 
 export default function IcebergScene({ operations, locale, className, height = 650 }: IcebergSceneProps) {
-  const [selected, setSelected] = useState<IcebergOperation | null>(null)
+  const defaultOp = operations.find((o) => o.icebergLevel === 1) ?? operations[0] ?? null
+  const [selected, setSelected] = useState<IcebergOperation | null>(defaultOp)
 
   const handleDotHover = useCallback((id: string | null) => {
     if (id) {
