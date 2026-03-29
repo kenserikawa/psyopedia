@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 
@@ -6,6 +7,7 @@ export function HeroSection({ locale }: { locale: string }) {
 
   return (
     <section className="flex flex-col items-center justify-center gap-6 py-20 text-center">
+      <Image src="/logo.png" alt="Psyopedia" width={120} height={120} priority />
       <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
         {t("title")}
       </h1>

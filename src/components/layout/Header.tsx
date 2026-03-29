@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -9,7 +10,8 @@ export function Header({ locale }: { locale: string }) {
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-14 items-center justify-between px-4">
-        <Link href={`/${locale}`} className="text-xl font-bold">
+        <Link href={`/${locale}`} className="flex items-center gap-2 text-xl font-bold">
+          <Image src="/logo.png" alt="Psyopedia" width={32} height={32} />
           Psyopedia
         </Link>
         <nav className="flex items-center gap-6 text-sm">
