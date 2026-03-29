@@ -148,7 +148,7 @@ export default function IcebergMesh({ levelStats, onLevelClick }: IcebergMeshPro
 
             {/* Zone label */}
             <IcebergZoneLabel
-              zone={zone}
+              zone={{ ...zone, label: levelStats.find(s => s.level === zone.level)?.label ?? '' }}
               stats={{
                 count: levelStats.find(s => s.level === zone.level)?.count ?? 0,
                 featured: levelStats.find(s => s.level === zone.level)?.featured ?? [],
