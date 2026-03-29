@@ -9,6 +9,7 @@ import { OperationBody } from "@/components/operation/OperationBody";
 import { SourcesList } from "@/components/operation/SourcesList";
 import { RelatedOps } from "@/components/operation/RelatedOps";
 import { CommentSection } from "@/components/operation/CommentSection";
+import { generateOperationMetadata, generateOperationJsonLd } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -33,30 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: "Not Found" };
   }
 
-  const tSeo = await getTranslations({ locale, namespace: "seo" });
-  const title = locale === "es" ? operation.titleEs : operation.title;
-  const description = locale === "es" ? operation.excerptEs : operation.excerpt;
-
-  const enSlug = operation.slug;
-  const esSlug = operation.slugEs;
-
-  return {
-    title: `${title} | ${tSeo("siteName")}`,
-    description,
-    openGraph: {
-      title,
-      description,
-      siteName: tSeo("siteName"),
-      locale: locale === "es" ? "es_ES" : "en_US",
-    },
-    alternates: {
-      canonical: `/${locale}/catalog/${slug}`,
-      languages: {
-        en: `/en/catalog/${enSlug}`,
-        es: `/es/catalog/${esSlug}`,
-      },
-    },
-  };
+  return generateOperationMetadata(operation, locale);
 }
 
 export default async function OperationDetailPage({ params }: Props) {
@@ -75,6 +53,14 @@ export default async function OperationDetailPage({ params }: Props) {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
+      {/* JSON-LD structured data — safe: JSON.stringify on own data produces valid JSON, not raw HTML */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(generateOperationJsonLd(operation, locale)),
+        }}
+      />
+
       {/* Header */}
       <OperationHeader operation={operation} locale={locale} />
 
