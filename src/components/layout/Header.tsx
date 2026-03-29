@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { UserMenu } from "@/components/auth/UserMenu";
 
 export function Header({ locale }: { locale: string }) {
   const t = useTranslations("nav");
@@ -24,6 +25,7 @@ export function Header({ locale }: { locale: string }) {
           >
             {otherLocale}
           </Link>
+          <UserMenu locale={locale} />
         </nav>
       </div>
     </header>

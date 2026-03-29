@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { SessionProvider } from "@/components/auth/SessionProvider";
 import "@/app/globals.css";
 
 type Props = {
@@ -39,9 +40,11 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale} suppressHydrationWarning>
       <body className="min-h-screen bg-background font-sans antialiased">
         <NextIntlClientProvider messages={messages}>
-          <Header locale={locale} />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <SessionProvider>
+            <Header locale={locale} />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </SessionProvider>
         </NextIntlClientProvider>
       </body>
     </html>
