@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Environment } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
@@ -92,41 +92,89 @@ export default function IcebergScene({ operations, locale, className, height = 6
         </Canvas>
       </div>
 
-      {/* Side panel tooltip */}
-      <div className="w-64 shrink-0 flex items-center pl-4">
-        {selected ? (
-          <div className="bg-card border border-border rounded-lg p-4 shadow-sm w-full transition-opacity duration-200">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
-                Level {selected.icebergLevel}
-              </span>
-              <span className="text-[10px] text-muted-foreground">
-                {LEVEL_LABELS[selected.icebergLevel]}
-              </span>
-            </div>
-            <h3 className="text-sm font-bold text-foreground leading-snug">
-              {selected.title}
-            </h3>
-            <div className="flex items-center gap-2 mt-1.5">
-              <span className="text-[10px] text-muted-foreground">
-                {ERA_LABELS[selected.era] ?? selected.era}
-              </span>
-              <span className="text-[10px] text-muted-foreground">
-                {selected.status}
-              </span>
-            </div>
-            <p className="text-xs text-muted-foreground mt-2 leading-relaxed">
-              {selected.excerpt.length > 200
-                ? selected.excerpt.slice(0, 200) + '...'
-                : selected.excerpt}
-            </p>
+      {/* Side panel */}
+      <SidePanel selected={selected} />
+    </div>
+  )
+}
+
+function SidePanel({ selected }: { selected: IcebergOperation | null }) {
+  const [visible, setVisible] = useState(false)
+  const [display, setDisplay] = useState<IcebergOperation | null>(null)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    if (selected) {
+      // If switching between operations, fade out then in
+      if (display && display.id !== selected.id) {
+        setVisible(false)
+        if (timeoutRef.current) clearTimeout(timeoutRef.current)
+        timeoutRef.current = setTimeout(() => {
+          setDisplay(selected)
+          setVisible(true)
+        }, 150)
+      } else if (!display) {
+        setDisplay(selected)
+        // Small delay so the element renders before fading in
+        requestAnimationFrame(() => setVisible(true))
+      }
+    }
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    }
+  }, [selected, display])
+
+  return (
+    <div className="w-72 shrink-0 flex flex-col justify-center pl-6">
+      {display ? (
+        <div
+          className="transition-all duration-300 ease-out"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(8px)',
+          }}
+        >
+          {/* Level indicator */}
+          <div className="flex items-center gap-2 mb-3">
+            <div className="h-px flex-1 bg-border" />
+            <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-[0.15em]">
+              Level {display.icebergLevel}
+            </span>
+            <div className="h-px flex-1 bg-border" />
           </div>
-        ) : (
-          <p className="text-xs text-muted-foreground italic">
-            Hover over a dot to see details
+
+          {/* Classification line */}
+          <p className="text-[10px] text-muted-foreground uppercase tracking-[0.1em] mb-1">
+            {LEVEL_LABELS[display.icebergLevel]}
           </p>
-        )}
-      </div>
+
+          {/* Title */}
+          <h3 className="text-lg font-bold text-foreground leading-tight tracking-tight">
+            {display.title}
+          </h3>
+
+          {/* Meta row */}
+          <div className="flex items-center gap-1.5 mt-2 text-[11px] text-muted-foreground">
+            <span>{ERA_LABELS[display.era] ?? display.era}</span>
+            <span className="text-border">|</span>
+            <span>{display.status.replace('_', ' ')}</span>
+          </div>
+
+          {/* Divider */}
+          <div className="h-px bg-border my-3" />
+
+          {/* Excerpt */}
+          <p className="text-[13px] text-muted-foreground leading-relaxed">
+            {display.excerpt.length > 220
+              ? display.excerpt.slice(0, 220) + '...'
+              : display.excerpt}
+          </p>
+        </div>
+      ) : (
+        <p className="text-xs text-muted-foreground/50 italic">
+          Hover over a point to inspect
+        </p>
+      )}
     </div>
   )
 }
