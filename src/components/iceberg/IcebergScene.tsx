@@ -56,7 +56,7 @@ export default function IcebergScene({ operations, locale, className, height = 6
       {/* Desktop/tablet: side by side. Mobile: stacked */}
       <div className="flex flex-col md:flex-row md:items-center md:gap-8 lg:gap-12">
         {/* Canvas */}
-        <div className="w-full md:w-[500px] md:shrink-0 lg:w-[600px] relative h-[500px] md:h-[600px] lg:h-[650px]">
+        <div className="w-full md:w-[60%] md:shrink-0 lg:w-[65%] relative h-[500px] md:h-[600px] lg:h-[650px]">
           <Canvas
             camera={{ position: [0.5, 0.3, 1.2], fov: 55 }}
             gl={{ antialias: true, alpha: true }}
