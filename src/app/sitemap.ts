@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { getAllOperationSlugs } from "@/lib/queries";
 
+export const dynamic = "force-dynamic";
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://psyopedia.org";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
