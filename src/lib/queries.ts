@@ -249,6 +249,27 @@ export async function getAllOperationsAdmin() {
   });
 }
 
+// ─── Comment Queries ──────────────────────────────────
+
+export async function getApprovedComments(operationId: string) {
+  return prisma.comment.findMany({
+    where: { operationId, status: "APPROVED" },
+    include: { author: { select: { name: true, image: true } } },
+    orderBy: { createdAt: "desc" },
+  });
+}
+
+export async function getPendingComments() {
+  return prisma.comment.findMany({
+    where: { status: "PENDING" },
+    include: {
+      author: { select: { name: true } },
+      operation: { select: { title: true, slug: true } },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+}
+
 // ─── Filter Helpers ───────────────────────────────────
 
 export async function getDistinctActors(): Promise<string[]> {

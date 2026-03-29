@@ -3,11 +3,12 @@ import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { getOperationBySlug, getOperationBySlugEs } from "@/lib/queries";
+import { getOperationBySlug, getOperationBySlugEs, getApprovedComments } from "@/lib/queries";
 import { OperationHeader } from "@/components/operation/OperationHeader";
 import { OperationBody } from "@/components/operation/OperationBody";
 import { SourcesList } from "@/components/operation/SourcesList";
 import { RelatedOps } from "@/components/operation/RelatedOps";
+import { CommentSection } from "@/components/operation/CommentSection";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -70,6 +71,7 @@ export default async function OperationDetailPage({ params }: Props) {
 
   const bodyContent = locale === "es" ? operation.bodyEs : operation.bodyEn;
   const relatedOps = operation.relatedOps ?? [];
+  const comments = await getApprovedComments(operation.id);
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -113,6 +115,20 @@ export default async function OperationDetailPage({ params }: Props) {
           <RelatedOps operations={relatedOps} locale={locale} />
         </>
       )}
+
+      {/* Comments */}
+      <Separator className="my-6" />
+      <CommentSection
+        operationId={operation.id}
+        comments={comments.map((c) => ({
+          id: c.id,
+          body: c.body,
+          author: { name: c.author.name ?? null },
+          createdAt: c.createdAt,
+          status: c.status,
+        }))}
+        locale={locale}
+      />
     </div>
   );
 }

@@ -82,7 +82,8 @@
     "operations": "Todas las Operaciones",
     "pendingCount": "{count} pendientes",
     "approve": "Aprobar",
-    "reject": "Rechazar"
+    "reject": "Rechazar",
+    "comments": "Moderación de Comentarios"
   },
   "enums": {
     "era": {
