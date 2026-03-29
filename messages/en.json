@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "iceberg": "The Iceberg",
+    "contribute": "Contribute",
+    "admin": "Admin",
+    "signIn": "Sign In",
+    "signOut": "Sign Out"
+  },
+  "home": {
+    "title": "PsyOps Encyclopedia",
+    "subtitle": "A comprehensive, bilingual database of psychological operations throughout history",
+    "exploreCatalog": "Explore the Catalog",
+    "viewIceberg": "View the Iceberg",
+    "stats": {
+      "operations": "Operations Documented",
+      "eras": "Historical Eras",
+      "sources": "Verified Sources",
+      "contributors": "Contributors"
+    },
+    "featured": "Featured Operations",
+    "recentlyAdded": "Recently Added"
+  },
+  "catalog": {
+    "title": "Operations Catalog",
+    "search": "Search operations...",
+    "filters": {
+      "icebergLevel": "Iceberg Level",
+      "era": "Era",
+      "type": "Type",
+      "country": "Country",
+      "outcome": "Outcome",
+      "status": "Status",
+      "clearAll": "Clear All Filters"
+    },
+    "sort": {
+      "label": "Sort by",
+      "newest": "Newest First",
+      "oldest": "Oldest First",
+      "mostViewed": "Most Viewed",
+      "icebergLevel": "Iceberg Level",
+      "title": "Title A-Z"
+    },
+    "noResults": "No operations found matching your filters.",
+    "resultsCount": "{count} operations found"
+  },
+  "operation": {
+    "sources": "Sources",
+    "relatedOps": "Related Operations",
+    "comments": "Comments",
+    "suggestEdit": "Suggest an Edit",
+    "share": "Share",
+    "icebergLevel": "Iceberg Level {level}",
+    "viewCount": "{count} views",
+    "tags": "Tags"
+  },
+  "iceberg": {
+    "title": "The Psyop Iceberg",
+    "subtitle": "From well-known to deep conspiracy — explore five levels of psychological operations",
+    "levels": {
+      "1": "Well-Known & Declassified",
+      "2": "Known but Underappreciated",
+      "3": "Leaked / Partially Verified",
+      "4": "Alleged",
+      "5": "Deep Conspiracy"
+    },
+    "clickToExplore": "Click a level to explore"
+  },
+  "contribute": {
+    "title": "Contribute",
+    "subtitle": "Help expand the database by submitting new operations or corrections",
+    "newOperation": "Submit New Operation",
+    "editOperation": "Suggest an Edit",
+    "addSource": "Add a Source",
+    "thankYou": "Thank you! Your submission is under review.",
+    "loginRequired": "Please sign in to contribute"
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "queue": "Moderation Queue",
+    "operations": "All Operations",
+    "pendingCount": "{count} pending",
+    "approve": "Approve",
+    "reject": "Reject"
+  },
+  "enums": {
+    "era": {
+      "WWII": "World War II",
+      "COLD_WAR": "Cold War",
+      "MODERN": "Modern Era",
+      "DIGITAL_AGE": "Digital Age"
+    },
+    "type": {
+      "ASSASSINATION": "Assassination",
+      "PROPAGANDA": "Propaganda",
+      "DECEPTION": "Deception",
+      "INFLUENCE_OP": "Influence Operation",
+      "FALSE_FLAG": "False Flag",
+      "INFILTRATION": "Infiltration",
+      "MIND_CONTROL": "Mind Control",
+      "SURVEILLANCE": "Surveillance",
+      "DISINFORMATION": "Disinformation"
+    },
+    "outcome": {
+      "SUCCESSFUL": "Successful",
+      "FAILED": "Failed",
+      "PARTIAL": "Partial",
+      "ONGOING": "Ongoing",
+      "UNKNOWN": "Unknown"
+    },
+    "status": {
+      "DECLASSIFIED": "Declassified",
+      "LEAKED": "Leaked",
+      "ALLEGED": "Alleged"
+    }
+  },
+  "seo": {
+    "siteName": "Psyopedia",
+    "siteDescription": "A comprehensive bilingual encyclopedia of psychological operations throughout history"
+  }
+}
