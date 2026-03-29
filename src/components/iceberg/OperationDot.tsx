@@ -2,7 +2,6 @@
 
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 import type { IcebergOperation } from './IcebergScene'
 
@@ -15,25 +14,16 @@ interface OperationDotProps {
   locale: string
 }
 
-const ERA_LABELS: Record<string, string> = {
-  WWII: 'WWII',
-  COLD_WAR: 'Cold War',
-  MODERN: 'Modern',
-  DIGITAL_AGE: 'Digital Age',
-}
-
 export default function OperationDot({
   operation,
   position,
   color,
   isHovered,
   onHover,
-  locale,
 }: OperationDotProps) {
   const meshRef = useRef<THREE.Mesh>(null)
   const glowRef = useRef<THREE.Mesh>(null)
 
-  // Gentle pulse animation
   useFrame(({ clock }) => {
     if (meshRef.current) {
       const scale = isHovered ? 1.8 : 1.0 + Math.sin(clock.getElapsedTime() * 2 + position[1]) * 0.15
@@ -45,12 +35,8 @@ export default function OperationDot({
     }
   })
 
-  const title = locale === 'es' ? operation.title : operation.title
-  const excerpt = locale === 'es' ? operation.excerpt : operation.excerpt
-
   return (
     <group position={position}>
-      {/* Glow sphere (larger, faint) */}
       <mesh ref={glowRef}>
         <sphereGeometry args={[0.02, 8, 8]} />
         <meshBasicMaterial
@@ -61,14 +47,12 @@ export default function OperationDot({
         />
       </mesh>
 
-      {/* Core dot */}
       <mesh
         ref={meshRef}
         onPointerEnter={(e) => {
           e.stopPropagation()
           onHover(operation.id)
         }}
-        onPointerLeave={() => onHover(null)}
       >
         <sphereGeometry args={[0.02, 8, 8]} />
         <meshStandardMaterial
@@ -78,33 +62,6 @@ export default function OperationDot({
           roughness={0.3}
         />
       </mesh>
-
-      {/* Tooltip on hover */}
-      {isHovered && (
-        <Html
-          center
-          distanceFactor={2}
-          style={{ pointerEvents: 'none' }}
-          position={[0, 0.15, 0]}
-        >
-          <div className="bg-card border border-border rounded-md p-1.5 w-32 shadow-sm">
-            <div className="flex items-center gap-1 mb-0.5">
-              <span className="text-[6px] font-semibold text-muted-foreground uppercase tracking-wider">
-                Lv{operation.icebergLevel}
-              </span>
-              <span className="text-[6px] text-muted-foreground">
-                {ERA_LABELS[operation.era] ?? operation.era}
-              </span>
-            </div>
-            <p className="text-[7px] font-semibold text-foreground leading-tight">
-              {title}
-            </p>
-            <p className="text-[6px] text-muted-foreground mt-0.5 line-clamp-2 leading-tight">
-              {excerpt.length > 80 ? excerpt.slice(0, 80) + '...' : excerpt}
-            </p>
-          </div>
-        </Html>
-      )}
     </group>
   )
 }

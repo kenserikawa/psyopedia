@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState, useCallback } from 'react'
+import { useMemo } from 'react'
 import * as THREE from 'three'
 import { useGLTF } from '@react-three/drei'
 import OperationDot from './OperationDot'
@@ -9,6 +9,8 @@ import type { IcebergOperation } from './IcebergScene'
 interface IcebergMeshProps {
   operations: IcebergOperation[]
   locale: string
+  hoveredId: string | null
+  onDotHover: (id: string | null) => void
 }
 
 // Preload the model
@@ -129,11 +131,9 @@ function computeDotPositions(
   return result
 }
 
-export default function IcebergMesh({ operations, locale }: IcebergMeshProps) {
+export default function IcebergMesh({ operations, locale, hoveredId, onDotHover }: IcebergMeshProps) {
   const { scene } = useGLTF('/iceberg.glb')
-  const [hoveredId, setHoveredId] = useState<string | null>(null)
 
-  // Compute bounds once the model loads
   const bounds = useMemo(() => {
     scene.updateMatrixWorld(true)
     return computeModelBounds(scene)
@@ -144,17 +144,10 @@ export default function IcebergMesh({ operations, locale }: IcebergMeshProps) {
     [operations, bounds]
   )
 
-  const handleHover = useCallback((id: string | null) => {
-    setHoveredId(id)
-    document.body.style.cursor = id ? 'pointer' : 'default'
-  }, [])
-
   return (
     <group>
-      {/* GLB iceberg model */}
       <primitive object={scene} />
 
-      {/* Operation dots */}
       {dots.map(({ op, position }) => (
         <OperationDot
           key={op.id}
@@ -162,7 +155,7 @@ export default function IcebergMesh({ operations, locale }: IcebergMeshProps) {
           position={position}
           color={LEVEL_DOT_COLOR[op.icebergLevel] ?? '#3098dd'}
           isHovered={hoveredId === op.id}
-          onHover={handleHover}
+          onHover={onDotHover}
           locale={locale}
         />
       ))}
