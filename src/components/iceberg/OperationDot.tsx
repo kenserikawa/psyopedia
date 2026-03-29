@@ -36,11 +36,11 @@ export default function OperationDot({
   // Gentle pulse animation
   useFrame(({ clock }) => {
     if (meshRef.current) {
-      const scale = isHovered ? 1.6 : 1.0 + Math.sin(clock.getElapsedTime() * 2 + position[1]) * 0.1
+      const scale = isHovered ? 1.8 : 1.0 + Math.sin(clock.getElapsedTime() * 2 + position[1]) * 0.15
       meshRef.current.scale.setScalar(scale)
     }
     if (glowRef.current) {
-      const glowScale = isHovered ? 3.0 : 1.8 + Math.sin(clock.getElapsedTime() * 1.5 + position[1]) * 0.3
+      const glowScale = isHovered ? 3.5 : 2.0 + Math.sin(clock.getElapsedTime() * 1.5 + position[1]) * 0.3
       glowRef.current.scale.setScalar(glowScale)
     }
   })
@@ -52,7 +52,7 @@ export default function OperationDot({
     <group position={position}>
       {/* Glow sphere (larger, faint) */}
       <mesh ref={glowRef}>
-        <sphereGeometry args={[0.12, 16, 16]} />
+        <sphereGeometry args={[0.06, 12, 12]} />
         <meshBasicMaterial
           color={color}
           transparent
@@ -70,7 +70,7 @@ export default function OperationDot({
         }}
         onPointerLeave={() => onHover(null)}
       >
-        <sphereGeometry args={[0.12, 16, 16]} />
+        <sphereGeometry args={[0.06, 12, 12]} />
         <meshStandardMaterial
           color={color}
           emissive={color}

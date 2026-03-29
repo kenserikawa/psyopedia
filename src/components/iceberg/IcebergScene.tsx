@@ -27,7 +27,7 @@ export default function IcebergScene({ operations, locale, className, height = 6
   return (
     <div style={{ height }} className={`w-full relative ${className ?? ''}`}>
       <Canvas
-        camera={{ position: [2, 1, 4.5], fov: 55 }}
+        camera={{ position: [1.5, 0.8, 3.5], fov: 55 }}
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]}
         style={{ background: 'transparent' }}
@@ -49,8 +49,8 @@ export default function IcebergScene({ operations, locale, className, height = 6
             enablePan={false}
             minPolarAngle={Math.PI / 4}
             maxPolarAngle={Math.PI / 1.8}
-            minDistance={3}
-            maxDistance={12}
+            minDistance={2}
+            maxDistance={10}
           />
 
           <EffectComposer>
@@ -59,9 +59,6 @@ export default function IcebergScene({ operations, locale, className, height = 6
         </Suspense>
       </Canvas>
 
-      <div className="absolute inset-0 flex items-center justify-center -z-10">
-        <span className="text-muted-foreground text-sm animate-pulse">Loading iceberg...</span>
-      </div>
     </div>
   )
 }
