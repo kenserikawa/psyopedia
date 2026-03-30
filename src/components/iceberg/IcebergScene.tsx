@@ -7,15 +7,8 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import { Suspense } from 'react'
 import IcebergMesh from './IcebergMesh'
 
-export interface IcebergOperation {
-  id: string
-  title: string
-  excerpt: string
-  era: string
-  status: string
-  slug: string
-  icebergLevel: number
-}
+import type { IcebergOperation } from './OperationDot'
+export type { IcebergOperation }
 
 export interface IcebergSceneProps {
   operations: IcebergOperation[]
@@ -75,8 +68,6 @@ export default function IcebergScene({ operations, locale, className, height = 6
               <IcebergMesh
                 operations={operations}
                 locale={locale}
-                hoveredId={selected?.id ?? null}
-                onDotHover={handleDotHover}
               />
 
               <OrbitControls
