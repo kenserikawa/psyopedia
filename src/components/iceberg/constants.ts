@@ -8,7 +8,8 @@ export const ICEBERG_LEVELS = [
     fogDensity: 0.008,
     ambientIntensity: 1.0,
     accentColor: "#e0f4ff",
-    labelColor: "#ffffff",
+    labelColor: "#0a1628",      // dark on white bg
+    subtitleColor: "#1a3a5c",
   },
   {
     level: 2,
@@ -19,7 +20,8 @@ export const ICEBERG_LEVELS = [
     fogDensity: 0.018,
     ambientIntensity: 0.75,
     accentColor: "#7ec8e3",
-    labelColor: "#b0e0ff",
+    labelColor: "#0e2a4a",      // dark on light-blue bg
+    subtitleColor: "#1a4a6a",
   },
   {
     level: 3,
@@ -30,7 +32,8 @@ export const ICEBERG_LEVELS = [
     fogDensity: 0.035,
     ambientIntensity: 0.5,
     accentColor: "#2e86ab",
-    labelColor: "#7ecff5",
+    labelColor: "#c0e4ff",      // transitioning to light
+    subtitleColor: "#90c0e0",
   },
   {
     level: 4,
@@ -41,7 +44,8 @@ export const ICEBERG_LEVELS = [
     fogDensity: 0.06,
     ambientIntensity: 0.25,
     accentColor: "#1a3a5c",
-    labelColor: "#3a7abf",
+    labelColor: "#d0e8ff",      // light on dark bg
+    subtitleColor: "#8ab0d0",
   },
   {
     level: 5,
@@ -52,6 +56,7 @@ export const ICEBERG_LEVELS = [
     fogDensity: 0.12,
     ambientIntensity: 0.08,
     accentColor: "#060d1a",
-    labelColor: "#1a3a6e",
+    labelColor: "#e8f0ff",      // near-white on dark-blue bg
+    subtitleColor: "#90a8c8",
   },
 ] as const;

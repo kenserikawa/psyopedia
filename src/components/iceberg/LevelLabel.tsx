@@ -22,22 +22,22 @@ export default function LevelLabel() {
         >
           <p
             className="text-[10px] md:text-xs font-mono tracking-[0.3em] uppercase mb-1"
-            style={{ color: levelData.labelColor }}
+            style={{ color: levelData.subtitleColor }}
           >
             Level {activeLevel} / 5
           </p>
 
           <h2
             className="text-3xl md:text-6xl font-bold tracking-tight leading-none mb-2"
-            style={{
-              color: levelData.labelColor,
-              textShadow: "0 0 40px rgba(0,100,255,0.3)",
-            }}
+            style={{ color: levelData.labelColor }}
           >
             {levelData.name}
           </h2>
 
-          <p className="text-xs md:text-sm text-slate-400 font-light tracking-wide">
+          <p
+            className="text-xs md:text-sm font-light tracking-wide"
+            style={{ color: levelData.subtitleColor }}
+          >
             {levelData.subtitle}
           </p>
         </motion.div>
