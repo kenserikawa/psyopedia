@@ -21,7 +21,7 @@ export default function DepthAtmosphere() {
 
   // Initialize fog
   useEffect(() => {
-    scene.fog = new THREE.FogExp2('#0a1628', ICEBERG_LEVELS[0].fogDensity)
+    scene.fog = new THREE.FogExp2('#ffffff', ICEBERG_LEVELS[0].fogDensity)
   }, [scene])
 
   useFrame(() => {

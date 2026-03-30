@@ -5,7 +5,7 @@ import type { IcebergOperation } from "./OperationDot";
 
 const IcebergJourney = dynamic(() => import("./IcebergJourney"), {
   ssr: false,
-  loading: () => <div className="h-screen bg-[#0a1628]" />,
+  loading: () => <div className="h-screen" />,
 });
 
 interface Props {

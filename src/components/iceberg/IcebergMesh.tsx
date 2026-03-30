@@ -98,7 +98,7 @@ export default function IcebergMesh({ operations }: IcebergMeshProps) {
       {/* Placeholder iceberg — translucent cylinder spanning all levels */}
       {/* Top at y=6 (above level 1), bottom at y=-14 (below level 5) */}
       <mesh position={[0, -4, 0]}>
-        <cylinderGeometry args={[0.8, 3.0, 20, 24]} />
+        <cylinderGeometry args={[3.0, 0.8, 20, 24]} />
         <meshStandardMaterial
           color="#b0d8ee"
           transparent

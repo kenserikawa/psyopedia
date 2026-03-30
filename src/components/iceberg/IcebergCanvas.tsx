@@ -35,9 +35,9 @@ export default function IcebergCanvas({ scrollContainer, operations, locale }: I
   return (
     <Canvas
       camera={{ position: [0, 4, 12], fov: 50 }}
-      gl={{ antialias: true, alpha: false }}
+      gl={{ antialias: true, alpha: true }}
       dpr={[1, 1.5]}
-      style={{ background: '#0a1628' }}
+      style={{ background: 'transparent' }}
     >
       <Suspense fallback={null}>
         <SceneContent
