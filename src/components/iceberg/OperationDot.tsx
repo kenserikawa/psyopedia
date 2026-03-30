@@ -4,6 +4,7 @@ import { useRef, memo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 import * as THREE from 'three'
+import { ICEBERG_LEVELS } from './constants'
 
 export interface IcebergOperation {
   id: string
@@ -93,30 +94,42 @@ function OperationDotInner({
       </mesh>
 
       {/* Expanded label when level is active */}
-      {isLevelActive && (
-        <Html
-          center
-          distanceFactor={12}
-          style={{ pointerEvents: 'none' }}
-          position={[0, 0.3, 0]}
-        >
-          <div
-            className="transition-opacity duration-300"
-            style={{ opacity: isLevelActive ? 1 : 0 }}
+      {isLevelActive && (() => {
+        const levelData = ICEBERG_LEVELS.find((l) => l.level === operation.icebergLevel)
+        const titleColor = levelData?.labelColor ?? '#0a1628'
+        const metaColor = levelData?.subtitleColor ?? '#1a3a5c'
+        // Dark levels need light shadow, light levels need dark shadow
+        const isDark = operation.icebergLevel >= 3
+        const shadowColor = isDark ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.8)'
+
+        return (
+          <Html
+            center
+            distanceFactor={12}
+            style={{ pointerEvents: 'none' }}
+            position={[0, 0.3, 0]}
           >
-            <p className="text-[7px] font-semibold text-white leading-tight whitespace-nowrap drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
-              {operation.title}
-            </p>
-            {isHovered && (
-              <div className="mt-0.5">
-                <span className="text-[5px] text-blue-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-                  {ERA_LABELS[operation.era] ?? operation.era}
-                </span>
-              </div>
-            )}
-          </div>
-        </Html>
-      )}
+            <div className="transition-opacity duration-300" style={{ opacity: 1 }}>
+              <p
+                className="text-[7px] font-semibold leading-tight whitespace-nowrap"
+                style={{ color: titleColor, textShadow: `0 1px 3px ${shadowColor}` }}
+              >
+                {operation.title}
+              </p>
+              {isHovered && (
+                <div className="mt-0.5">
+                  <span
+                    className="text-[5px]"
+                    style={{ color: metaColor, textShadow: `0 1px 2px ${shadowColor}` }}
+                  >
+                    {ERA_LABELS[operation.era] ?? operation.era}
+                  </span>
+                </div>
+              )}
+            </div>
+          </Html>
+        )
+      })()}
     </group>
   )
 }
