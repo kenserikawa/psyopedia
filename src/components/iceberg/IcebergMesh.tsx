@@ -2,9 +2,9 @@
 
 import { useMemo, useState, useCallback, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import OperationDot from './OperationDot'
+import ProceduralIceberg from './ProceduralIceberg'
 import type { IcebergOperation } from './OperationDot'
 import { useIcebergStore } from './useIcebergStore'
 import { ICEBERG_LEVELS } from './constants'
@@ -99,28 +99,6 @@ function computeDotPositions(
   return result
 }
 
-function IcebergModel() {
-  const { scene } = useGLTF('/iceberg-long.glb')
-  const cloned = useMemo(() => {
-    const s = scene.clone(true)
-    s.traverse((child) => {
-      if ((child as THREE.Mesh).isMesh) {
-        const mesh = child as THREE.Mesh
-        // Keep original material/textures, just make translucent
-        const mat = (mesh.material as THREE.MeshStandardMaterial).clone()
-        mat.transparent = false
-        mat.opacity = 1
-        mesh.material = mat
-      }
-    })
-    return s
-  }, [scene])
-
-  return <primitive object={cloned} position={[0, -4, 0]} scale={[20, 20, 20]} />
-}
-
-useGLTF.preload('/iceberg-long.glb')
-
 export default function IcebergMesh({ operations, locale, onSelect }: IcebergMeshProps) {
   const activeLevel = useIcebergStore((s) => s.activeLevel)
   const [hoveredId, setHoveredId] = useState<string | null>(null)
@@ -193,8 +171,8 @@ export default function IcebergMesh({ operations, locale, onSelect }: IcebergMes
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerUp}
     >
-      {/* GLB iceberg model */}
-      <IcebergModel />
+      {/* Iceberg procedural (reemplaza el GLB de 74 MB) */}
+      <ProceduralIceberg />
 
       {/* Operation dots */}
       {dots.map(({ op, position }) => (
