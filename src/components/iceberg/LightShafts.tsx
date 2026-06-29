@@ -3,12 +3,13 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { sampleLevels } from './levelSampling'
+import { sampleLevels, type InterpolatedLevel } from './levelSampling'
 import { useIcebergStore } from './useIcebergStore'
 
 export default function LightShafts() {
   const groupRef = useRef<THREE.Group>(null)
   const matRef = useRef<THREE.ShaderMaterial>(null)
+  const sample = useRef<InterpolatedLevel>(sampleLevels(0))
 
   const material = useMemo(
     () =>
@@ -38,7 +39,7 @@ export default function LightShafts() {
   useEffect(() => () => { material.dispose() }, [material])
 
   useFrame(({ clock }) => {
-    const s = sampleLevels(useIcebergStore.getState().scrollProgress)
+    const s = sampleLevels(useIcebergStore.getState().scrollProgress, sample.current)
     if (matRef.current) matRef.current.uniforms.uIntensity.value = s.godRayIntensity
     if (groupRef.current) groupRef.current.rotation.y = clock.getElapsedTime() * 0.03
   })

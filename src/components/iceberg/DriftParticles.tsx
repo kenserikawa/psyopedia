@@ -3,14 +3,15 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Sparkles } from '@react-three/drei'
-import { sampleLevels } from './levelSampling'
+import { sampleLevels, type InterpolatedLevel } from './levelSampling'
 import { useIcebergStore } from './useIcebergStore'
 
 export default function DriftParticles({ lowPower = false }: { lowPower?: boolean }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ref = useRef<any>(null)
+  const sample = useRef<InterpolatedLevel>(sampleLevels(0))
   useFrame(() => {
-    const s = sampleLevels(useIcebergStore.getState().scrollProgress)
+    const s = sampleLevels(useIcebergStore.getState().scrollProgress, sample.current)
     if (ref.current?.material) {
       ref.current.material.opacity = 0.2 + s.particleDensity * 0.8
     }
