@@ -1,8 +1,12 @@
 'use client'
 
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
+import { useFrame } from '@react-three/fiber'
+import { MeshTransmissionMaterial } from '@react-three/drei'
 import * as THREE from 'three'
 import { SimplexNoise } from 'three/addons/math/SimplexNoise.js'
+import { sampleLevels, type InterpolatedLevel } from './levelSampling'
+import { useIcebergStore } from './useIcebergStore'
 
 interface ProceduralIcebergProps {
   lowPower?: boolean
@@ -59,16 +63,88 @@ function buildIcebergGeometry(lowPower: boolean): THREE.BufferGeometry {
   return flat
 }
 
+// Material fresnel additive para el borde glacial (rim light frío).
+function makeRimMaterial() {
+  return new THREE.ShaderMaterial({
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    side: THREE.BackSide,
+    uniforms: {
+      uColor: { value: new THREE.Color('#bfe9ff') },
+      uPower: { value: 2.5 },
+      uIntensity: { value: 0.6 },
+    },
+    vertexShader: /* glsl */ `
+      varying vec3 vNormalW;
+      varying vec3 vViewDir;
+      void main() {
+        vec4 wp = modelMatrix * vec4(position, 1.0);
+        vNormalW = normalize(mat3(modelMatrix) * normal);
+        vViewDir = normalize(cameraPosition - wp.xyz);
+        gl_Position = projectionMatrix * viewMatrix * wp;
+      }
+    `,
+    fragmentShader: /* glsl */ `
+      uniform vec3 uColor; uniform float uPower; uniform float uIntensity;
+      varying vec3 vNormalW; varying vec3 vViewDir;
+      void main() {
+        float fres = pow(1.0 - max(dot(normalize(vNormalW), normalize(vViewDir)), 0.0), uPower);
+        gl_FragColor = vec4(uColor * fres * uIntensity, fres);
+      }
+    `,
+  })
+}
+
 export default function ProceduralIceberg({ lowPower = false }: ProceduralIcebergProps) {
   const geometry = useMemo(() => buildIcebergGeometry(lowPower), [lowPower])
   useEffect(() => () => { geometry.dispose() }, [geometry])
+  const rimMaterial = useMemo(() => makeRimMaterial(), [])
+  // MeshTransmissionMaterial no exporta un tipo público estable: ref laxo.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const matRef = useRef<any>(null)
+  const sample = useRef<InterpolatedLevel>(sampleLevels(0))
+
+  useFrame((_, delta) => {
+    const progress = useIcebergStore.getState().scrollProgress
+    sampleLevels(progress, sample.current)
+    const s = sample.current
+    if (matRef.current) {
+      // Lerp suave para evitar saltos
+      const k = Math.min(delta * 4, 1)
+      matRef.current.color.lerp(s.iceColor, k)
+      matRef.current.roughness += (s.iceRoughness - matRef.current.roughness) * k
+      matRef.current.thickness += (s.iceThickness - matRef.current.thickness) * k
+    }
+    // El rim se apaga con la profundidad
+    // eslint-disable-next-line react-hooks/immutability
+    rimMaterial.uniforms.uIntensity.value = 0.15 + s.godRayIntensity * 0.6
+  })
 
   return (
     <group position={[0, -3, 0]} scale={1.4}>
       <mesh geometry={geometry}>
-        {/* Material temporal — se reemplaza por hielo en la Task 2 */}
-        <meshStandardMaterial color="#bfe4f7" roughness={0.15} metalness={0.05} flatShading />
+        <MeshTransmissionMaterial
+          ref={matRef}
+          transmission={lowPower ? 0.6 : 1}
+          thickness={1.2}
+          roughness={0.08}
+          ior={1.31}
+          chromaticAberration={0.04}
+          anisotropy={0.1}
+          distortion={0.2}
+          distortionScale={0.3}
+          temporalDistortion={0.1}
+          samples={lowPower ? 4 : 8}
+          resolution={lowPower ? 256 : 512}
+          color="#dff1ff"
+          attenuationColor="#9fd6f0"
+          attenuationDistance={4}
+          background={undefined}
+        />
       </mesh>
+      {/* Borde fresnel glacial */}
+      <mesh geometry={geometry} material={rimMaterial} scale={1.015} />
     </group>
   )
 }
