@@ -100,6 +100,7 @@ export default function ProceduralIceberg({ lowPower = false }: ProceduralIceber
   const geometry = useMemo(() => buildIcebergGeometry(lowPower), [lowPower])
   useEffect(() => () => { geometry.dispose() }, [geometry])
   const rimMaterial = useMemo(() => makeRimMaterial(), [])
+  useEffect(() => () => { rimMaterial.dispose() }, [rimMaterial])
   // MeshTransmissionMaterial no exporta un tipo público estable: ref laxo.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const matRef = useRef<any>(null)
