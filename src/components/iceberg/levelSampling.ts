@@ -18,6 +18,9 @@ export interface InterpolatedLevel {
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
+// Module-level scratch color — reused across all sampleLevels calls to avoid per-frame heap allocations.
+const _tmp = new THREE.Color();
+
 // Reusable target so callers can pass one in and avoid per-frame allocations.
 export function sampleLevels(progress: number, out?: InterpolatedLevel): InterpolatedLevel {
   const segments = ICEBERG_LEVELS.length - 1; // 4
@@ -33,9 +36,9 @@ export function sampleLevels(progress: number, out?: InterpolatedLevel): Interpo
   } as InterpolatedLevel);
 
   r.fogDensity = lerp(a.fogDensity, b.fogDensity, t);
-  r.fogColor.set(a.accentColor).lerp(new THREE.Color(b.accentColor), t);
-  r.bgColor.set(a.bgColor).lerp(new THREE.Color(b.bgColor), t);
-  r.iceColor.set(a.iceColor).lerp(new THREE.Color(b.iceColor), t);
+  r.fogColor.set(a.accentColor).lerp(_tmp.set(b.accentColor), t);
+  r.bgColor.set(a.bgColor).lerp(_tmp.set(b.bgColor), t);
+  r.iceColor.set(a.iceColor).lerp(_tmp.set(b.iceColor), t);
   r.iceRoughness = lerp(a.iceRoughness, b.iceRoughness, t);
   r.iceThickness = lerp(a.iceThickness, b.iceThickness, t);
   r.ambientIntensity = lerp(a.ambientIntensity, b.ambientIntensity, t);
