@@ -8,6 +8,7 @@ import DriftParticles from './DriftParticles'
 import LightShafts from './LightShafts'
 import { useScrollCamera } from './useScrollCamera'
 import type { IcebergOperation } from './OperationDot'
+import PostFX from './PostFX'
 
 interface IcebergCanvasProps {
   scrollContainer: React.RefObject<HTMLDivElement | null>
@@ -74,6 +75,7 @@ export default function IcebergCanvas({ scrollContainer, operations, locale, onS
           locale={locale}
           onSelect={onSelect}
         />
+        <PostFX />
       </Suspense>
     </Canvas>
   )
