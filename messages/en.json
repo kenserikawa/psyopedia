@@ -6,7 +6,9 @@
     "contribute": "Contribute",
     "admin": "Admin",
     "signIn": "Sign In",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "home": {
     "title": "Psyopedia",
@@ -51,6 +53,8 @@
     "comments": "Comments",
     "suggestEdit": "Suggest an Edit",
     "share": "Share",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied!",
     "icebergLevel": "Iceberg Level {level}",
     "viewCount": "{count} views",
     "tags": "Tags"

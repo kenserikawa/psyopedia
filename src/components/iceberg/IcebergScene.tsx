@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback, useRef, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Environment } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
@@ -35,6 +36,14 @@ const LEVEL_LABELS: Record<number, string> = {
 export default function IcebergScene({ operations, locale, className, height = 650 }: IcebergSceneProps) {
   const defaultOp = operations.find((o) => o.icebergLevel === 1) ?? operations[0] ?? null
   const [selected, setSelected] = useState<IcebergOperation | null>(defaultOp)
+  const router = useRouter()
+
+  const handleSelect = useCallback(
+    (operation: IcebergOperation) => {
+      router.push(`/${locale}/catalog/${operation.slug}`)
+    },
+    [router, locale]
+  )
 
   const handleDotHover = useCallback((id: string | null) => {
     if (id) {
@@ -68,6 +77,7 @@ export default function IcebergScene({ operations, locale, className, height = 6
               <IcebergMesh
                 operations={operations}
                 locale={locale}
+                onSelect={handleSelect}
               />
 
               <OrbitControls

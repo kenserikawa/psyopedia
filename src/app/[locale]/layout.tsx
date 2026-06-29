@@ -4,7 +4,9 @@ import { EB_Garamond } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { Analytics } from "@vercel/analytics/next";
 import { routing } from "@/i18n/routing";
+import { SITE_URL } from "@/lib/seo";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SessionProvider } from "@/components/auth/SessionProvider";
@@ -26,12 +28,17 @@ export function generateStaticParams() {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     template: "%s | Psyopedia",
     default: "Psyopedia",
   },
   description:
     "A comprehensive bilingual encyclopedia of psychological operations throughout history.",
+  openGraph: {
+    siteName: "Psyopedia",
+    type: "website",
+  },
 };
 
 export default async function LocaleLayout({ children, params }: Props) {
@@ -53,6 +60,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             <Footer />
           </SessionProvider>
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );

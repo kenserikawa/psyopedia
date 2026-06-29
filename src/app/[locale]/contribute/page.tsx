@@ -10,7 +10,18 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "contribute" });
-  return { title: t("title") };
+  return {
+    title: t("title"),
+    description: t("subtitle"),
+    openGraph: {
+      title: t("title"),
+      description: t("subtitle"),
+    },
+    alternates: {
+      canonical: `/${locale}/contribute`,
+      languages: { en: "/en/contribute", es: "/es/contribute" },
+    },
+  };
 }
 
 export default async function ContributePage({ params }: Props) {

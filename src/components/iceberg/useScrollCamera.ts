@@ -44,11 +44,14 @@ export function useScrollCamera(scrollContainer: React.RefObject<HTMLDivElement 
           // Camera looks slightly below its position
           camera.lookAt(0, camera.position.y - 1.5, 0)
 
-          // Update global progress
-          setScrollProgress((index - 1 + p) / (ICEBERG_LEVELS.length - 1))
+          // Update global progress and active level from progress
+          const totalProgress = (index - 1 + p) / (ICEBERG_LEVELS.length - 1)
+          setScrollProgress(totalProgress)
+
+          // Derive active level: whichever level we're closer to
+          const currentLevel = p < 0.5 ? prevLevel.level : level.level
+          setActiveLevel(currentLevel)
         },
-        onEnter: () => setActiveLevel(level.level),
-        onEnterBack: () => setActiveLevel(prevLevel.level),
       })
     })
 

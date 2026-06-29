@@ -32,9 +32,12 @@ export default function DepthAtmosphere() {
     const curr = ICEBERG_LEVELS[levelIndex]
     const next = ICEBERG_LEVELS[Math.min(levelIndex + 1, totalLevels)]
 
-    // Fog density
+    // Fog density + color transition (white at surface → dark blue at abyss)
     if (scene.fog instanceof THREE.FogExp2) {
       scene.fog.density = curr.fogDensity + (next.fogDensity - curr.fogDensity) * levelFrac
+      const currFogColor = new THREE.Color(curr.accentColor)
+      const nextFogColor = new THREE.Color(next.accentColor)
+      scene.fog.color.copy(currFogColor.lerp(nextFogColor, levelFrac))
     }
 
     // Ambient light dims with depth

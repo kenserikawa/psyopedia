@@ -1,46 +1,48 @@
 {
   "nav": {
     "home": "Inicio",
-    "catalog": "Catalogo",
+    "catalog": "Catálogo",
     "iceberg": "El Iceberg",
     "contribute": "Contribuir",
     "admin": "Admin",
-    "signIn": "Iniciar Sesion",
-    "signOut": "Cerrar Sesion"
+    "signIn": "Iniciar Sesión",
+    "signOut": "Cerrar Sesión",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
   },
   "home": {
     "title": "Psyopedia",
-    "subtitle": "Una base de datos bilingue y completa de operaciones psicologicas a lo largo de la historia",
-    "exploreCatalog": "Explorar el Catalogo",
+    "subtitle": "Una base de datos bilingüe y completa de operaciones psicológicas a lo largo de la historia",
+    "exploreCatalog": "Explorar el Catálogo",
     "viewIceberg": "Ver el Iceberg",
     "stats": {
       "operations": "Operaciones Documentadas",
-      "eras": "Eras Historicas",
+      "eras": "Eras Históricas",
       "sources": "Fuentes Verificadas",
       "contributors": "Contribuidores"
     },
     "featured": "Operaciones Destacadas",
-    "recentlyAdded": "Anadidas Recientemente"
+    "recentlyAdded": "Añadidas Recientemente"
   },
   "catalog": {
-    "title": "Catalogo de Operaciones",
+    "title": "Catálogo de Operaciones",
     "search": "Buscar operaciones...",
     "filters": {
       "icebergLevel": "Nivel del Iceberg",
       "era": "Era",
       "type": "Tipo",
-      "country": "Pais",
+      "country": "País",
       "outcome": "Resultado",
       "status": "Estado",
       "clearAll": "Limpiar Todos los Filtros"
     },
     "sort": {
       "label": "Ordenar por",
-      "newest": "Mas Recientes",
-      "oldest": "Mas Antiguos",
-      "mostViewed": "Mas Vistos",
+      "newest": "Más Recientes",
+      "oldest": "Más Antiguos",
+      "mostViewed": "Más Vistas",
       "icebergLevel": "Nivel del Iceberg",
-      "title": "Titulo A-Z"
+      "title": "Título A-Z"
     },
     "noResults": "No se encontraron operaciones que coincidan con tus filtros.",
     "resultsCount": "{count} operaciones encontradas"
@@ -49,36 +51,38 @@
     "sources": "Fuentes",
     "relatedOps": "Operaciones Relacionadas",
     "comments": "Comentarios",
-    "suggestEdit": "Sugerir una Edicion",
+    "suggestEdit": "Sugerir una Edición",
     "share": "Compartir",
+    "copyLink": "Copiar enlace",
+    "linkCopied": "¡Enlace copiado!",
     "icebergLevel": "Nivel del Iceberg {level}",
     "viewCount": "{count} vistas",
     "tags": "Etiquetas"
   },
   "iceberg": {
-    "title": "El Iceberg de las Operaciones Psicologicas",
-    "subtitle": "De lo conocido a la conspiracion profunda — explora cinco niveles de operaciones psicologicas",
+    "title": "El Iceberg de las Operaciones Psicológicas",
+    "subtitle": "De lo conocido a la conspiración profunda — explora cinco niveles de operaciones psicológicas",
     "levels": {
       "1": "Conocidas y Desclasificadas",
       "2": "Conocidas pero Subestimadas",
       "3": "Filtradas / Parcialmente Verificadas",
       "4": "Alegadas",
-      "5": "Conspiracion Profunda"
+      "5": "Conspiración Profunda"
     },
     "clickToExplore": "Haz clic en un nivel para explorar"
   },
   "contribute": {
     "title": "Contribuir",
     "subtitle": "Ayuda a expandir la base de datos enviando nuevas operaciones o correcciones",
-    "newOperation": "Enviar Nueva Operacion",
-    "editOperation": "Sugerir una Edicion",
-    "addSource": "Anadir una Fuente",
-    "thankYou": "Gracias! Tu envio esta en revision.",
-    "loginRequired": "Por favor inicia sesion para contribuir"
+    "newOperation": "Enviar Nueva Operación",
+    "editOperation": "Sugerir una Edición",
+    "addSource": "Añadir una Fuente",
+    "thankYou": "¡Gracias! Tu envío está en revisión.",
+    "loginRequired": "Por favor inicia sesión para contribuir"
   },
   "admin": {
     "dashboard": "Panel de Control",
-    "queue": "Cola de Moderacion",
+    "queue": "Cola de Moderación",
     "operations": "Todas las Operaciones",
     "pendingCount": "{count} pendientes",
     "approve": "Aprobar",
@@ -88,20 +92,20 @@
   "enums": {
     "era": {
       "WWII": "Segunda Guerra Mundial",
-      "COLD_WAR": "Guerra Fria",
+      "COLD_WAR": "Guerra Fría",
       "MODERN": "Era Moderna",
       "DIGITAL_AGE": "Era Digital"
     },
     "type": {
       "ASSASSINATION": "Asesinato",
       "PROPAGANDA": "Propaganda",
-      "DECEPTION": "Engano",
-      "INFLUENCE_OP": "Operacion de Influencia",
+      "DECEPTION": "Engaño",
+      "INFLUENCE_OP": "Operación de Influencia",
       "FALSE_FLAG": "Falsa Bandera",
-      "INFILTRATION": "Infiltracion",
+      "INFILTRATION": "Infiltración",
       "MIND_CONTROL": "Control Mental",
       "SURVEILLANCE": "Vigilancia",
-      "DISINFORMATION": "Desinformacion"
+      "DISINFORMATION": "Desinformación"
     },
     "outcome": {
       "SUCCESSFUL": "Exitosa",
@@ -118,6 +122,6 @@
   },
   "seo": {
     "siteName": "Psyopedia",
-    "siteDescription": "Una enciclopedia bilingue completa de operaciones psicologicas a lo largo de la historia"
+    "siteDescription": "Una enciclopedia bilingüe y completa de operaciones psicológicas a lo largo de la historia"
   }
 }
