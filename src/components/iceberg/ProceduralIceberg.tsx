@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { SimplexNoise } from 'three/addons/math/SimplexNoise.js'
 
@@ -52,7 +52,6 @@ function buildIcebergGeometry(lowPower: boolean): THREE.BufferGeometry {
     pos.setXYZ(i, v.x, v.y, v.z)
   }
 
-  geo.computeBoundingBox()
   // Facetas: sin índice + normales por cara
   const flat = geo.toNonIndexed()
   flat.computeVertexNormals()
@@ -62,6 +61,7 @@ function buildIcebergGeometry(lowPower: boolean): THREE.BufferGeometry {
 
 export default function ProceduralIceberg({ lowPower = false }: ProceduralIcebergProps) {
   const geometry = useMemo(() => buildIcebergGeometry(lowPower), [lowPower])
+  useEffect(() => () => { geometry.dispose() }, [geometry])
 
   return (
     <group position={[0, -3, 0]} scale={1.4}>
