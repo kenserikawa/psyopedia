@@ -60,7 +60,7 @@ export default function IcebergJourney({ operations, locale }: IcebergJourneyPro
     <div
       ref={containerRef}
       style={{ height: '500vh' }}
-      className="relative bg-gradient-to-b from-white via-[#b0d8ee] via-40% to-[#0a1628]"
+      className="relative"
     >
       {/* Sticky viewport — stays fixed while user scrolls through the 500vh track */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">

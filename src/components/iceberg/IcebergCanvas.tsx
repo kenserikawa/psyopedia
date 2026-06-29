@@ -4,6 +4,8 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useRef } from 'react'
 import IcebergMesh from './IcebergMesh'
 import DepthAtmosphere from './DepthAtmosphere'
+import DriftParticles from './DriftParticles'
+import LightShafts from './LightShafts'
 import { useScrollCamera } from './useScrollCamera'
 import type { IcebergOperation } from './OperationDot'
 
@@ -51,6 +53,8 @@ function SceneContent({ scrollContainer, operations, locale, onSelect }: Iceberg
     <>
       {process.env.NODE_ENV === 'development' && <PerfMonitor />}
       <DepthAtmosphere />
+      <LightShafts />
+      <DriftParticles />
       <IcebergMesh operations={operations} locale={locale} onSelect={onSelect} />
     </>
   )
@@ -60,9 +64,8 @@ export default function IcebergCanvas({ scrollContainer, operations, locale, onS
   return (
     <Canvas
       camera={{ position: [0, 4, 12], fov: 50 }}
-      gl={{ antialias: true, alpha: true }}
+      gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
       dpr={[1, 1.5]}
-      style={{ background: 'transparent' }}
     >
       <Suspense fallback={null}>
         <SceneContent
