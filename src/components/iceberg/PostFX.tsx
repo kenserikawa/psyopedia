@@ -7,7 +7,7 @@ import {
 } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
 import * as THREE from 'three'
-import { sampleLevels } from './levelSampling'
+import { sampleLevels, type InterpolatedLevel } from './levelSampling'
 import { useIcebergStore } from './useIcebergStore'
 
 export default function PostFX({ lowPower = false }: { lowPower?: boolean }) {
@@ -21,25 +21,44 @@ export default function PostFX({ lowPower = false }: { lowPower?: boolean }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const caRef = useRef<any>(null)
   const _focusTarget = useRef(new THREE.Vector3(0, -3, 0))
+  const sample = useRef<InterpolatedLevel>(sampleLevels(0))
 
   useFrame(() => {
     const state = useIcebergStore.getState()
-    const s = sampleLevels(state.scrollProgress)
+    const s = sampleLevels(state.scrollProgress, sample.current)
 
     // Foco del DOF: el dot hovered, o el centro del iceberg a la altura de cámara
-    if (state.hoveredDotPosition) _focusTarget.current.set(...state.hoveredDotPosition)
-    else _focusTarget.current.set(0, camera.position.y - 1.5, 0)
+    if (state.hoveredDotPosition) {
+      _focusTarget.current.set(
+        state.hoveredDotPosition[0],
+        state.hoveredDotPosition[1],
+        state.hoveredDotPosition[2]
+      )
+    } else {
+      _focusTarget.current.set(0, camera.position.y - 1.5, 0)
+    }
     const dist = camera.position.distanceTo(_focusTarget.current)
-    if (dofRef.current) dofRef.current.circleOfConfusionMaterial.uniforms.focusDistance.value =
-      dist / 50 // normalizado aprox.; afinar visualmente
+    const coc = dofRef.current?.cocMaterial ?? dofRef.current?.circleOfConfusionMaterial
+    if (coc?.uniforms?.focusDistance) {
+      coc.uniforms.focusDistance.value = Math.min(dist / 30, 1)
+    }
 
     if (vignetteRef.current) vignetteRef.current.darkness = s.vignette
-    if (noiseRef.current) noiseRef.current.blendMode.opacity.value = s.grain
-    if (caRef.current) caRef.current.offset.set(s.chromaticAberration, s.chromaticAberration)
+    if (noiseRef.current?.blendMode?.opacity) noiseRef.current.blendMode.opacity.value = s.grain
+
+    // ChromaticAberration: en postprocessing v6 `offset` es un Uniform<Vector2> (tiene .value);
+    // en otras versiones es un Vector2 directo. Soportar ambas sin romper el frame (evita el
+    // throw que provocaba el WebGL Context Lost).
+    const off = caRef.current?.offset
+    if (off?.value?.set) off.value.set(s.chromaticAberration, s.chromaticAberration)
+    else if (off?.set) off.set(s.chromaticAberration, s.chromaticAberration)
   })
 
+  // multisampling=0: evita el blit MSAA+depth/stencil (GL_INVALID_OPERATION → Context Lost)
+  // que rompe DepthOfField en muchos drivers/headless. El canvas ya usa antialias y
+  // bloom(mipmapBlur)+DOF suavizan los bordes del iceberg low-poly.
   return (
-    <EffectComposer multisampling={lowPower ? 0 : 2}>
+    <EffectComposer multisampling={0}>
       <Bloom luminanceThreshold={0.65} intensity={0.6} radius={0.5} mipmapBlur />
       {lowPower ? <></> : (
         <DepthOfField ref={dofRef} focusDistance={0.02} focalLength={0.05} bokehScale={3} />
