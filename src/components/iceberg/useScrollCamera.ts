@@ -4,10 +4,12 @@ import { useEffect, useRef } from 'react'
 import { useThree } from '@react-three/fiber'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { CustomEase } from 'gsap/CustomEase'
 import { ICEBERG_LEVELS } from './constants'
 import { useIcebergStore } from './useIcebergStore'
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, CustomEase)
+const cinematicSilk = CustomEase.create('cinematicSilk', '0.45,0.05,0.55,0.95')
 
 export function useScrollCamera(scrollContainer: React.RefObject<HTMLDivElement | null>) {
   const { camera } = useThree()
@@ -36,10 +38,14 @@ export function useScrollCamera(scrollContainer: React.RefObject<HTMLDivElement 
         scrub: 1.5,
         onUpdate: (self) => {
           const p = self.progress
+          const e = cinematicSilk(p)
 
           // Interpolate camera position
-          camera.position.y = gsap.utils.interpolate(prevLevel.cameraY, level.cameraY, p)
-          camera.position.z = gsap.utils.interpolate(prevLevel.cameraZ, level.cameraZ, p)
+          camera.position.y = gsap.utils.interpolate(prevLevel.cameraY, level.cameraY, e)
+          camera.position.z = gsap.utils.interpolate(prevLevel.cameraZ, level.cameraZ, e)
+
+          // Roll y dolly sutiles para sensación de cámara en mano
+          camera.rotation.z = Math.sin(p * Math.PI) * 0.02
 
           // Camera looks slightly below its position
           camera.lookAt(0, camera.position.y - 1.5, 0)

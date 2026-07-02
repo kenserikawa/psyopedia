@@ -9,6 +9,7 @@ import LightShafts from './LightShafts'
 import { useScrollCamera } from './useScrollCamera'
 import type { IcebergOperation } from './OperationDot'
 import PostFX from './PostFX'
+import MouseParallax from './MouseParallax'
 
 interface IcebergCanvasProps {
   scrollContainer: React.RefObject<HTMLDivElement | null>
@@ -52,6 +53,7 @@ function SceneContent({ scrollContainer, operations, locale, onSelect }: Iceberg
 
   return (
     <>
+      <MouseParallax />
       {process.env.NODE_ENV === 'development' && <PerfMonitor />}
       <DepthAtmosphere />
       <LightShafts />
