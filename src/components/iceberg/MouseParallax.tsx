@@ -21,8 +21,8 @@ export default function MouseParallax({ amount = 0.4 }: { amount?: number }) {
     current.current.x += (target.current.x - current.current.x) * 0.05
     current.current.y += (target.current.y - current.current.y) * 0.05
     // Offset aditivo: useScrollCamera fija la base cada frame; aquí solo desplazamos.
+    // eslint-disable-next-line react-hooks/immutability
     camera.position.x = current.current.x * amount
-    camera.position.y += -current.current.y * amount * 0.15
   })
 
   return null

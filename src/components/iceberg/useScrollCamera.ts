@@ -44,11 +44,10 @@ export function useScrollCamera(scrollContainer: React.RefObject<HTMLDivElement 
           camera.position.y = gsap.utils.interpolate(prevLevel.cameraY, level.cameraY, e)
           camera.position.z = gsap.utils.interpolate(prevLevel.cameraZ, level.cameraZ, e)
 
-          // Roll y dolly sutiles para sensación de cámara en mano
-          camera.rotation.z = Math.sin(p * Math.PI) * 0.02
-
           // Camera looks slightly below its position
           camera.lookAt(0, camera.position.y - 1.5, 0)
+          // Roll sutil DESPUÉS de lookAt (lookAt sobrescribe el quaternion)
+          camera.rotation.z = Math.sin(p * Math.PI) * 0.02
 
           // Update global progress and active level from progress
           const totalProgress = (index - 1 + p) / (ICEBERG_LEVELS.length - 1)
