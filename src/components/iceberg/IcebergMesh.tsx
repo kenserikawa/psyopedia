@@ -101,12 +101,14 @@ function computeDotPositions(
 
 export default function IcebergMesh({ operations, locale, onSelect }: IcebergMeshProps) {
   const activeLevel = useIcebergStore((s) => s.activeLevel)
+  const setHoveredOperation = useIcebergStore((s) => s.setHoveredOperation)
   const [hoveredId, setHoveredId] = useState<string | null>(null)
 
   const handleHover = useCallback((id: string | null) => {
     setHoveredId(id)
+    setHoveredOperation(id)
     document.body.style.cursor = id ? 'pointer' : 'default'
-  }, [])
+  }, [setHoveredOperation])
 
   const dots = useMemo(() => computeDotPositions(operations), [operations])
 

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Lenis from 'lenis'
 import IcebergCanvas from './IcebergCanvas'
 import LevelLabel from './LevelLabel'
+import ClassifiedPanel from './ClassifiedPanel'
 import ScrollDepthIndicator from './ScrollDepthIndicator'
 import ScrollToTopButton from './ScrollToTopButton'
 import type { IcebergOperation } from './OperationDot'
@@ -71,6 +72,7 @@ export default function IcebergJourney({ operations, locale }: IcebergJourneyPro
           onSelect={handleSelect}
         />
         <LevelLabel />
+        <ClassifiedPanel operations={operations} locale={locale} />
         <ScrollDepthIndicator />
         <ScrollToTopButton onScrollToTop={scrollToTop} />
       </div>

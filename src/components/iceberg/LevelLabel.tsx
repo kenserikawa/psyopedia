@@ -22,7 +22,10 @@ export default function LevelLabel() {
   const [c1, c2, c3] = LEVEL_WATER_COLORS[activeLevel] ?? ["#4a9eca", "#0a1628", "#2e7aa8"];
 
   return (
-    <div className="absolute inset-0 pointer-events-none flex flex-col justify-end pb-20 pl-8 md:pb-24 md:pl-12">
+    <div
+      className="absolute inset-0 pointer-events-none flex flex-col justify-end pb-20 pl-8 md:pb-24 md:pl-12"
+      style={{ mixBlendMode: 'difference' }}
+    >
       <style>{`
         @keyframes waterText {
           0%   { background-position: 0% 50%; }

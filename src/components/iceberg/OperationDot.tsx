@@ -5,6 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { ICEBERG_LEVELS } from './constants'
+import { useIcebergStore } from './useIcebergStore'
 
 export interface IcebergOperation {
   id: string
@@ -134,8 +135,12 @@ function OperationDotInner({
         onPointerEnter={(e) => {
           e.stopPropagation()
           onHover(operation.id)
+          useIcebergStore.getState().setHoveredDotPosition(position)
         }}
-        onPointerLeave={() => onHover(null)}
+        onPointerLeave={() => {
+          onHover(null)
+          useIcebergStore.getState().setHoveredDotPosition(null)
+        }}
         onClick={(e) => {
           e.stopPropagation()
           onSelect(operation)
@@ -151,6 +156,12 @@ function OperationDotInner({
           transparent
           opacity={levelDistance === 0 ? 1 : levelDistance === 1 ? 0.6 : 0.25}
         />
+      </mesh>
+
+      {/* Halo additive */}
+      <mesh scale={2.2}>
+        <sphereGeometry args={[0.056, 16, 16]} />
+        <meshBasicMaterial color={color} transparent opacity={0.25} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
 
       {/* Label — only active level */}
