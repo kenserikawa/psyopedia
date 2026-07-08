@@ -2,13 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { MobileNav } from "@/components/layout/MobileNav";
 
 export function Header({ locale }: { locale: string }) {
   const t = useTranslations("nav");
   const otherLocale = locale === "en" ? "es" : "en";
 
   return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="relative border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-14 items-center justify-between px-4">
         <Link href={`/${locale}`} className="flex items-center gap-2 text-xl font-bold">
           <Image src="/logo.png" alt="Psyopedia" width={32} height={32} style={{ width: 32, height: 'auto' }} />
@@ -19,7 +20,7 @@ export function Header({ locale }: { locale: string }) {
             {t("catalog")}
           </Link>
           <Link href={`/${locale}/iceberg`} className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
-            {t("iceberg")}
+            <Image src="/iceberg-emoji.png" alt={t("iceberg")} width={22} height={22} className="inline" style={{ width: 22, height: 'auto' }} />
           </Link>
           <Link href={`/${locale}/contribute`} className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
             {t("contribute")}
@@ -31,6 +32,7 @@ export function Header({ locale }: { locale: string }) {
             {otherLocale}
           </Link>
           <UserMenu locale={locale} />
+          <MobileNav locale={locale} />
         </nav>
       </div>
     </header>

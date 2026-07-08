@@ -1,6 +1,6 @@
 import type { Operation } from "@/generated/prisma";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://psyopedia.org";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://psyopedia.org";
 
 export function generateOperationJsonLd(operation: Operation, locale: string) {
   const title = locale === "es" ? operation.titleEs : operation.title;

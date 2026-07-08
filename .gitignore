@@ -46,3 +46,15 @@ next-env.d.ts
 # PGlite local dev databases
 .pglite-data/
 .pglite-shadow/
+
+# local tooling state
+.playwright-mcp/
+.ec-plugin-data/
+.ec-state/
+.superpowers/
+
+# raw/source assets not served by the app
+/assets-raw/
+
+# work screenshots
+/*.png

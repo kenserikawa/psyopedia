@@ -1,7 +1,10 @@
 'use client'
 
-import { useMemo, useState, useCallback } from 'react'
+import { useMemo, useState, useCallback, useRef } from 'react'
+import { useFrame, useThree } from '@react-three/fiber'
+import * as THREE from 'three'
 import OperationDot from './OperationDot'
+import ProceduralIceberg from './ProceduralIceberg'
 import type { IcebergOperation } from './OperationDot'
 import { useIcebergStore } from './useIcebergStore'
 import { ICEBERG_LEVELS } from './constants'
@@ -9,15 +12,16 @@ import { ICEBERG_LEVELS } from './constants'
 interface IcebergMeshProps {
   operations: IcebergOperation[]
   locale: string
+  onSelect: (operation: IcebergOperation) => void
 }
 
 // Dot glow colors per level
 const LEVEL_DOT_COLOR: Record<number, string> = {
-  1: '#8ba8c4',
-  2: '#6a9dbd',
-  3: '#5088aa',
-  4: '#3d7090',
-  5: '#2a5a78',
+  1: '#1a5a80',
+  2: '#3578a0',
+  3: '#5098c0',
+  4: '#7ab8de',
+  5: '#a8d4f0',
 }
 
 // Y ranges for each level — centered around the camera Y positions
@@ -34,13 +38,27 @@ const LEVEL_Y_RANGE: Record<number, { min: number; max: number }> = {
   5: { min: -13, max: -9 },
 }
 
-// Placeholder iceberg radius at each level (wider at depth)
+// Iceberg radius at each level — wide at surface, narrow at abyss (matches cylinder mock)
 const LEVEL_RADIUS: Record<number, number> = {
-  1: 1.2,
-  2: 2.0,
-  3: 2.8,
-  4: 3.2,
-  5: 2.5,
+  1: 3.0,
+  2: 2.5,
+  3: 2.0,
+  4: 1.5,
+  5: 1.0,
+}
+
+// Deterministic pseudo-random from string — same slug always gives same number
+function seededRandom(str: string): () => number {
+  let h = 0
+  for (let i = 0; i < str.length; i++) {
+    h = Math.imul(31, h) + str.charCodeAt(i) | 0
+  }
+  return () => {
+    h = Math.imul(h ^ (h >>> 16), 0x45d9f3b)
+    h = Math.imul(h ^ (h >>> 13), 0x45d9f3b)
+    h = (h ^ (h >>> 16)) >>> 0
+    return h / 0x100000000
+  }
 }
 
 function computeDotPositions(
@@ -60,18 +78,17 @@ function computeDotPositions(
     const radius = LEVEL_RADIUS[level] ?? 2.5
     if (!range) continue
 
-    ops.forEach((op, i) => {
-      // Spread vertically within the level range
-      const yFrac = ops.length > 1 ? i / (ops.length - 1) : 0.5
-      const y = range.max - yFrac * (range.max - range.min)
+    ops.forEach((op) => {
+      const rand = seededRandom(op.slug)
 
-      // Spread around circumference
-      const hash = op.id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
-      const angleBase = (i / ops.length) * Math.PI * 2
-      const angleJitter = ((hash % 100) / 100 - 0.5) * 0.4
-      const angle = angleBase + angleJitter
+      // Random Y within level range
+      const y = range.min + rand() * (range.max - range.min)
 
-      const dotRadius = radius + 0.5
+      // Random angle and radius variation — minimum grows with depth to keep dots off the Y axis
+      const angle = rand() * Math.PI * 2
+      const rJitter = 0.9 + rand() * 0.5 // 0.9–1.4 of base radius
+      const dotRadius = radius * rJitter
+
       const x = Math.cos(angle) * dotRadius
       const z = Math.sin(angle) * dotRadius
 
@@ -82,50 +99,82 @@ function computeDotPositions(
   return result
 }
 
-export default function IcebergMesh({ operations }: IcebergMeshProps) {
+export default function IcebergMesh({ operations, locale, onSelect }: IcebergMeshProps) {
   const activeLevel = useIcebergStore((s) => s.activeLevel)
+  const setHoveredOperation = useIcebergStore((s) => s.setHoveredOperation)
   const [hoveredId, setHoveredId] = useState<string | null>(null)
 
   const handleHover = useCallback((id: string | null) => {
     setHoveredId(id)
+    setHoveredOperation(id)
     document.body.style.cursor = id ? 'pointer' : 'default'
-  }, [])
+  }, [setHoveredOperation])
 
   const dots = useMemo(() => computeDotPositions(operations), [operations])
 
-  return (
-    <group>
-      {/* Placeholder iceberg — translucent cylinder spanning all levels */}
-      {/* Top at y=6 (above level 1), bottom at y=-14 (below level 5) */}
-      <mesh position={[0, -4, 0]}>
-        <cylinderGeometry args={[3.0, 0.8, 20, 24]} />
-        <meshStandardMaterial
-          color="#b0d8ee"
-          transparent
-          opacity={0.15}
-          roughness={0.4}
-          metalness={0.1}
-        />
-      </mesh>
+  // Y-axis drag rotation + scroll-driven rotation
+  const groupRef = useRef<THREE.Group>(null)
+  const dragState = useRef({ active: false, startX: 0, startRotation: 0 })
+  const velocity = useRef(0)
+  const currentRotation = useRef(0)
+  const prevProgress = useRef(useIcebergStore.getState().scrollProgress)
+  const { gl } = useThree()
 
-      {/* Horizontal rings at level boundaries for visual reference */}
-      {ICEBERG_LEVELS.map((level) => {
-        const radius = LEVEL_RADIUS[level.level] ?? 2.0
-        return (
-          <mesh
-            key={level.level}
-            position={[0, level.cameraY, 0]}
-            rotation={[Math.PI / 2, 0, 0]}
-          >
-            <torusGeometry args={[radius, 0.02, 8, 48]} />
-            <meshBasicMaterial
-              color={level.accentColor}
-              transparent
-              opacity={activeLevel === level.level ? 0.4 : 0.1}
-            />
-          </mesh>
-        )
-      })}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onPointerDown = useCallback((e: any) => {
+    if (hoveredId) return
+    e.stopPropagation?.()
+    const clientX = e.clientX ?? e.nativeEvent?.clientX ?? 0
+    dragState.current = { active: true, startX: clientX, startRotation: currentRotation.current }
+    gl.domElement.style.cursor = 'grabbing'
+  }, [gl, hoveredId])
+
+  const onPointerUp = useCallback(() => {
+    dragState.current.active = false
+    gl.domElement.style.cursor = hoveredId ? 'pointer' : 'default'
+  }, [gl, hoveredId])
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onPointerMove = useCallback((e: any) => {
+    if (!dragState.current.active) return
+    const clientX = e.clientX ?? e.nativeEvent?.clientX ?? 0
+    const delta = (clientX - dragState.current.startX) * 0.005
+    const target = dragState.current.startRotation + delta
+    velocity.current = target - currentRotation.current
+    currentRotation.current = target
+  }, [])
+
+  useFrame(() => {
+    if (!groupRef.current) return
+
+    // Scroll-driven rotation: add velocity based on scroll delta
+    const progress = useIcebergStore.getState().scrollProgress
+    const delta = progress - prevProgress.current
+    prevProgress.current = progress
+    if (!dragState.current.active && Math.abs(delta) > 0.0001) {
+      velocity.current += delta * 0.3
+    }
+
+    if (!dragState.current.active) {
+      // Inertia decay
+      velocity.current *= 0.95
+      if (Math.abs(velocity.current) > 0.0001) {
+        currentRotation.current += velocity.current
+      }
+    }
+    groupRef.current.rotation.y = currentRotation.current
+  })
+
+  return (
+    <group
+      ref={groupRef}
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerUp}
+    >
+      {/* Iceberg procedural (reemplaza el GLB de 74 MB) */}
+      <ProceduralIceberg />
 
       {/* Operation dots */}
       {dots.map(({ op, position }) => (
@@ -135,8 +184,10 @@ export default function IcebergMesh({ operations }: IcebergMeshProps) {
           position={position}
           color={LEVEL_DOT_COLOR[op.icebergLevel] ?? '#3098dd'}
           isHovered={hoveredId === op.id}
-          isLevelActive={activeLevel === op.icebergLevel}
+          levelDistance={Math.abs(activeLevel - op.icebergLevel)}
           onHover={handleHover}
+          onSelect={onSelect}
+          locale={locale}
         />
       ))}
     </group>

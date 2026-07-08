@@ -30,13 +30,22 @@ npx prisma generate  # Regenerate Prisma client (after schema changes)
 - **@vercel/og** for dynamic OG image generation
 - **EB Garamond** (serif) as primary typeface via `next/font/google`
 
+### 3D Iceberg Visualization
+The `/[locale]/iceberg` route is a scroll-driven 3D experience built with:
+- **@react-three/fiber + drei** for the Three.js scene (`src/components/iceberg/`)
+- **GSAP + Lenis** for scroll-driven camera animation through 5 depth levels
+- **Zustand** store (`useIcebergStore.ts`) tracks activeLevel, scrollProgress, hoveredOperationId
+- Level config (camera positions, fog, colors) defined in `constants.ts`
+- All iceberg components are client-side (`"use client"`)
+
 ### Key Patterns
-- **Server components by default** — `"use client"` only for interactive components (filters, forms, auth menus)
+- **Server components by default** — `"use client"` only for interactive components (filters, forms, auth menus, iceberg 3D)
 - **Data fetching** — All Prisma queries centralized in `src/lib/queries.ts`, called directly in server components
 - **Server actions** — Mutations in `src/lib/actions/` (contributions.ts, comments.ts, moderation.ts)
 - **Auth helpers** — `src/lib/auth.ts` (NextAuth config), `src/lib/auth-utils.ts` (requireAuth/requireModerator/requireAdmin)
 - **SEO** — `src/lib/seo.ts` for metadata/JSON-LD helpers, dynamic sitemap at `src/app/sitemap.ts`
 - **Locale-aware content** — Operations have dual fields (title/titleEs, bodyEn/bodyEs, slug/slugEs); components select by locale prop
+- **No test framework** — no tests exist in this project currently
 
 ### Next.js 16 Gotchas
 - **`params` and `searchParams` are Promises** — must be awaited in page/layout components: `const { locale } = await params;`
@@ -67,4 +76,10 @@ npx prisma generate  # Regenerate Prisma client (after schema changes)
 - `/api/auth/[...nextauth]` — NextAuth endpoints
 
 ### Environment Variables
-See `.env.example` for all variables. Only `DATABASE_URL` is validated at startup via Zod (`src/lib/env.ts`). Auth variables (AUTH_SECRET, AUTH_GOOGLE_ID/SECRET, AUTH_GITHUB_ID/SECRET) are optional for local dev without OAuth.
+See `.env.example` for all variables. Only `DATABASE_URL` is validated at startup via Zod (`src/lib/env.ts`). Auth variables (AUTH_SECRET, AUTH_GOOGLE_ID/SECRET, AUTH_GITHUB_ID/SECRET) are optional for local dev without OAuth. `SHADOW_DATABASE_URL` is used by Prisma for migration diffing (configured in `prisma.config.ts`).
+
+### next-intl Setup
+- Plugin wraps Next config via `next-intl/plugin` pointing to `src/i18n/request.ts`
+- Routing config (`src/i18n/routing.ts`): locales `["en", "es"]`, default `"en"`
+- Message bundles at `messages/en.json` and `messages/es.json`
+- Middleware at `src/middleware.ts` handles locale detection/redirect (excludes `/api`, `/_next`, static files)

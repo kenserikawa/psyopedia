@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tSeo = await getTranslations({ locale, namespace: "seo" });
 
   return {
-    title: `${t("title")} | ${tSeo("siteName")}`,
+    title: t("title"),
     description: tSeo("siteDescription"),
   };
 }

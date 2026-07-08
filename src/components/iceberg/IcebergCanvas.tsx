@@ -1,50 +1,88 @@
 'use client'
 
-import { Canvas } from '@react-three/fiber'
-import { Environment } from '@react-three/drei'
-import { EffectComposer, Bloom } from '@react-three/postprocessing'
-import { Suspense } from 'react'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Suspense, useEffect, useRef } from 'react'
 import IcebergMesh from './IcebergMesh'
 import DepthAtmosphere from './DepthAtmosphere'
+import DriftParticles from './DriftParticles'
+import LightShafts from './LightShafts'
 import { useScrollCamera } from './useScrollCamera'
 import type { IcebergOperation } from './OperationDot'
+import PostFX from './PostFX'
+import MouseParallax from './MouseParallax'
 
 interface IcebergCanvasProps {
   scrollContainer: React.RefObject<HTMLDivElement | null>
   operations: IcebergOperation[]
   locale: string
+  onSelect: (operation: IcebergOperation) => void
 }
 
-function SceneContent({ scrollContainer, operations, locale }: IcebergCanvasProps) {
+function PerfMonitor() {
+  const { gl } = useThree()
+  const frames = useRef(0)
+  const lastTime = useRef(0)
+  const divRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const div = document.createElement('div')
+    div.style.cssText = 'position:fixed;top:8px;left:8px;z-index:9999;font:12px monospace;color:#0f0;background:rgba(0,0,0,0.7);padding:4px 8px;border-radius:4px;pointer-events:none'
+    document.body.appendChild(div)
+    divRef.current = div
+    return () => {
+      div.remove()
+      divRef.current = null
+    }
+  }, [])
+
+  useFrame(() => {
+    frames.current++
+    const now = performance.now()
+    if (lastTime.current === 0) lastTime.current = now
+    if (now - lastTime.current >= 500) {
+      const fps = Math.round(frames.current / ((now - lastTime.current) / 1000))
+      const info = gl.info.render
+      if (divRef.current) {
+        divRef.current.textContent = `${fps} FPS | ${info.calls} draws | ${info.triangles} tris`
+      }
+      frames.current = 0
+      lastTime.current = now
+    }
+  })
+
+  return null
+}
+
+function SceneContent({ scrollContainer, operations, locale, onSelect }: IcebergCanvasProps) {
   useScrollCamera(scrollContainer)
 
   return (
     <>
+      <MouseParallax />
+      {process.env.NODE_ENV === 'development' && <PerfMonitor />}
       <DepthAtmosphere />
-      <Environment preset="night" />
-      <IcebergMesh operations={operations} locale={locale} />
-
-      <EffectComposer>
-        <Bloom luminanceThreshold={0.6} intensity={0.5} radius={0.3} />
-      </EffectComposer>
+      <LightShafts />
+      <DriftParticles />
+      <IcebergMesh operations={operations} locale={locale} onSelect={onSelect} />
     </>
   )
 }
 
-export default function IcebergCanvas({ scrollContainer, operations, locale }: IcebergCanvasProps) {
+export default function IcebergCanvas({ scrollContainer, operations, locale, onSelect }: IcebergCanvasProps) {
   return (
     <Canvas
       camera={{ position: [0, 4, 12], fov: 50 }}
-      gl={{ antialias: true, alpha: true }}
+      gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
       dpr={[1, 1.5]}
-      style={{ background: 'transparent' }}
     >
       <Suspense fallback={null}>
         <SceneContent
           scrollContainer={scrollContainer}
           operations={operations}
           locale={locale}
+          onSelect={onSelect}
         />
+        <PostFX />
       </Suspense>
     </Canvas>
   )

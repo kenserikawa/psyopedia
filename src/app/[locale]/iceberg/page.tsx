@@ -10,7 +10,18 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "iceberg" });
-  return { title: t("title") };
+  return {
+    title: t("title"),
+    description: t("subtitle"),
+    openGraph: {
+      title: t("title"),
+      description: t("subtitle"),
+    },
+    alternates: {
+      canonical: `/${locale}/iceberg`,
+      languages: { en: "/en/iceberg", es: "/es/iceberg" },
+    },
+  };
 }
 
 export default async function IcebergPage({ params }: Props) {

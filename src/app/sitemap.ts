@@ -8,7 +8,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://psyopedia.org";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const operations = await getAllOperationSlugs();
 
-  const staticPages = ["", "/catalog", "/iceberg"].flatMap((path) =>
+  const staticPages = ["", "/catalog", "/iceberg", "/legal/privacy", "/legal/terms"].flatMap((path) =>
     ["en", "es"].map((locale) => ({
       url: `${SITE_URL}/${locale}${path}`,
       lastModified: new Date(),

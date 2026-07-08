@@ -9,7 +9,8 @@ import { OperationBody } from "@/components/operation/OperationBody";
 import { SourcesList } from "@/components/operation/SourcesList";
 import { RelatedOps } from "@/components/operation/RelatedOps";
 import { CommentSection } from "@/components/operation/CommentSection";
-import { generateOperationMetadata, generateOperationJsonLd } from "@/lib/seo";
+import { ShareButtons } from "@/components/operation/ShareButtons";
+import { generateOperationMetadata, generateOperationJsonLd, SITE_URL } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -63,6 +64,14 @@ export default async function OperationDetailPage({ params }: Props) {
 
       {/* Header */}
       <OperationHeader operation={operation} locale={locale} />
+
+      {/* Share */}
+      <div className="mt-6">
+        <ShareButtons
+          url={`${SITE_URL}/${locale}/catalog/${slug}`}
+          title={locale === "es" ? operation.titleEs : operation.title}
+        />
+      </div>
 
       <Separator className="my-6" />
 
