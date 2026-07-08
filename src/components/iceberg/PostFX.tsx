@@ -63,9 +63,18 @@ export default function PostFX({ lowPower = false }: { lowPower?: boolean }) {
       {lowPower ? <></> : (
         <DepthOfField ref={dofRef} focusDistance={0.02} focalLength={0.05} bokehScale={3} />
       )}
-      <ChromaticAberration ref={caRef} blendFunction={BlendFunction.NORMAL} offset={[0.0006, 0.0006]} />
-      <Vignette ref={vignetteRef} eskil={false} offset={0.3} darkness={0.25} />
-      <Noise ref={noiseRef} premultiply blendFunction={BlendFunction.OVERLAY} />
+      {/* Callback refs, no RefObject: estos efectos van envueltos en wrapEffect, que usa
+          JSON.stringify(props) como dependencia de useMemo. En React 19 `ref` es un prop
+          normal: un RefObject con el efecto asignado (que referencia la cámara) crea un
+          ciclo children/parent y el stringify lanza en cada re-render. Las funciones se
+          omiten al serializar. */}
+      <ChromaticAberration
+        ref={(e: unknown) => { caRef.current = e }}
+        blendFunction={BlendFunction.NORMAL}
+        offset={[0.0006, 0.0006]}
+      />
+      <Vignette ref={(e: unknown) => { vignetteRef.current = e }} eskil={false} offset={0.3} darkness={0.25} />
+      <Noise ref={(e: unknown) => { noiseRef.current = e }} premultiply blendFunction={BlendFunction.OVERLAY} />
     </EffectComposer>
   )
 }

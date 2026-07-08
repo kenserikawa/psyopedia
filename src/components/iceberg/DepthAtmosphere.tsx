@@ -21,6 +21,7 @@ export default function DepthAtmosphere() {
 
   // Initialize fog + background
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/immutability -- mutating the Three.js scene is the idiomatic R3F pattern
     scene.fog = new THREE.FogExp2('#eaf6ff', ICEBERG_LEVELS[0].fogDensity)
     scene.background = new THREE.Color('#eaf6ff')
   }, [scene])
@@ -29,6 +30,7 @@ export default function DepthAtmosphere() {
   useFrame(() => {
     const s = sampleLevels(progressRef.current, sample.current)
     if (scene.fog instanceof THREE.FogExp2) {
+      // eslint-disable-next-line react-hooks/immutability -- per-frame mutation of Three.js objects is idiomatic R3F
       scene.fog.density = s.fogDensity
       scene.fog.color.copy(s.fogColor)
     }

@@ -1,7 +1,7 @@
 'use client'
 
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Suspense, useRef } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import IcebergMesh from './IcebergMesh'
 import DepthAtmosphere from './DepthAtmosphere'
 import DriftParticles from './DriftParticles'
@@ -21,19 +21,24 @@ interface IcebergCanvasProps {
 function PerfMonitor() {
   const { gl } = useThree()
   const frames = useRef(0)
-  const lastTime = useRef(performance.now())
+  const lastTime = useRef(0)
   const divRef = useRef<HTMLDivElement | null>(null)
 
-  if (!divRef.current && typeof document !== 'undefined') {
+  useEffect(() => {
     const div = document.createElement('div')
     div.style.cssText = 'position:fixed;top:8px;left:8px;z-index:9999;font:12px monospace;color:#0f0;background:rgba(0,0,0,0.7);padding:4px 8px;border-radius:4px;pointer-events:none'
     document.body.appendChild(div)
     divRef.current = div
-  }
+    return () => {
+      div.remove()
+      divRef.current = null
+    }
+  }, [])
 
   useFrame(() => {
     frames.current++
     const now = performance.now()
+    if (lastTime.current === 0) lastTime.current = now
     if (now - lastTime.current >= 500) {
       const fps = Math.round(frames.current / ((now - lastTime.current) / 1000))
       const info = gl.info.render

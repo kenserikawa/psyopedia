@@ -114,6 +114,7 @@ function SidePanel({ selected }: { selected: IcebergOperation | null }) {
     if (selected) {
       // If switching between operations, fade out then in
       if (display && display.id !== selected.id) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- fade-out/in transition, mirrors ClassifiedPanel
         setVisible(false)
         if (timeoutRef.current) clearTimeout(timeoutRef.current)
         timeoutRef.current = setTimeout(() => {
