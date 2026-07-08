@@ -123,5 +123,17 @@
   "seo": {
     "siteName": "Psyopedia",
     "siteDescription": "Una enciclopedia bilingüe y completa de operaciones psicológicas a lo largo de la historia"
+  },
+  "errors": {
+    "notFoundTitle": "Página no encontrada",
+    "notFoundDescription": "Este archivo no existe… o nunca fue desclasificado.",
+    "backHome": "Volver a la superficie",
+    "errorTitle": "Algo ha salido mal",
+    "errorDescription": "Se ha producido un error inesperado al cargar esta página.",
+    "retry": "Reintentar"
+  },
+  "footer": {
+    "privacy": "Política de privacidad",
+    "terms": "Términos de uso"
   }
 }

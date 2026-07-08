@@ -123,5 +123,17 @@
   "seo": {
     "siteName": "Psyopedia",
     "siteDescription": "A comprehensive bilingual encyclopedia of psychological operations throughout history"
+  },
+  "errors": {
+    "notFoundTitle": "Page not found",
+    "notFoundDescription": "This file doesn't exist — or it was never declassified.",
+    "backHome": "Back to the surface",
+    "errorTitle": "Something went wrong",
+    "errorDescription": "An unexpected error occurred while loading this page.",
+    "retry": "Try again"
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
   }
 }
