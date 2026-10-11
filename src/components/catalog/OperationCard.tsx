@@ -2,11 +2,12 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { Operation, Tag } from "@/generated/prisma";
+import type { OperationSummary } from "@/lib/catalog";
 
 interface OperationCardProps {
-  operation: Operation & { tags: Tag[] };
+  operation: OperationSummary;
   locale: string;
+  queryString?: string;
 }
 
 const levelColors: Record<number, string> = {
@@ -17,7 +18,7 @@ const levelColors: Record<number, string> = {
   5: "bg-purple-100 text-purple-900",
 };
 
-export function OperationCard({ operation, locale }: OperationCardProps) {
+export function OperationCard({ operation, locale, queryString }: OperationCardProps) {
   const t = useTranslations("enums");
   const tOp = useTranslations("operation");
 
@@ -26,7 +27,7 @@ export function OperationCard({ operation, locale }: OperationCardProps) {
   const slug = locale === "es" ? operation.slugEs : operation.slug;
 
   return (
-    <Link href={`/${locale}/catalog/${slug}`}>
+    <Link href={`/${locale}/catalog/${slug}${queryString ? `?${queryString}` : ""}`}>
       <Card className="h-full hover:shadow-md transition-shadow">
         <CardHeader className="pb-2">
           <div className="flex items-center gap-2 mb-1">

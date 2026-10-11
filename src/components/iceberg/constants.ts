@@ -1,37 +1,44 @@
+// `cameraElevation` son grados por encima del objetivo y `cameraZ` la distancia
+// hasta él. El viaje arranca mirando la superficie desde arriba y se va
+// tumbando hasta un descenso casi paralelo en las profundidades.
+//
+// El tope del arranque es el medio ángulo vertical (25°): por encima, el borde
+// superior del plano cae por debajo de la horizontal y el horizonte —y con él
+// la lámina de agua— desaparece de la toma.
 export const ICEBERG_LEVELS = [
   {
     level: 1,
     name: "Surface",
     subtitle: "Well-Known & Declassified",
-    cameraY: 4,
+    cameraElevation: 22,
     cameraZ: 12,
-    fogDensity: 0.008,
-    ambientIntensity: 1.0,
-    accentColor: "#e0f4ff",
-    labelColor: "#0a1628",      // dark on white bg
+    fogDensity: 0.014,
+    ambientIntensity: 0.92,
+    accentColor: "#c9e2f2",
+    labelColor: "#0a1628",      // dark on pale-blue bg
     subtitleColor: "#1a3a5c",
-    bgColor: "#eaf6ff", iceColor: "#dff1ff", iceRoughness: 0.05, iceThickness: 1.2,
-    grain: 0.015, chromaticAberration: 0.0006, vignette: 0.25, godRayIntensity: 1.0, particleDensity: 0.15,
+    bgColor: "#b6d5e8", iceColor: "#e4f4ff", iceRoughness: 0.05, iceThickness: 1.2,
+    grain: 0.02, chromaticAberration: 0.0006, vignette: 0.32, godRayIntensity: 0.4, particleDensity: 0.15,
   },
   {
     level: 2,
     name: "Shallow",
     subtitle: "Known but Underappreciated",
-    cameraY: -1,
+    cameraElevation: 12,
     cameraZ: 11,
-    fogDensity: 0.018,
-    ambientIntensity: 0.75,
-    accentColor: "#7ec8e3",
-    labelColor: "#0e2a4a",      // dark on light-blue bg
-    subtitleColor: "#1a4a6a",
-    bgColor: "#9fcfe6", iceColor: "#b9e1f5", iceRoughness: 0.12, iceThickness: 1.6,
-    grain: 0.03, chromaticAberration: 0.0010, vignette: 0.35, godRayIntensity: 0.6, particleDensity: 0.4,
+    fogDensity: 0.032,
+    ambientIntensity: 0.5,
+    accentColor: "#3f7ea6",
+    labelColor: "#eaf6ff",      // light on submerged blue
+    subtitleColor: "#b4d8ee",
+    bgColor: "#3d7fa6", iceColor: "#9ed3ee", iceRoughness: 0.12, iceThickness: 1.6,
+    grain: 0.03, chromaticAberration: 0.0010, vignette: 0.42, godRayIntensity: 0.45, particleDensity: 0.4,
   },
   {
     level: 3,
     name: "Midwater",
     subtitle: "Leaked & Partially Verified",
-    cameraY: -4,
+    cameraElevation: 9,
     cameraZ: 10,
     fogDensity: 0.035,
     ambientIntensity: 0.5,
@@ -45,7 +52,7 @@ export const ICEBERG_LEVELS = [
     level: 4,
     name: "Deep",
     subtitle: "Alleged & Unconfirmed",
-    cameraY: -7,
+    cameraElevation: 8,
     cameraZ: 9,
     fogDensity: 0.06,
     ambientIntensity: 0.25,
@@ -59,7 +66,7 @@ export const ICEBERG_LEVELS = [
     level: 5,
     name: "Abyss",
     subtitle: "Deep Conspiracy",
-    cameraY: -11,
+    cameraElevation: 8,
     cameraZ: 8,
     fogDensity: 0.12,
     ambientIntensity: 0.08,

@@ -2,11 +2,14 @@
 
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useRef } from 'react'
+import { ICEBERG_CAMERA_FOV } from '@/lib/iceberg-geometry'
 import IcebergMesh from './IcebergMesh'
 import DepthAtmosphere from './DepthAtmosphere'
-import DriftParticles from './DriftParticles'
+import MarineSnow from './MarineSnow'
 import LightShafts from './LightShafts'
+import SeaSurface from './SeaSurface'
 import { useScrollCamera } from './useScrollCamera'
+import { useIcebergStore } from './useIcebergStore'
 import type { IcebergOperation } from './OperationDot'
 import PostFX from './PostFX'
 import MouseParallax from './MouseParallax'
@@ -16,6 +19,9 @@ interface IcebergCanvasProps {
   operations: IcebergOperation[]
   locale: string
   onSelect: (operation: IcebergOperation) => void
+  lowPower?: boolean
+  reducedMotion?: boolean
+  noHover?: boolean
 }
 
 function PerfMonitor() {
@@ -53,27 +59,30 @@ function PerfMonitor() {
   return null
 }
 
-function SceneContent({ scrollContainer, operations, locale, onSelect }: IcebergCanvasProps) {
-  useScrollCamera(scrollContainer)
+function SceneContent({ scrollContainer, operations, locale, onSelect, lowPower = false, reducedMotion = false, noHover = false }: IcebergCanvasProps) {
+  useScrollCamera(scrollContainer, reducedMotion)
 
   return (
     <>
-      <MouseParallax />
+      {!lowPower && <MouseParallax />}
       {process.env.NODE_ENV === 'development' && <PerfMonitor />}
       <DepthAtmosphere />
-      <LightShafts />
-      <DriftParticles />
-      <IcebergMesh operations={operations} locale={locale} onSelect={onSelect} />
+      <LightShafts reducedMotion={reducedMotion} />
+      <SeaSurface reducedMotion={reducedMotion} />
+      {!reducedMotion && <MarineSnow lowPower={lowPower} />}
+      <IcebergMesh operations={operations} locale={locale} onSelect={onSelect} lowPower={lowPower} reducedMotion={reducedMotion} noHover={noHover} />
     </>
   )
 }
 
-export default function IcebergCanvas({ scrollContainer, operations, locale, onSelect }: IcebergCanvasProps) {
+export default function IcebergCanvas({ scrollContainer, operations, locale, onSelect, lowPower = false, reducedMotion = false, noHover = false }: IcebergCanvasProps) {
   return (
     <Canvas
-      camera={{ position: [0, 4, 12], fov: 50 }}
+      camera={{ position: [0, 4, 12], fov: ICEBERG_CAMERA_FOV }}
       gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
-      dpr={[1, 1.5]}
+      dpr={lowPower ? 1 : [1, 1.5]}
+      // Tocar el fondo cierra el expediente abierto por selección táctil.
+      onPointerMissed={() => useIcebergStore.getState().setSelectedOperation(null)}
     >
       <Suspense fallback={null}>
         <SceneContent
@@ -81,8 +90,11 @@ export default function IcebergCanvas({ scrollContainer, operations, locale, onS
           operations={operations}
           locale={locale}
           onSelect={onSelect}
+          lowPower={lowPower}
+          reducedMotion={reducedMotion}
+          noHover={noHover}
         />
-        <PostFX />
+        <PostFX lowPower={lowPower} />
       </Suspense>
     </Canvas>
   )

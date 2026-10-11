@@ -1,4 +1,4 @@
-import type { Operation } from "@/generated/prisma";
+import type { Operation } from "@/generated/prisma/client";
 
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://psyopedia.org";
 

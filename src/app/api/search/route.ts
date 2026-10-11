@@ -5,7 +5,6 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
 
   const q = searchParams.get("q");
-  const locale = searchParams.get("locale") || "en";
 
   // Validate query parameter
   if (!q || q.trim().length < 2) {
@@ -15,7 +14,7 @@ export async function GET(request: Request) {
     );
   }
 
-  const operations = await searchOperations(q, locale);
+  const operations = await searchOperations(q);
 
   // Transform response to include only needed fields
   const results = operations.map((op) => ({

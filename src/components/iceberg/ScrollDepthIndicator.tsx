@@ -1,14 +1,24 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 import { ICEBERG_LEVELS } from "./constants";
 import { useIcebergStore } from "./useIcebergStore";
+import ZoomControls from "./ZoomControls";
 
-export default function ScrollDepthIndicator() {
+interface ScrollDepthIndicatorProps {
+  reducedMotion?: boolean;
+  /** Salta al nivel indicado. La barra deja de ser decorativa. */
+  onSelectLevel?: (level: number) => void;
+}
+
+export default function ScrollDepthIndicator({ reducedMotion = false, onSelectLevel }: ScrollDepthIndicatorProps) {
+  const t = useTranslations("iceberg");
   const fillRef = useRef<HTMLDivElement>(null);
   const depthRef = useRef<HTMLSpanElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const dotRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   // Subscribe outside React render cycle — no re-renders
   useEffect(() => {
@@ -38,6 +48,9 @@ export default function ScrollDepthIndicator() {
               : "rgba(255,255,255,0.15)";
         dot.style.boxShadow =
           activeLevel === level.level ? `0 0 8px ${level.labelColor}` : "none";
+
+        const button = buttonRefs.current[i];
+        if (button) button.setAttribute("aria-current", activeLevel === level.level ? "true" : "false");
       });
     });
   }, []);
@@ -48,23 +61,35 @@ export default function ScrollDepthIndicator() {
         <div ref={fillRef} className="w-px absolute top-0" style={{ height: "0%", backgroundColor: "#1a3a5c" }} />
       </div>
 
-      <div className="flex flex-col items-center gap-2">
+      {/* Cada marca salta a su nivel. El botón es mayor que el punto para que
+          sea alcanzable con el dedo sin engordar la marca visual. */}
+      <div className="flex flex-col items-center">
         {ICEBERG_LEVELS.map((level, i) => (
-          <div
+          <button
             key={level.level}
-            ref={(el) => { dotRefs.current[i] = el; }}
-            className="w-1.5 h-1.5 rounded-full transition-all duration-300"
-          />
+            ref={(el) => { buttonRefs.current[i] = el; }}
+            type="button"
+            onClick={() => onSelectLevel?.(level.level)}
+            aria-label={t("goToLevel", { level: level.level })}
+            className="pointer-events-auto flex h-5 w-5 cursor-pointer items-center justify-center"
+          >
+            <div
+              ref={(el) => { dotRefs.current[i] = el; }}
+              className="h-1.5 w-1.5 rounded-full transition-all duration-300 motion-reduce:transition-none"
+            />
+          </button>
         ))}
       </div>
 
       <span
         ref={depthRef}
-        className="text-[9px] font-mono rotate-90 mt-3 whitespace-nowrap transition-colors duration-500"
+        className="text-[9px] font-mono rotate-90 mt-3 whitespace-nowrap transition-colors duration-500 motion-reduce:transition-none"
         style={{ color: "#1a3a5c" }}
       >
         DEPTH 0%
       </span>
+
+      <ZoomControls reducedMotion={reducedMotion} />
     </div>
   );
 }

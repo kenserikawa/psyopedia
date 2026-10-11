@@ -26,7 +26,7 @@ export async function GET(
   const { slug } = await params;
 
   const operation = await prisma.operation.findUnique({
-    where: { slug },
+    where: { slug, moderationStatus: "APPROVED" },
     select: { title: true, icebergLevel: true, era: true, status: true, excerpt: true },
   });
 

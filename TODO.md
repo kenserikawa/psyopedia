@@ -2,17 +2,19 @@
 
 ## Scroll-Driven 3D Iceberg Journey
 
-Transform the existing IcebergScene into a fully scroll-driven 3D cinematic experience. The camera starts at the tip of the iceberg above water and descends through 5 depth levels as the user scrolls down. Each level is a scroll stop with snapping behavior, expanding operation details, atmospheric depth changes, and cinematic transitions. Scrolling up reverses the journey.
+**Active route:** `src/app/[locale]/iceberg/page.tsx` → `IcebergJourneyWrapper` (client-side dynamic import, SSR disabled) → `IcebergJourney` → `IcebergCanvas`. The camera starts above water and descends through five depth levels within a sticky, 500vh scroll track.
+
+**Legacy, retained intentionally:** `IcebergScene`, `IcebergClientWrapper`, and the `IcebergVisualization` re-export are not used by current routes. The legacy scene still shares `IcebergMesh`/`OperationDot` with the active journey; new rendering options remain optional and preserve its existing defaults. Do not treat the legacy orbit-controls scene as the route implementation or delete it without a separate migration decision.
+
+The design notes below are the original target, **not a claim that every effect is implemented**. In particular, scroll snapping, the waterline distortion, and the original expanded-dot content remain pending. Checked items record implementation reviewed in code; browser/production acceptance remains separate.
 
 ### Dependencies
 
-```bash
-npm install gsap lenis zustand framer-motion
-```
-
-Use GSAP for camera animation and ScrollTrigger. Use Lenis for smooth scroll inertia. Zustand for shared state. Framer Motion for DOM label animations.
+GSAP, Lenis, Zustand, and Framer Motion are already dependencies. GSAP ScrollTrigger drives the camera; Lenis supplies scroll inertia unless reduced motion is requested. Zustand shares scene state and Framer Motion animates DOM labels. No additional dependency is needed.
 
 ### Level Definitions
+
+Original proposed values below; `src/components/iceberg/constants.ts` is the source of truth for current colors and atmosphere settings.
 
 ```ts
 export const ICEBERG_LEVELS = [
@@ -37,9 +39,12 @@ Uses a **fixed-height scroll container** technique:
 components/iceberg/
 ├── IcebergJourney.tsx          # Root client component — scroll container + canvas
 ├── IcebergCanvas.tsx           # <Canvas> setup + scene composition
-├── IcebergMesh.tsx             # Iceberg GLB model (adapt existing)
-├── OceanWater.tsx              # Water surface (adapt existing)
-├── CausticsLight.tsx           # Caustics (adapt existing)
+├── IcebergJourneyWrapper.tsx   # Active route's no-SSR client boundary
+├── useIcebergPreferences.ts    # Live viewport/pointer and reduced-motion queries
+├── IcebergMesh.tsx             # Shared dots/drag rotation + ProceduralIceberg
+├── ProceduralIceberg.tsx       # Active procedural geometry/transmission material
+├── OceanWater.tsx              # Retained; not mounted by active Canvas
+├── CausticsLight.tsx           # Retained; not mounted by active Canvas
 ├── OperationDot.tsx            # 3D dot per operation — expands when level active
 ├── DepthAtmosphere.tsx         # Fog, lighting, color changes driven by scroll
 ├── LevelLabel.tsx              # Full-screen fade-in/out level name (DOM overlay)
@@ -73,39 +78,47 @@ components/iceberg/
 - GSAP directly mutates `camera.position` — no React state
 - `DepthAtmosphere` reads progress in `useFrame` via ref
 - `dpr={[1, 1.5]}` cap
-- Mobile: disable parallax particles, 3 dots per level max, skip DepthOfField
+- Mobile/small screens (`max-width: 767px`) or coarse pointers: DPR 1, no mouse parallax, 120 rather than 350 particles, no DepthOfField, and lower procedural geometry/transmission cost. All operations remain accessible; the original three-dot cap is not implemented.
+- Reduced motion: live media-query subscription; native scroll instead of Lenis, instant scroll-to-top, linear scroll-linked camera without roll, no mouse parallax/particles/rotation inertia, static light shafts and ice distortion, instant dot/label transitions, no looping label gradient, and reduced-motion CSS for overlay transitions. The essential scroll-linked depth journey remains.
+- Desktop without reduced motion retains the existing visual settings.
+- On unmount/preference changes, Journey cancels its pending animation frame, destroys Lenis, clears its ref, and restores the previous inline scrollbar value/priority. Injected page styles are removed. Camera cleanup kills only its own ScrollTriggers.
 
 ### Integration
 
-In `app/[locale]/page.tsx` (or iceberg page):
+The active iceberg page renders `IcebergJourneyWrapper`. Its existing client boundary owns the dynamic import (do not move `ssr: false` into the server page):
 
 ```tsx
-const IcebergJourney = dynamic(
-  () => import('@/components/iceberg/IcebergJourney'),
-  { ssr: false, loading: () => <div className="h-screen bg-[#0a1628]" /> }
-)
+// src/components/iceberg/IcebergJourneyWrapper.tsx ("use client")
+const IcebergJourney = dynamic(() => import("./IcebergJourney"), {
+  ssr: false,
+  // Existing loading placeholder omitted here.
+});
 ```
 
 Journey fills the scroll track (500vh), then page content continues below.
 
 ### Deliverables Checklist
 
-- [ ] Scrolling down sinks camera from Level 1 to Level 5 smoothly
-- [ ] Scrolling up reverses the journey correctly
+- [x] ScrollTrigger interpolates camera through Levels 1–5 in both directions
+- [ ] Verify smooth descent/ascent visually in a browser
 - [ ] Camera interpolation is cinematic — no jitter, no abrupt jumps
-- [ ] Fog density visibly increases between Level 1 and Level 5
-- [ ] Ambient light dims progressively — Level 5 is near-dark
-- [ ] Level name and subtitle fade in when camera arrives at each zone
-- [ ] Level name fades out as camera leaves the zone
-- [ ] Operation dots are dim in transit, expand when level is active
+- [x] Fog, lighting, and background sample the current depth configuration
+- [ ] Verify atmospheric progression visually in a browser
+- [x] Level name/subtitle enter and exit with Framer Motion
+- [x] Operation dots dim by level distance and expand when active/hovered
 - [ ] Expanded dots show title, truncated excerpt, and era badge
 - [ ] Water surface disappears cleanly below Y=0
 - [ ] Submersion distortion effect fires once on waterline crossing
-- [ ] ScrollDepthIndicator reflects current level and progress
+- [x] ScrollDepthIndicator subscribes to current level and progress
 - [ ] Scroll snapping settles at nearest level when scroll stops
-- [ ] Parallax particle field creates sinking sensation
-- [ ] `npm run build` passes — no SSR errors
-- [ ] Mobile: reduced effects, still functional and performant
+- [x] Particle field and mouse parallax are mounted in the active desktop scene
+- [x] Mobile/coarse-pointer low-power settings reach PostFX, particles, and procedural mesh
+- [x] Live reduced-motion preference disables inertial/decorative motion and overlay transitions
+- [x] Journey RAF, Lenis ref, page styles, media listeners, and owned ScrollTriggers have scoped cleanup
+- [x] Focused ESLint passes for changed iceberg files; Future Features preserved byte-for-byte
+- [x] Chrome browser: mobile filters, repeated route navigation, depth descent/ascent, live reduced-motion changes, and DPR switching (mobile 1, desktop 1.5) work without runtime errors or accumulating route RAFs
+- [ ] Measure performance on physical mobile devices; browser acceptance above used viewport emulation and software WebGL
+- [x] Production build/SSR and local API/database regression suite pass with the final changes
 
 ---
 

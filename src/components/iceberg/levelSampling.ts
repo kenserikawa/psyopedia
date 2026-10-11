@@ -26,7 +26,11 @@ export function sampleLevels(progress: number, out?: InterpolatedLevel): Interpo
   const segments = ICEBERG_LEVELS.length - 1; // 4
   const p = Math.min(Math.max(progress, 0), 1);
   const idx = Math.min(Math.floor(p * segments), segments - 1);
-  const t = p * segments - idx;
+  const raw = p * segments - idx;
+  // En el primer tramo la cámara atraviesa la lámina de agua por la mitad del
+  // recorrido: el cambio de paleta se concentra ahí, en vez de repartirse, para
+  // que se lea como una inmersión y no como un fundido.
+  const t = idx === 0 ? THREE.MathUtils.smoothstep(raw, 0.15, 0.8) : raw;
   const a = ICEBERG_LEVELS[idx];
   const b = ICEBERG_LEVELS[idx + 1];
 

@@ -8,6 +8,7 @@ import {
 import { BlendFunction } from 'postprocessing'
 import * as THREE from 'three'
 import { sampleLevels, type InterpolatedLevel } from './levelSampling'
+import UnderwaterDistortion from './UnderwaterDistortion'
 import { useIcebergStore } from './useIcebergStore'
 
 export default function PostFX({ lowPower = false }: { lowPower?: boolean }) {
@@ -35,7 +36,9 @@ export default function PostFX({ lowPower = false }: { lowPower?: boolean }) {
         state.hoveredDotPosition[2]
       )
     } else {
-      _focusTarget.current.set(0, camera.position.y - 1.5, 0)
+      // El objetivo real de la cámara, no un offset bajo ella: en la vista
+      // cenital del arranque está muy por debajo y el DOF desenfocaría todo.
+      _focusTarget.current.set(0, state.cameraTargetY, 0)
     }
     const dist = camera.position.distanceTo(_focusTarget.current)
     const coc = dofRef.current?.cocMaterial ?? dofRef.current?.circleOfConfusionMaterial
@@ -59,6 +62,8 @@ export default function PostFX({ lowPower = false }: { lowPower?: boolean }) {
   // bloom(mipmapBlur)+DOF suavizan los bordes del iceberg low-poly.
   return (
     <EffectComposer multisampling={0}>
+      {/* Antes que nada: lo que sigue ya se pinta sobre la imagen ondulada. */}
+      <UnderwaterDistortion />
       <Bloom luminanceThreshold={0.65} intensity={0.6} radius={0.5} mipmapBlur />
       {lowPower ? <></> : (
         <DepthOfField ref={dofRef} focusDistance={0.02} focalLength={0.05} bokehScale={3} />

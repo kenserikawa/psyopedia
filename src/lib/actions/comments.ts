@@ -2,35 +2,21 @@
 
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { createComment } from "@/lib/comments";
+import { idSchema, moderationStatusSchema, validationError } from "@/lib/validation";
+import { revalidateModeration } from "@/lib/revalidation";
 import { revalidatePath } from "next/cache";
 
 export async function submitComment(operationId: string, body: string) {
   const session = await auth();
-  if (!session?.user?.id) {
-    return { error: "Not authenticated" };
-  }
+  if (!session?.user?.id) return { error: "Not authenticated" };
 
-  if (!body || body.trim().length < 3) {
-    return { error: "Comment must be at least 3 characters" };
-  }
-
-  await prisma.comment.create({
-    data: {
-      body: body.trim(),
-      operationId,
-      authorId: session.user.id,
-      status: "PENDING",
-    },
-  });
-
-  revalidatePath(`/catalog`);
+  const result = await createComment(session.user.id, { operationId, body });
+  if ("error" in result) return { error: result.error };
   return { success: true };
 }
 
-export async function moderateComment(
-  commentId: string,
-  status: "APPROVED" | "REJECTED"
-) {
+export async function moderateComment(commentId: string, status: "APPROVED" | "REJECTED") {
   const session = await auth();
   if (
     !session?.user?.id ||
@@ -38,13 +24,18 @@ export async function moderateComment(
   ) {
     return { error: "Not authorized" };
   }
+  const id = idSchema.safeParse(commentId);
+  if (!id.success) return { error: validationError(id.error) };
+  const parsed = moderationStatusSchema.safeParse(status);
+  if (!parsed.success) return { error: validationError(parsed.error) };
 
-  await prisma.comment.update({
-    where: { id: commentId },
-    data: { status },
+  const result = await prisma.comment.updateMany({
+    where: { id: id.data, status: "PENDING" },
+    data: { status: parsed.data },
   });
+  if (result.count !== 1) return { error: "Comment not found or already reviewed" };
 
-  revalidatePath(`/catalog`);
-  revalidatePath(`/admin`);
+  revalidatePath("/[locale]/catalog/[slug]", "page");
+  revalidateModeration();
   return { success: true };
 }

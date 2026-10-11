@@ -1,18 +1,27 @@
 'use client'
 
-import { useMemo, useState, useCallback, useRef } from 'react'
+import { useMemo, useState, useCallback, useEffect, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
+import {
+  buildIcebergGeometry,
+  buildSilhouette,
+  computeDotPositions,
+} from '@/lib/iceberg-geometry'
+import LabelDeclutter from './LabelDeclutter'
 import OperationDot from './OperationDot'
 import ProceduralIceberg from './ProceduralIceberg'
 import type { IcebergOperation } from './OperationDot'
 import { useIcebergStore } from './useIcebergStore'
-import { ICEBERG_LEVELS } from './constants'
 
 interface IcebergMeshProps {
   operations: IcebergOperation[]
   locale: string
   onSelect: (operation: IcebergOperation) => void
+  lowPower?: boolean
+  reducedMotion?: boolean
+  /** Sin hover, abrir la operación pasa a ser el segundo toque. */
+  noHover?: boolean
 }
 
 // Dot glow colors per level
@@ -24,84 +33,15 @@ const LEVEL_DOT_COLOR: Record<number, string> = {
   5: '#a8d4f0',
 }
 
-// Y ranges for each level — centered around the camera Y positions
-// Level 1: camera at 4  → dots from 3 to 5
-// Level 2: camera at -1 → dots from -2.5 to 0.5
-// Level 3: camera at -4 → dots from -5.5 to -2.5
-// Level 4: camera at -7 → dots from -8.5 to -5.5
-// Level 5: camera at -11 → dots from -13 to -9
-const LEVEL_Y_RANGE: Record<number, { min: number; max: number }> = {
-  1: { min: 3, max: 5 },
-  2: { min: -2.5, max: 0.5 },
-  3: { min: -5.5, max: -2.5 },
-  4: { min: -8.5, max: -5.5 },
-  5: { min: -13, max: -9 },
-}
+// Píxeles de recorrido a partir de los cuales el gesto es un giro y no un clic.
+const DRAG_THRESHOLD = 5
+// Ventana tras soltar un arrastre en la que se ignora la selección de un punto.
+const CLICK_SUPPRESSION_MS = 250
 
-// Iceberg radius at each level — wide at surface, narrow at abyss (matches cylinder mock)
-const LEVEL_RADIUS: Record<number, number> = {
-  1: 3.0,
-  2: 2.5,
-  3: 2.0,
-  4: 1.5,
-  5: 1.0,
-}
-
-// Deterministic pseudo-random from string — same slug always gives same number
-function seededRandom(str: string): () => number {
-  let h = 0
-  for (let i = 0; i < str.length; i++) {
-    h = Math.imul(31, h) + str.charCodeAt(i) | 0
-  }
-  return () => {
-    h = Math.imul(h ^ (h >>> 16), 0x45d9f3b)
-    h = Math.imul(h ^ (h >>> 13), 0x45d9f3b)
-    h = (h ^ (h >>> 16)) >>> 0
-    return h / 0x100000000
-  }
-}
-
-function computeDotPositions(
-  operations: IcebergOperation[]
-): { op: IcebergOperation; position: [number, number, number] }[] {
-  const result: { op: IcebergOperation; position: [number, number, number] }[] = []
-
-  const byLevel = new Map<number, IcebergOperation[]>()
-  for (const op of operations) {
-    const arr = byLevel.get(op.icebergLevel) || []
-    arr.push(op)
-    byLevel.set(op.icebergLevel, arr)
-  }
-
-  for (const [level, ops] of byLevel) {
-    const range = LEVEL_Y_RANGE[level]
-    const radius = LEVEL_RADIUS[level] ?? 2.5
-    if (!range) continue
-
-    ops.forEach((op) => {
-      const rand = seededRandom(op.slug)
-
-      // Random Y within level range
-      const y = range.min + rand() * (range.max - range.min)
-
-      // Random angle and radius variation — minimum grows with depth to keep dots off the Y axis
-      const angle = rand() * Math.PI * 2
-      const rJitter = 0.9 + rand() * 0.5 // 0.9–1.4 of base radius
-      const dotRadius = radius * rJitter
-
-      const x = Math.cos(angle) * dotRadius
-      const z = Math.sin(angle) * dotRadius
-
-      result.push({ op, position: [x, y, z] })
-    })
-  }
-
-  return result
-}
-
-export default function IcebergMesh({ operations, locale, onSelect }: IcebergMeshProps) {
+export default function IcebergMesh({ operations, locale, onSelect, lowPower = false, reducedMotion = false, noHover = false }: IcebergMeshProps) {
   const activeLevel = useIcebergStore((s) => s.activeLevel)
   const setHoveredOperation = useIcebergStore((s) => s.setHoveredOperation)
+  const setSelectedOperation = useIcebergStore((s) => s.setSelectedOperation)
   const [hoveredId, setHoveredId] = useState<string | null>(null)
 
   const handleHover = useCallback((id: string | null) => {
@@ -110,39 +50,94 @@ export default function IcebergMesh({ operations, locale, onSelect }: IcebergMes
     document.body.style.cursor = id ? 'pointer' : 'default'
   }, [setHoveredOperation])
 
-  const dots = useMemo(() => computeDotPositions(operations), [operations])
+  // La geometría se genera con ruido nuevo en cada montaje: los puntos se
+  // colocan midiendo esa forma concreta, no una estimación.
+  const shape = useMemo(() => {
+    const geometry = buildIcebergGeometry(lowPower)
+    return { geometry, silhouette: buildSilhouette(geometry) }
+  }, [lowPower])
+  useEffect(() => () => { shape.geometry.dispose() }, [shape])
+
+  const dots = useMemo(
+    () => computeDotPositions(operations, shape.silhouette),
+    [operations, shape]
+  )
 
   // Y-axis drag rotation + scroll-driven rotation
   const groupRef = useRef<THREE.Group>(null)
-  const dragState = useRef({ active: false, startX: 0, startRotation: 0 })
+  const dragging = useRef(false)
+  const dragEndedAt = useRef(0)
   const velocity = useRef(0)
   const currentRotation = useRef(0)
   const prevProgress = useRef(useIcebergStore.getState().scrollProgress)
-  const { gl } = useThree()
+  const gl = useThree((s) => s.gl)
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onPointerDown = useCallback((e: any) => {
-    if (hoveredId) return
-    e.stopPropagation?.()
-    const clientX = e.clientX ?? e.nativeEvent?.clientX ?? 0
-    dragState.current = { active: true, startX: clientX, startRotation: currentRotation.current }
-    gl.domElement.style.cursor = 'grabbing'
-  }, [gl, hoveredId])
+  // El arrastre escucha en el canvas, no en la malla: así el hielo puede quedar
+  // fuera del raycast y los puntos reciben sus propios eventos sin competencia.
+  useEffect(() => {
+    const el = gl.domElement
+    let activePointer: number | null = null
+    let startX = 0
+    let startRotation = 0
+    let moved = false
 
-  const onPointerUp = useCallback(() => {
-    dragState.current.active = false
-    gl.domElement.style.cursor = hoveredId ? 'pointer' : 'default'
-  }, [gl, hoveredId])
+    const onDown = (e: PointerEvent) => {
+      if (!e.isPrimary) return
+      activePointer = e.pointerId
+      startX = e.clientX
+      startRotation = currentRotation.current
+      moved = false
+    }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onPointerMove = useCallback((e: any) => {
-    if (!dragState.current.active) return
-    const clientX = e.clientX ?? e.nativeEvent?.clientX ?? 0
-    const delta = (clientX - dragState.current.startX) * 0.005
-    const target = dragState.current.startRotation + delta
-    velocity.current = target - currentRotation.current
-    currentRotation.current = target
-  }, [])
+    const onMove = (e: PointerEvent) => {
+      if (activePointer === null || e.pointerId !== activePointer) return
+      const dx = e.clientX - startX
+      if (!moved) {
+        if (Math.abs(dx) < DRAG_THRESHOLD) return
+        moved = true
+        dragging.current = true
+        el.style.cursor = 'grabbing'
+      }
+      const target = startRotation + dx * 0.005
+      velocity.current = target - currentRotation.current
+      currentRotation.current = target
+    }
+
+    const onUp = (e: PointerEvent) => {
+      if (activePointer === null || e.pointerId !== activePointer) return
+      activePointer = null
+      if (moved) dragEndedAt.current = performance.now()
+      dragging.current = false
+      moved = false
+      el.style.cursor = ''
+    }
+
+    el.addEventListener('pointerdown', onDown)
+    el.addEventListener('pointermove', onMove)
+    window.addEventListener('pointerup', onUp)
+    window.addEventListener('pointercancel', onUp)
+    return () => {
+      el.removeEventListener('pointerdown', onDown)
+      el.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', onUp)
+      window.removeEventListener('pointercancel', onUp)
+      el.style.cursor = ''
+    }
+  }, [gl])
+
+  // Soltar un arrastre encima de un punto no debe navegar.
+  const handleSelect = useCallback((operation: IcebergOperation) => {
+    if (performance.now() - dragEndedAt.current < CLICK_SUPPRESSION_MS) return
+
+    // Sin hover, el primer toque abre el expediente y solo el segundo navega:
+    // si no, el usuario se va de la página sin llegar a ver la ficha.
+    if (noHover && useIcebergStore.getState().selectedOperationId !== operation.id) {
+      setSelectedOperation(operation.id)
+      return
+    }
+
+    onSelect(operation)
+  }, [onSelect, noHover, setSelectedOperation])
 
   useFrame(() => {
     if (!groupRef.current) return
@@ -151,11 +146,12 @@ export default function IcebergMesh({ operations, locale, onSelect }: IcebergMes
     const progress = useIcebergStore.getState().scrollProgress
     const delta = progress - prevProgress.current
     prevProgress.current = progress
-    if (!dragState.current.active && Math.abs(delta) > 0.0001) {
+    if (!reducedMotion && !dragging.current && Math.abs(delta) > 0.0001) {
       velocity.current += delta * 0.3
     }
 
-    if (!dragState.current.active) {
+    if (reducedMotion) velocity.current = 0
+    if (!reducedMotion && !dragging.current) {
       // Inertia decay
       velocity.current *= 0.95
       if (Math.abs(velocity.current) > 0.0001) {
@@ -166,28 +162,27 @@ export default function IcebergMesh({ operations, locale, onSelect }: IcebergMes
   })
 
   return (
-    <group
-      ref={groupRef}
-      onPointerDown={onPointerDown}
-      onPointerUp={onPointerUp}
-      onPointerMove={onPointerMove}
-      onPointerLeave={onPointerUp}
-    >
+    <group ref={groupRef}>
       {/* Iceberg procedural (reemplaza el GLB de 74 MB) */}
-      <ProceduralIceberg />
+      <ProceduralIceberg geometry={shape.geometry} lowPower={lowPower} reducedMotion={reducedMotion} />
+
+      {/* Árbitro de los rótulos que caen en el mismo sitio */}
+      <LabelDeclutter reducedMotion={reducedMotion} />
 
       {/* Operation dots */}
-      {dots.map(({ op, position }) => (
+      {dots.map(({ op, position, stagger }) => (
         <OperationDot
           key={op.id}
           operation={op}
           position={position}
+          stagger={stagger}
           color={LEVEL_DOT_COLOR[op.icebergLevel] ?? '#3098dd'}
           isHovered={hoveredId === op.id}
           levelDistance={Math.abs(activeLevel - op.icebergLevel)}
           onHover={handleHover}
-          onSelect={onSelect}
+          onSelect={handleSelect}
           locale={locale}
+          reducedMotion={reducedMotion}
         />
       ))}
     </group>

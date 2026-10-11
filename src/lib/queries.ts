@@ -1,22 +1,34 @@
 import { prisma } from "@/lib/prisma";
-import {
-  Era,
-  ModerationStatus,
-  OperationType,
-  Outcome,
-  OperationStatus,
-} from "@/generated/prisma";
+import { cache } from "react";
+import { ModerationStatus, Prisma } from "@/generated/prisma/client";
+import type { CatalogFilters } from "@/lib/catalog";
 
-export interface CatalogFilters {
-  search?: string;
-  levels?: number[];
-  eras?: Era[];
-  types?: OperationType[];
-  outcomes?: Outcome[];
-  statuses?: OperationStatus[];
-  actor?: string;
-  sort?: string;
-}
+export type { CatalogFilters } from "@/lib/catalog";
+
+const operationSummarySelect = {
+  id: true,
+  slug: true,
+  slugEs: true,
+  title: true,
+  titleEs: true,
+  excerpt: true,
+  excerptEs: true,
+  icebergLevel: true,
+  era: true,
+  status: true,
+  types: true,
+  actors: true,
+  targets: true,
+  outcome: true,
+  aliases: true,
+  coverImage: true,
+  viewCount: true,
+  createdAt: true,
+  updatedAt: true,
+  moderationStatus: true,
+  tags: true,
+  _count: { select: { sources: true } },
+} satisfies Prisma.OperationSelect;
 
 // ─── Homepage ────────────────────────────────────────
 
@@ -37,7 +49,9 @@ export async function getHomepageData() {
         select: { era: true },
         distinct: ["era"],
       }),
-      prisma.source.count(),
+      prisma.source.count({
+        where: { operation: { moderationStatus: ModerationStatus.APPROVED } },
+      }),
     ]);
 
   return {
@@ -53,10 +67,10 @@ export async function getHomepageData() {
 // ─── Catalog ─────────────────────────────────────────
 
 export async function getCatalogOperations(filters: CatalogFilters = {}) {
-  const { search, levels, eras, types, outcomes, statuses, actor, sort } =
+  const { search, levels, eras, types, outcomes, statuses, actor, sort, locale } =
     filters;
 
-  const where: NonNullable<Parameters<typeof prisma.operation.findMany>[0]>["where"] = {
+  const where: Prisma.OperationWhereInput = {
     moderationStatus: ModerationStatus.APPROVED,
   };
 
@@ -93,11 +107,7 @@ export async function getCatalogOperations(filters: CatalogFilters = {}) {
     where.actors = { has: actor };
   }
 
-  type OrderBy = NonNullable<Parameters<
-    typeof prisma.operation.findMany
-  >[0]>["orderBy"];
-
-  let orderBy: OrderBy;
+  let orderBy: Prisma.OperationOrderByWithRelationInput;
   switch (sort) {
     case "oldest":
       orderBy = { createdAt: "asc" };
@@ -109,65 +119,65 @@ export async function getCatalogOperations(filters: CatalogFilters = {}) {
       orderBy = { icebergLevel: "asc" };
       break;
     case "title":
-      orderBy = { title: "asc" };
+      orderBy = locale === "es" ? { titleEs: "asc" } : { title: "asc" };
       break;
     case "newest":
     default:
       orderBy = { createdAt: "desc" };
   }
 
+  const pageSize = Math.min(100, Math.max(1, Math.trunc(filters.pageSize ?? 12)));
+  const total = await prisma.operation.count({ where });
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const page = Math.min(totalPages, Math.max(1, Math.trunc(filters.page ?? 1)));
   const operations = await prisma.operation.findMany({
     where,
-    orderBy,
-    include: {
-      tags: true,
-      _count: { select: { sources: true } },
-    },
+    orderBy: [orderBy, { id: "asc" }],
+    select: operationSummarySelect,
+    skip: (page - 1) * pageSize,
+    take: pageSize,
   });
 
-  return operations;
+  return { operations, total, page, pageSize, totalPages };
 }
 
 // ─── Operation Detail ─────────────────────────────────
 
-export async function getOperationBySlug(slug: string) {
-  const operation = await prisma.operation.findUnique({
-    where: { slug },
+export const getOperationBySlug = cache(async (slug: string) => {
+  return prisma.operation.findUnique({
+    where: { slug, moderationStatus: ModerationStatus.APPROVED },
     include: {
       sources: true,
       tags: true,
-      relatedOps: { include: { tags: true } },
+      relatedOps: {
+        where: { moderationStatus: ModerationStatus.APPROVED },
+        include: { tags: true },
+      },
     },
   });
+});
 
-  if (operation) {
-    await prisma.operation.update({
-      where: { slug },
-      data: { viewCount: { increment: 1 } },
-    });
-  }
-
-  return operation;
-}
-
-export async function getOperationBySlugEs(slugEs: string) {
-  const operation = await prisma.operation.findUnique({
-    where: { slugEs },
+export const getOperationBySlugEs = cache(async (slugEs: string) => {
+  return prisma.operation.findUnique({
+    where: { slugEs, moderationStatus: ModerationStatus.APPROVED },
     include: {
       sources: true,
       tags: true,
-      relatedOps: { include: { tags: true } },
+      relatedOps: {
+        where: { moderationStatus: ModerationStatus.APPROVED },
+        include: { tags: true },
+      },
     },
   });
+});
 
-  if (operation) {
-    await prisma.operation.update({
-      where: { slugEs },
-      data: { viewCount: { increment: 1 } },
-    });
-  }
-
-  return operation;
+export async function incrementOperationView(operationId: string) {
+  // A visit must not change the article's editorial updatedAt timestamp.
+  await prisma.$executeRaw`
+    UPDATE "Operation"
+    SET "viewCount" = "viewCount" + 1
+    WHERE "id" = ${operationId} AND "moderationStatus" = 'APPROVED'
+  `;
 }
 
 // ─── Static Generation Helpers ────────────────────────
@@ -195,6 +205,11 @@ export async function getIcebergData() {
       excerptEs: true,
       era: true,
       status: true,
+      // Ficha del panel de hover: permite explorar sin abrir la operación.
+      types: true,
+      outcome: true,
+      actors: true,
+      _count: { select: { sources: true } },
     },
     orderBy: { viewCount: "desc" },
   });
@@ -264,7 +279,7 @@ export async function getPendingComments() {
 
 // ─── Search ───────────────────────────────────────────
 
-export async function searchOperations(query: string, locale: string = "en") {
+export async function searchOperations(query: string) {
   if (!query || query.trim().length < 2) {
     return [];
   }
@@ -285,7 +300,7 @@ export async function searchOperations(query: string, locale: string = "en") {
         { bodyEs: { contains: searchTerm, mode: "insensitive" } },
       ],
     },
-    include: { tags: true },
+    select: operationSummarySelect,
     take: 20,
   });
 

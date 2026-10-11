@@ -58,3 +58,4 @@ next-env.d.ts
 
 # work screenshots
 /*.png
+.token-savior-cache.json

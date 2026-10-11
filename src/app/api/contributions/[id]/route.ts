@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { approveContribution, rejectContribution } from "@/lib/actions/moderation";
+import { moderationRequestSchema, validationError } from "@/lib/validation";
 
 export async function PATCH(
   request: Request,
@@ -22,17 +23,14 @@ export async function PATCH(
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const { status, reviewNote } = body as {
-    status?: string;
-    reviewNote?: string;
-  };
-
-  if (status !== "APPROVED" && status !== "REJECTED") {
+  const parsed = moderationRequestSchema.safeParse(body);
+  if (!parsed.success) {
     return NextResponse.json(
-      { error: "status must be APPROVED or REJECTED" },
+      { error: validationError(parsed.error) },
       { status: 400 }
     );
   }
+  const { status, reviewNote } = parsed.data;
 
   const { id } = await params;
 

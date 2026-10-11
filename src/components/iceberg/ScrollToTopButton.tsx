@@ -5,9 +5,10 @@ import { useIcebergStore } from './useIcebergStore'
 
 interface ScrollToTopButtonProps {
   onScrollToTop: () => void
+  reducedMotion?: boolean
 }
 
-export default function ScrollToTopButton({ onScrollToTop }: ScrollToTopButtonProps) {
+export default function ScrollToTopButton({ onScrollToTop, reducedMotion = false }: ScrollToTopButtonProps) {
   const btnRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export default function ScrollToTopButton({ onScrollToTop }: ScrollToTopButtonPr
         opacity: 0,
         pointerEvents: 'none',
         transform: 'translateY(-12px)',
-        transition: 'opacity 0.4s ease, transform 0.4s ease',
+        transition: reducedMotion ? 'none' : 'opacity 0.4s ease, transform 0.4s ease',
         background: 'rgba(255,255,255,0.12)',
       }}
     >

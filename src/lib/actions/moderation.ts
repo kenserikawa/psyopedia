@@ -2,14 +2,14 @@
 
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma/client";
 import {
-  Era,
-  OperationType,
-  Outcome,
-  OperationStatus,
-  SourceType,
-} from "@/generated/prisma";
-import { revalidatePath } from "next/cache";
+  contributionSchema,
+  idSchema,
+  moderationRequestSchema,
+  validationError,
+} from "@/lib/validation";
+import { revalidateModeration, revalidateOperations } from "@/lib/revalidation";
 
 export async function approveContribution(contributionId: string) {
   const session = await auth();
@@ -19,83 +19,94 @@ export async function approveContribution(contributionId: string) {
   ) {
     return { error: "Not authorized" };
   }
+  const id = idSchema.safeParse(contributionId);
+  if (!id.success) return { error: validationError(id.error) };
 
-  const contribution = await prisma.contribution.findUnique({
-    where: { id: contributionId },
-    include: { submittedBy: true },
-  });
-
-  if (!contribution || contribution.status !== "PENDING") {
-    return { error: "Contribution not found or already reviewed" };
-  }
-
-  if (contribution.type === "NEW_OPERATION") {
-    const data = contribution.proposedData as Record<string, unknown>;
-    await prisma.operation.create({
-      data: {
-        slug: data.slug as string,
-        slugEs: (data.slugEs as string) || (data.slug as string),
-        title: data.title as string,
-        titleEs: (data.titleEs as string) || (data.title as string),
-        aliases: (data.aliases as string[]) || [],
-        icebergLevel: (data.icebergLevel as number) || 3,
-        era: ((data.era as Era) || "MODERN") as Era,
-        types: ((data.types as OperationType[]) || []) as OperationType[],
-        actors: (data.actors as string[]) || [],
-        targets: (data.targets as string[]) || [],
-        outcome: ((data.outcome as Outcome) || "UNKNOWN") as Outcome,
-        status: ((data.status as OperationStatus) || "ALLEGED") as OperationStatus,
-        bodyEn: (data.bodyEn as string) || "",
-        bodyEs: (data.bodyEs as string) || "",
-        excerpt: (data.excerpt as string) || "",
-        excerptEs: (data.excerptEs as string) || "",
-        moderationStatus: "APPROVED",
-        contributedById: contribution.submittedById,
-      },
-    });
-
-    // +10 reputation for approved new operation
-    await prisma.user.update({
-      where: { id: contribution.submittedById },
-      data: { reputation: { increment: 10 } },
-    });
-  } else if (contribution.type === "ADD_SOURCE") {
-    const data = contribution.proposedData as Record<string, unknown>;
-    if (contribution.operationId) {
-      await prisma.source.create({
-        data: {
-          title: data.sourceTitle as string,
-          url: (data.sourceUrl as string) || null,
-          type: ((data.sourceType as SourceType) || "WEBSITE") as SourceType,
-          credibility: (data.credibility as number) || 3,
-          operationId: contribution.operationId,
-        },
+  try {
+    const result = await prisma.$transaction(async (tx) => {
+      const contribution = await tx.contribution.findUnique({
+        where: { id: id.data },
       });
+      if (!contribution || contribution.status !== "PENDING") {
+        return { error: "Contribution not found or already reviewed" };
+      }
 
-      // +5 reputation for approved source
-      await prisma.user.update({
+      const parsed = contributionSchema.safeParse({
+        type: contribution.type,
+        proposedData: contribution.proposedData,
+        ...(contribution.operationId ? { operationId: contribution.operationId } : {}),
+      });
+      if (!parsed.success) return { error: validationError(parsed.error) };
+      const data = parsed.data;
+
+      if (data.type !== "NEW_OPERATION") {
+        const operation = await tx.operation.findUnique({
+          where: { id: data.operationId, moderationStatus: "APPROVED" },
+          select: { id: true },
+        });
+        if (!operation) return { error: "Operation not found" };
+      }
+
+      // Claim the pending review under a row lock before applying any effects.
+      const claimed = await tx.contribution.updateMany({
+        where: { id: id.data, status: "PENDING" },
+        data: { status: "APPROVED", reviewedById: session.user.id },
+      });
+      if (claimed.count !== 1) {
+        return { error: "Contribution not found or already reviewed" };
+      }
+
+      if (data.type === "NEW_OPERATION") {
+        await tx.operation.create({
+          data: {
+            ...data.proposedData,
+            moderationStatus: "APPROVED",
+            contributedById: contribution.submittedById,
+          },
+        });
+      } else if (data.type === "EDIT_OPERATION") {
+        await tx.operation.update({
+          where: { id: data.operationId, moderationStatus: "APPROVED" },
+          data: data.proposedData,
+        });
+      } else {
+        await tx.source.create({
+          data: {
+            title: data.proposedData.sourceTitle,
+            url: data.proposedData.sourceUrl,
+            type: data.proposedData.sourceType,
+            credibility: data.proposedData.credibility,
+            operationId: data.operationId,
+          },
+        });
+      }
+
+      await tx.user.update({
         where: { id: contribution.submittedById },
-        data: { reputation: { increment: 5 } },
+        data: { reputation: { increment: data.type === "NEW_OPERATION" ? 10 : 5 } },
       });
+      return { success: true };
+    });
+
+    if (result.success) {
+      revalidateModeration();
+      revalidateOperations();
     }
+    return result;
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        return { error: "An operation with this slug already exists. The contribution is still pending." };
+      }
+      if (error.code === "P2025" || error.code === "P2003") {
+        return { error: "A referenced record no longer exists. The contribution was not approved." };
+      }
+    }
+    throw error;
   }
-
-  await prisma.contribution.update({
-    where: { id: contributionId },
-    data: {
-      status: "APPROVED",
-      reviewedById: session.user.id,
-    },
-  });
-
-  revalidatePath("/admin");
-  return { success: true };
 }
 
-export async function rejectContribution(
-  contributionId: string,
-  reviewNote?: string
-) {
+export async function rejectContribution(contributionId: string, reviewNote?: string) {
   const session = await auth();
   if (
     !session?.user?.id ||
@@ -103,16 +114,23 @@ export async function rejectContribution(
   ) {
     return { error: "Not authorized" };
   }
+  const id = idSchema.safeParse(contributionId);
+  if (!id.success) return { error: validationError(id.error) };
+  const parsed = moderationRequestSchema.safeParse({ status: "REJECTED", reviewNote });
+  if (!parsed.success) return { error: validationError(parsed.error) };
 
-  await prisma.contribution.update({
-    where: { id: contributionId },
+  const result = await prisma.contribution.updateMany({
+    where: { id: id.data, status: "PENDING" },
     data: {
       status: "REJECTED",
       reviewedById: session.user.id,
-      reviewNote: reviewNote || null,
+      reviewNote: parsed.data.reviewNote || null,
     },
   });
+  if (result.count !== 1) {
+    return { error: "Contribution not found or already reviewed" };
+  }
 
-  revalidatePath("/admin");
+  revalidateModeration();
   return { success: true };
 }

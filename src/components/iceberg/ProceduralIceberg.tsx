@@ -4,63 +4,67 @@ import { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { MeshTransmissionMaterial } from '@react-three/drei'
 import * as THREE from 'three'
-import { SimplexNoise } from 'three/addons/math/SimplexNoise.js'
+import { ICEBERG_ORIGIN_Y, ICEBERG_SCALE } from '@/lib/iceberg-geometry'
 import { sampleLevels, type InterpolatedLevel } from './levelSampling'
 import { useIcebergStore } from './useIcebergStore'
 
 interface ProceduralIcebergProps {
+  /** Geometría compartida con IcebergMesh, que también la mide para orbitar los puntos. */
+  geometry: THREE.BufferGeometry
   lowPower?: boolean
+  reducedMotion?: boolean
 }
 
-// Construye una geometría de iceberg: icosaedro subdividido, desplazado con FBM,
-// estirado y afilado hacia abajo para la masa sumergida (regla del iceberg).
-function buildIcebergGeometry(lowPower: boolean): THREE.BufferGeometry {
-  const detail = lowPower ? 4 : 6
-  const geo = new THREE.IcosahedronGeometry(2, detail)
-  const simplex = new SimplexNoise()
-  const pos = geo.attributes.position
-  const v = new THREE.Vector3()
+// El hielo es decorado: si participa en el raycast se queda con los eventos de
+// puntero y los puntos que tiene delante o detrás dejan de poder seleccionarse.
+const NO_RAYCAST = () => null
 
-  // FBM: varias octavas de simplex
-  const fbm = (x: number, y: number, z: number) => {
-    let amp = 1, freq = 0.9, sum = 0, norm = 0
-    for (let o = 0; o < 4; o++) {
-      sum += amp * simplex.noise3d(x * freq, y * freq, z * freq)
-      norm += amp
-      amp *= 0.5
-      freq *= 2.1
-    }
-    return sum / norm
-  }
+/**
+ * Cáusticas: la luz de la superficie, refractada por el oleaje, barriendo el
+ * hielo. Es el indicio que dice "esto está bajo el agua" sin necesidad de más
+ * atrezzo. Solo prenden en las caras que miran hacia arriba y se apagan con la
+ * profundidad, donde ya no llega luz.
+ */
+function makeCausticsMaterial() {
+  return new THREE.ShaderMaterial({
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    uniforms: {
+      uTime: { value: 0 },
+      uIntensity: { value: 1 },
+      uColor: { value: new THREE.Color('#dff4ff') },
+    },
+    vertexShader: /* glsl */ `
+      varying vec3 vWorld;
+      varying vec3 vNormalW;
+      void main() {
+        vec4 wp = modelMatrix * vec4(position, 1.0);
+        vWorld = wp.xyz;
+        vNormalW = normalize(mat3(modelMatrix) * normal);
+        gl_Position = projectionMatrix * viewMatrix * wp;
+      }
+    `,
+    fragmentShader: /* glsl */ `
+      uniform float uTime; uniform float uIntensity; uniform vec3 uColor;
+      varying vec3 vWorld; varying vec3 vNormalW;
 
-  for (let i = 0; i < pos.count; i++) {
-    v.fromBufferAttribute(pos, i)
-    const dir = v.clone().normalize()
-    const n = fbm(dir.x, dir.y, dir.z) // -1..1
+      void main() {
+        // Interferencia de tres ondas: el retículo irregular de las cáusticas.
+        vec2 p = vWorld.xz * 0.55;
+        float w = sin(p.x + uTime) * sin(p.y + uTime * 0.9);
+        w += sin(p.x * 1.4 - uTime * 0.7) * sin(p.y * 1.1 + uTime * 1.2);
+        w += sin((p.x + p.y) * 0.8 + uTime * 0.5);
+        float caustic = pow(max(w / 3.0 + 0.5, 0.0), 4.0);
 
-    // Desplazamiento facetado del relieve
-    const r = 2 + n * 0.55
+        // Solo en lo que mira al cielo, y solo cerca de la superficie.
+        float up = max(vNormalW.y, 0.0);
+        float depth = smoothstep(-16.0, 1.0, vWorld.y);
 
-    // Masa sumergida: estirar e ir afilando por debajo de y=0
-    if (dir.y < 0) {
-      const d = -dir.y // 0..1
-      v.multiplyScalar(r)
-      v.y *= 1 + d * 5.0          // estira hacia abajo (~6x de profundidad)
-      const taper = 1 - d * 0.45  // afila el fondo
-      v.x *= taper
-      v.z *= taper
-    } else {
-      v.multiplyScalar(r)
-      v.y *= 1.1 // pico ligeramente más alto
-    }
-    pos.setXYZ(i, v.x, v.y, v.z)
-  }
-
-  // Facetas: sin índice + normales por cara
-  const flat = geo.toNonIndexed()
-  flat.computeVertexNormals()
-  geo.dispose()
-  return flat
+        gl_FragColor = vec4(uColor, caustic * up * depth * uIntensity * 0.5);
+      }
+    `,
+  })
 }
 
 // Material fresnel additive para el borde glacial (rim light frío).
@@ -96,11 +100,11 @@ function makeRimMaterial() {
   })
 }
 
-export default function ProceduralIceberg({ lowPower = false }: ProceduralIcebergProps) {
-  const geometry = useMemo(() => buildIcebergGeometry(lowPower), [lowPower])
-  useEffect(() => () => { geometry.dispose() }, [geometry])
+export default function ProceduralIceberg({ geometry, lowPower = false, reducedMotion = false }: ProceduralIcebergProps) {
   const rimMaterial = useMemo(() => makeRimMaterial(), [])
   useEffect(() => () => { rimMaterial.dispose() }, [rimMaterial])
+  const causticsMaterial = useMemo(() => makeCausticsMaterial(), [])
+  useEffect(() => () => { causticsMaterial.dispose() }, [causticsMaterial])
   // MeshTransmissionMaterial no exporta un tipo público estable: ref laxo.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const matRef = useRef<any>(null)
@@ -120,11 +124,15 @@ export default function ProceduralIceberg({ lowPower = false }: ProceduralIceber
     // El rim se apaga con la profundidad
     // eslint-disable-next-line react-hooks/immutability
     rimMaterial.uniforms.uIntensity.value = 0.15 + s.godRayIntensity * 0.6
+    // Las cáusticas dependen de que llegue luz de arriba: siguen al godRay.
+    // eslint-disable-next-line react-hooks/immutability
+    causticsMaterial.uniforms.uIntensity.value = s.godRayIntensity
+    if (!reducedMotion) causticsMaterial.uniforms.uTime.value += delta * 0.6
   })
 
   return (
-    <group position={[0, -3, 0]} scale={1.4}>
-      <mesh geometry={geometry}>
+    <group position={[0, ICEBERG_ORIGIN_Y, 0]} scale={ICEBERG_SCALE}>
+      <mesh geometry={geometry} raycast={NO_RAYCAST}>
         <MeshTransmissionMaterial
           ref={matRef}
           transmission={lowPower ? 0.6 : 1}
@@ -135,7 +143,7 @@ export default function ProceduralIceberg({ lowPower = false }: ProceduralIceber
           anisotropy={0.1}
           distortion={0.2}
           distortionScale={0.3}
-          temporalDistortion={0.1}
+          temporalDistortion={reducedMotion ? 0 : 0.1}
           samples={lowPower ? 4 : 8}
           resolution={lowPower ? 256 : 512}
           color="#dff1ff"
@@ -144,8 +152,11 @@ export default function ProceduralIceberg({ lowPower = false }: ProceduralIceber
           background={undefined}
         />
       </mesh>
+      {/* Luz de la superficie barriendo el hielo */}
+      <mesh geometry={geometry} material={causticsMaterial} scale={1.002} raycast={NO_RAYCAST} />
+
       {/* Borde fresnel glacial */}
-      <mesh geometry={geometry} material={rimMaterial} scale={1.015} />
+      <mesh geometry={geometry} material={rimMaterial} scale={1.015} raycast={NO_RAYCAST} />
     </group>
   )
 }

@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
+import { after } from "next/server";
+import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { getOperationBySlug, getOperationBySlugEs, getApprovedComments } from "@/lib/queries";
+import { getOperationBySlug, getOperationBySlugEs, getApprovedComments, incrementOperationView } from "@/lib/queries";
 import { OperationHeader } from "@/components/operation/OperationHeader";
 import { OperationBody } from "@/components/operation/OperationBody";
 import { SourcesList } from "@/components/operation/SourcesList";
@@ -17,14 +19,7 @@ interface Props {
 }
 
 async function fetchOperation(locale: string, slug: string) {
-  try {
-    if (locale === "es") {
-      return await getOperationBySlugEs(slug);
-    }
-    return await getOperationBySlug(slug);
-  } catch {
-    return null;
-  }
+  return locale === "es" ? getOperationBySlugEs(slug) : getOperationBySlug(slug);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -40,6 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function OperationDetailPage({ params }: Props) {
   const { locale, slug } = await params;
+  const requestHeaders = await headers();
   const operation = await fetchOperation(locale, slug);
 
   if (!operation) {
@@ -52,13 +48,20 @@ export default async function OperationDetailPage({ params }: Props) {
   const relatedOps = operation.relatedOps ?? [];
   const comments = await getApprovedComments(operation.id);
 
+  if (
+    !requestHeaders.has("next-router-prefetch") &&
+    !requestHeaders.get("purpose")?.includes("prefetch") &&
+    !requestHeaders.get("sec-purpose")?.includes("prefetch")
+  ) {
+    after(() => incrementOperationView(operation.id));
+  }
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      {/* JSON-LD structured data — safe: JSON.stringify on own data produces valid JSON, not raw HTML */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateOperationJsonLd(operation, locale)),
+          __html: JSON.stringify(generateOperationJsonLd(operation, locale)).replace(/</g, "\\u003c"),
         }}
       />
 

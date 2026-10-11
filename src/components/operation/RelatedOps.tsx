@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { OperationCard } from "@/components/catalog/OperationCard";
-import type { Operation, Tag } from "@/generated/prisma";
+import type { Operation, Tag } from "@/generated/prisma/client";
 
 interface RelatedOpsProps {
   operations: (Operation & { tags: Tag[] })[];

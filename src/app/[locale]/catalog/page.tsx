@@ -1,30 +1,15 @@
 import { Suspense } from "react";
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { getCatalogOperations, getDistinctActors } from "@/lib/queries";
-import type { CatalogFilters } from "@/lib/queries";
+import { catalogSearchParams, parseCatalogFilters } from "@/lib/catalog";
 import { CatalogFilters as CatalogFiltersComponent } from "@/components/catalog/CatalogFilters";
 import { OperationGrid } from "@/components/catalog/OperationGrid";
-import type { Era, OperationType, Outcome } from "@/generated/prisma";
 
 interface Props {
   params: Promise<{ locale: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
-}
-
-function getString(
-  value: string | string[] | undefined
-): string | undefined {
-  if (!value) return undefined;
-  return Array.isArray(value) ? value[0] : value;
-}
-
-function getCommaSeparated(
-  value: string | string[] | undefined
-): string[] {
-  const str = getString(value);
-  if (!str) return [];
-  return str.split(",").filter(Boolean);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -44,27 +29,17 @@ export default async function CatalogPage({ params, searchParams }: Props) {
 
   const t = await getTranslations({ locale, namespace: "catalog" });
 
-  // Parse searchParams into CatalogFilters
-  const rawLevels = getCommaSeparated(sp.level);
-  const rawEras = getCommaSeparated(sp.era);
-  const rawTypes = getCommaSeparated(sp.type);
-  const rawOutcomes = getCommaSeparated(sp.outcome);
-
-  const filters: CatalogFilters = {
-    search: getString(sp.search),
-    levels: rawLevels.map(Number).filter((n) => !isNaN(n) && n >= 1 && n <= 5),
-    eras: rawEras as Era[],
-    types: rawTypes as OperationType[],
-    outcomes: rawOutcomes as Outcome[],
-    actor: getString(sp.actor),
-    sort: getString(sp.sort),
-  };
-
-  // Fetch data in parallel
-  const [operations, actors] = await Promise.all([
-    getCatalogOperations(filters),
+  const parsed = parseCatalogFilters(sp);
+  const [result, actors] = await Promise.all([
+    parsed.success ? getCatalogOperations({ ...parsed.filters, locale }) : Promise.resolve(null),
     getDistinctActors(),
   ]);
+  const queryString = catalogSearchParams(sp).toString();
+  const pageHref = (page: number) => {
+    const query = catalogSearchParams(sp);
+    query.set("page", String(page));
+    return `/${locale}/catalog?${query}`;
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -73,8 +48,17 @@ export default async function CatalogPage({ params, searchParams }: Props) {
         {t("title")}
       </h1>
 
-      <div className="flex gap-8">
-        {/* Sidebar — hidden on mobile */}
+      <div className="flex flex-col gap-8 md:flex-row">
+        <details className="rounded-md border p-4 md:hidden">
+          <summary className="cursor-pointer font-semibold">
+            {t("filters.title")}
+          </summary>
+          <div className="mt-4">
+            <Suspense fallback={<div className="h-32 animate-pulse rounded-md bg-muted" />}>
+              <CatalogFiltersComponent locale={locale} actors={actors} />
+            </Suspense>
+          </div>
+        </details>
         <div className="hidden w-64 shrink-0 md:block">
           <Suspense fallback={<div className="h-96 animate-pulse rounded-md bg-muted" />}>
             <CatalogFiltersComponent locale={locale} actors={actors} />
@@ -83,7 +67,33 @@ export default async function CatalogPage({ params, searchParams }: Props) {
 
         {/* Main content */}
         <main className="min-w-0 flex-1">
-          <OperationGrid operations={operations} locale={locale} />
+          {!parsed.success && (
+            <p role="alert" className="rounded-md border border-destructive p-4 text-destructive">
+              {t("invalidFilters")}
+            </p>
+          )}
+          {result && (
+            <>
+              <OperationGrid operations={result.operations} locale={locale} totalCount={result.total} queryString={queryString} />
+              {result.totalPages > 1 && (
+                <nav aria-label={t("pagination.label")} className="mt-8 flex flex-wrap items-center justify-center gap-4">
+                  {result.page > 1 && (
+                    <Link className="rounded-md border px-4 py-2 hover:bg-muted" href={pageHref(result.page - 1)} rel="prev">
+                      {t("pagination.previous")}
+                    </Link>
+                  )}
+                  <span aria-current="page">
+                    {t("pagination.page", { page: result.page, totalPages: result.totalPages })}
+                  </span>
+                  {result.page < result.totalPages && (
+                    <Link className="rounded-md border px-4 py-2 hover:bg-muted" href={pageHref(result.page + 1)} rel="next">
+                      {t("pagination.next")}
+                    </Link>
+                  )}
+                </nav>
+              )}
+            </>
+          )}
         </main>
       </div>
     </div>

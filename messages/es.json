@@ -27,7 +27,17 @@
   "catalog": {
     "title": "Catálogo de Operaciones",
     "search": "Buscar operaciones...",
+    "invalidFilters": "Algunos filtros no son válidos. Corrígelos o limpia todos los filtros para continuar.",
+    "pagination": {
+      "label": "Paginación del catálogo",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "page": "Página {page} de {totalPages}"
+    },
     "filters": {
+      "title": "Filtros",
+      "level": "Nivel {level}",
+      "all": "Todos",
       "icebergLevel": "Nivel del Iceberg",
       "era": "Era",
       "type": "Tipo",
@@ -69,7 +79,21 @@
       "4": "Alegadas",
       "5": "Conspiración Profunda"
     },
-    "clickToExplore": "Haz clic en un nivel para explorar"
+    "clickToExplore": "Haz clic en un nivel para explorar",
+    "dossier": {
+      "header": "Expediente",
+      "level": "Nivel",
+      "actors": "Actores",
+      "type": "Tipo",
+      "outcome": "Resultado",
+      "sources": "{count, plural, =0 {Sin fuentes} one {# fuente} other {# fuentes}}",
+      "open": "Clic para abrir el expediente"
+    },
+    "zoom": {
+      "in": "Acercar",
+      "out": "Alejar"
+    },
+    "goToLevel": "Ir al nivel {level}"
   },
   "contribute": {
     "title": "Contribuir",

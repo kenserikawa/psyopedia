@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
-import type { Source } from "@/generated/prisma";
+import type { Source } from "@/generated/prisma/client";
 
 const credibilityConfig: Record<
   number,

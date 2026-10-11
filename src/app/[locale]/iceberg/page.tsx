@@ -36,6 +36,10 @@ export default async function IcebergPage({ params }: Props) {
     status: op.status,
     slug: locale === "es" ? op.slugEs : op.slug,
     icebergLevel: op.icebergLevel,
+    types: op.types,
+    outcome: op.outcome,
+    actors: op.actors,
+    sourceCount: op._count.sources,
   }));
 
   return <IcebergJourneyWrapper operations={operations} locale={locale} />;

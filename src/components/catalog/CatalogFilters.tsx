@@ -15,33 +15,18 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCallback, useTransition } from "react";
+import { Era, OperationType, Outcome, OperationStatus } from "@/generated/prisma/enums";
+import { CATALOG_FILTER_PARAMS } from "@/lib/catalog";
 
 interface CatalogFiltersProps {
   locale: string;
   actors: string[];
 }
 
-const ERAS = ["WWII", "COLD_WAR", "MODERN", "DIGITAL_AGE"] as const;
-
-const TYPES = [
-  "ASSASSINATION",
-  "PROPAGANDA",
-  "DECEPTION",
-  "INFLUENCE_OP",
-  "FALSE_FLAG",
-  "INFILTRATION",
-  "MIND_CONTROL",
-  "SURVEILLANCE",
-  "DISINFORMATION",
-] as const;
-
-const OUTCOMES = [
-  "SUCCESSFUL",
-  "FAILED",
-  "PARTIAL",
-  "ONGOING",
-  "UNKNOWN",
-] as const;
+const ERAS = Object.values(Era);
+const TYPES = Object.values(OperationType);
+const OUTCOMES = Object.values(Outcome);
+const STATUSES = Object.values(OperationStatus);
 
 const LEVELS = [1, 2, 3, 4, 5] as const;
 
@@ -53,21 +38,16 @@ export function CatalogFilters({ locale, actors }: CatalogFiltersProps) {
   const [, startTransition] = useTransition();
 
   // Read current filter state from URL
-  const search = searchParams.get("search") ?? "";
+  const search = searchParams.get("search") ?? searchParams.get("q") ?? "";
   const sort = searchParams.get("sort") ?? "newest";
   const actor = searchParams.get("actor") ?? "";
-  const levels = searchParams.get("level")
-    ? searchParams.get("level")!.split(",").map(Number).filter(Boolean)
-    : [];
-  const eras = searchParams.get("era")
-    ? searchParams.get("era")!.split(",").filter(Boolean)
-    : [];
-  const types = searchParams.get("type")
-    ? searchParams.get("type")!.split(",").filter(Boolean)
-    : [];
-  const outcomes = searchParams.get("outcome")
-    ? searchParams.get("outcome")!.split(",").filter(Boolean)
-    : [];
+  const list = (key: string) =>
+    searchParams.getAll(key).flatMap((value) => value.split(",").map((item) => item.trim()));
+  const levels = list("level");
+  const eras = list("era");
+  const types = list("type");
+  const outcomes = list("outcome");
+  const statuses = list("status");
 
   const activeFilterCount =
     (search ? 1 : 0) +
@@ -76,11 +56,14 @@ export function CatalogFilters({ locale, actors }: CatalogFiltersProps) {
     levels.length +
     eras.length +
     types.length +
-    outcomes.length;
+    outcomes.length +
+    statuses.length;
 
   const updateParams = useCallback(
     (updates: Record<string, string | null>) => {
       const params = new URLSearchParams(searchParams.toString());
+      params.delete("page");
+      if ("search" in updates) params.delete("q");
       for (const [key, value] of Object.entries(updates)) {
         if (value === null || value === "") {
           params.delete(key);
@@ -106,28 +89,23 @@ export function CatalogFilters({ locale, actors }: CatalogFiltersProps) {
     [updateParams]
   );
 
-  const toggleLevelParam = useCallback(
-    (level: number) => {
-      const next = levels.includes(level)
-        ? levels.filter((l) => l !== level)
-        : [...levels, level];
-      updateParams({ level: next.length > 0 ? next.join(",") : null });
-    },
-    [levels, updateParams]
-  );
-
   const clearAll = useCallback(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    for (const key of [...CATALOG_FILTER_PARAMS, "page", "pageSize", "locale"]) {
+      params.delete(key);
+    }
+    const query = params.toString();
     startTransition(() => {
-      router.push(`/${locale}/catalog`);
+      router.push(`/${locale}/catalog${query ? `?${query}` : ""}`);
     });
-  }, [router, locale]);
+  }, [router, locale, searchParams]);
 
   return (
-    <aside className="flex flex-col gap-5">
+    <aside aria-label={t("filters.title")} className="flex flex-col gap-5">
       {/* Header */}
       <div className="flex items-center justify-between">
         <span className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-          {t("filters.clearAll").replace("Clear All Filters", "Filters")}
+          {t("filters.title")}
         </span>
         {activeFilterCount > 0 && (
           <Badge variant="secondary" className="text-xs">
@@ -139,6 +117,7 @@ export function CatalogFilters({ locale, actors }: CatalogFiltersProps) {
       {/* Search */}
       <div>
         <Input
+          aria-label={t("search")}
           placeholder={t("search")}
           value={search}
           onChange={(e) => updateParams({ search: e.target.value || null })}
@@ -157,7 +136,7 @@ export function CatalogFilters({ locale, actors }: CatalogFiltersProps) {
             updateParams({ sort: val === "newest" ? null : val })
           }
         >
-          <SelectTrigger className="h-9 w-full">
+          <SelectTrigger aria-label={t("sort.label")} className="h-9 w-full">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -184,10 +163,10 @@ export function CatalogFilters({ locale, actors }: CatalogFiltersProps) {
               className="flex cursor-pointer items-center gap-2 text-sm"
             >
               <Checkbox
-                checked={levels.includes(level)}
-                onCheckedChange={() => toggleLevelParam(level)}
+                checked={levels.includes(String(level))}
+                onCheckedChange={() => toggleArrayParam("level", String(level), levels)}
               />
-              <span>Level {level}</span>
+              <span>{t("filters.level", { level })}</span>
             </label>
           ))}
         </div>
@@ -266,6 +245,25 @@ export function CatalogFilters({ locale, actors }: CatalogFiltersProps) {
 
       <Separator />
 
+      <div>
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          {t("filters.status")}
+        </p>
+        <div className="flex flex-col gap-2">
+          {STATUSES.map((status) => (
+            <label key={status} className="flex cursor-pointer items-center gap-2 text-sm">
+              <Checkbox
+                checked={statuses.includes(status)}
+                onCheckedChange={() => toggleArrayParam("status", status, statuses)}
+              />
+              <span>{tEnum(`status.${status}`)}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <Separator />
+
       {/* Actor / Country */}
       {actors.length > 0 && (
         <div>
@@ -278,11 +276,11 @@ export function CatalogFilters({ locale, actors }: CatalogFiltersProps) {
               updateParams({ actor: val === "_all" ? null : val })
             }
           >
-            <SelectTrigger className="h-9 w-full">
-              <SelectValue placeholder="All" />
+            <SelectTrigger aria-label={t("filters.country")} className="h-9 w-full">
+              <SelectValue placeholder={t("filters.all")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="_all">All</SelectItem>
+              <SelectItem value="_all">{t("filters.all")}</SelectItem>
               {actors.map((a) => (
                 <SelectItem key={a} value={a}>
                   {a}
@@ -294,8 +292,7 @@ export function CatalogFilters({ locale, actors }: CatalogFiltersProps) {
       )}
 
       {/* Clear All */}
-      {activeFilterCount > 0 && (
-        <>
+      <>
           <Separator />
           <Button
             variant="outline"
@@ -305,8 +302,7 @@ export function CatalogFilters({ locale, actors }: CatalogFiltersProps) {
           >
             {t("filters.clearAll")}
           </Button>
-        </>
-      )}
+      </>
     </aside>
   );
 }

@@ -11,6 +11,7 @@ npm run dev          # Start dev server (Turbopack, port 3000)
 npm run build        # Production build
 npm run start        # Start production server
 npm run lint         # Run ESLint
+npm test             # Run validation regressions with Node + tsx
 npx prisma migrate dev --name <name>  # Create and apply a migration
 npx prisma db seed   # Seed database (idempotent via upserts)
 npx prisma studio    # Open Prisma Studio GUI
@@ -41,11 +42,11 @@ The `/[locale]/iceberg` route is a scroll-driven 3D experience built with:
 ### Key Patterns
 - **Server components by default** — `"use client"` only for interactive components (filters, forms, auth menus, iceberg 3D)
 - **Data fetching** — All Prisma queries centralized in `src/lib/queries.ts`, called directly in server components
-- **Server actions** — Mutations in `src/lib/actions/` (contributions.ts, comments.ts, moderation.ts)
+- **Server actions** — Authenticated mutations in `src/lib/actions/`; API and form submissions share `src/lib/contributions.ts`, `src/lib/comments.ts`, and runtime schemas in `src/lib/validation.ts`. Contribution approval is transactional.
 - **Auth helpers** — `src/lib/auth.ts` (NextAuth config), `src/lib/auth-utils.ts` (requireAuth/requireModerator/requireAdmin)
 - **SEO** — `src/lib/seo.ts` for metadata/JSON-LD helpers, dynamic sitemap at `src/app/sitemap.ts`
 - **Locale-aware content** — Operations have dual fields (title/titleEs, bodyEn/bodyEs, slug/slugEs); components select by locale prop
-- **No test framework** — no tests exist in this project currently
+- **Regression tests** — `npm test` uses Node's built-in runner through tsx, without a separate test framework. Opt-in local HTTP/database regressions use `npm run test:integration` (see README).
 
 ### Next.js 16 Gotchas
 - **`params` and `searchParams` are Promises** — must be awaited in page/layout components: `const { locale } = await params;`
@@ -54,7 +55,7 @@ The `/[locale]/iceberg` route is a scroll-driven 3D experience built with:
 
 ### Prisma 7 Specifics
 - Generator provider is `"prisma-client"` (not `"prisma-client-js"`)
-- Client output at `src/generated/prisma` — import types and client from `@/generated/prisma`
+- Client output at `src/generated/prisma` — import types and client from `@/generated/prisma/client`, or browser-safe enums from `@/generated/prisma/enums`. The generator does not provide an `index.ts`.
 - Requires PrismaPg driver adapter — see `src/lib/prisma.ts`
 - Datasource URL configured in `prisma.config.ts` (not in schema's datasource block)
 - Seed command configured in `prisma.config.ts` as `npx tsx prisma/seed.ts`
@@ -66,9 +67,9 @@ The `/[locale]/iceberg` route is a scroll-driven 3D experience built with:
 
 ### Route Structure
 - `/[locale]` — Homepage (hero, stats, featured ops)
-- `/[locale]/catalog` — Catalog with filter sidebar (searchParams-driven)
+- `/[locale]/catalog` — Paginated catalog with desktop/mobile filters (searchParams-driven)
 - `/[locale]/catalog/[slug]` — Operation detail with body, sources, tags, comments
-- `/[locale]/iceberg` — Interactive SVG iceberg visualization
+- `/[locale]/iceberg` — Scroll-driven 3D experience (`IcebergJourneyWrapper` → `IcebergJourney`)
 - `/[locale]/contribute` — Contribution form (auth-gated)
 - `/[locale]/admin/*` — Dashboard, moderation queue, operations, comments (MODERATOR/ADMIN only)
 - `/api/operations`, `/api/search`, `/api/contributions`, `/api/comments` — REST API
