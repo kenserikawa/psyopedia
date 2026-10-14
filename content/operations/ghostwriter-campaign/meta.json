@@ -1,0 +1,51 @@
+{
+  "slug": "ghostwriter-campaign",
+  "slugEs": "campana-ghostwriter",
+  "title": "Ghostwriter Campaign",
+  "titleEs": "Campaña Ghostwriter",
+  "aliases": ["UNC1151", "UAC-0057"],
+  "icebergLevel": 3,
+  "era": "DIGITAL_AGE",
+  "types": ["INFLUENCE_OP", "DISINFORMATION"],
+  "actors": ["Belarus", "Russia"],
+  "targets": ["Lithuania", "Latvia", "Poland", "Germany", "Ukraine", "NATO"],
+  "outcome": "ONGOING",
+  "status": "DECLASSIFIED",
+  "excerpt": "Eastern European campaign blending hacking and fake news planted on hijacked sites; Mandiant ties it to Belarus, while Germany and the EU point to Russia.",
+  "excerptEs": "Campaña en Europa del Este que mezclaba hackeos y noticias falsas en webs secuestradas; Mandiant la vincula a Bielorrusia, y Alemania y la UE, a Rusia.",
+  "publishedAt": "2026-10-14",
+  "tags": ["belarus", "russia", "disinformation", "hack-and-leak"],
+  "related": ["constant-informational-struggle", "doppelganger-campaign"],
+  "sources": [
+    {
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/ghostwriter-influence-campaign/",
+      "title": "Mandiant, \"'Ghostwriter' Influence Campaign: Unknown Actors Leverage Website Compromises and Fabricated Content to Push Narratives Aligned With Russian Security Interests\" (28 July 2020)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/unc1151-linked-to-belarus-government/",
+      "title": "Mandiant, \"UNC1151 Assessed with High Confidence to have Links to Belarus, Ghostwriter Campaign Aligned with Belarusian Government Interests\" (16 November 2021)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": "https://www.auswaertiges-amt.de/de/newsroom/regierungspressekonferenz/2480282",
+      "title": "German Federal Foreign Office, statements at the government press conference of 6 September 2021 (Ghostwriter attribution)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.gov.pl/web/diplomacy/polish-mfa-statement",
+      "title": "Ministry of Foreign Affairs of Poland, statement on the EU declaration on Ghostwriter (24 September 2021)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.sentinelone.com/labs/ghostwriter-new-campaign-targets-ukrainian-government-and-belarusian-opposition/",
+      "title": "SentinelLABS, \"Ghostwriter: New Campaign Targets Ukrainian Government and Belarusian Opposition\" (February 2025)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    }
+  ]
+}

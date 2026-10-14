@@ -1,0 +1,45 @@
+{
+  "slug": "secondary-infektion",
+  "slugEs": "secondary-infektion",
+  "title": "Secondary Infektion",
+  "titleEs": "Secondary Infektion",
+  "aliases": ["Operation Secondary Infektion"],
+  "icebergLevel": 3,
+  "era": "DIGITAL_AGE",
+  "types": ["DISINFORMATION"],
+  "actors": ["Russia"],
+  "targets": ["Ukraine", "United States", "United Kingdom", "Germany", "Kremlin critics"],
+  "outcome": "PARTIAL",
+  "status": "LEAKED",
+  "excerpt": "Six-year Russian campaign that planted forged documents on 300+ platforms; almost all fell flat, except leaked UK–US trade papers in 2019.",
+  "excerptEs": "Campaña rusa de seis años que sembró documentos falsos en más de 300 plataformas; casi todo pasó inadvertido salvo la filtración comercial británica de 2019.",
+  "publishedAt": "2026-10-14",
+  "tags": ["russia", "disinformation", "forgery", "social-media"],
+  "related": ["operation-infektion", "internet-research-agency"],
+  "sources": [
+    {
+      "url": "https://graphika.com/reports/exposing-secondary-infektion",
+      "title": "Graphika, \"Exposing Secondary Infektion: Forgeries, Interference, and Attacks on Kremlin Critics\" (16 June 2020)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": "https://www.atlanticcouncil.org/in-depth-research-reports/report/operation-secondary-infektion/",
+      "title": "Atlantic Council DFRLab, \"Operation Secondary Infektion: A Suspected Russian Intelligence Operation\" (22 June 2019)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": "https://public-assets.graphika.com/reports/graphika_report_uk_trade_leaks_&_secondary_infektion.pdf",
+      "title": "Graphika (Ben Nimmo), \"UK Trade Leaks and Secondary Infektion: New Findings and Insights from a Known Russian Operation\" (December 2019)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": "https://cyberscoop.com/uk-russian-disinformation-secondary-infektion/",
+      "title": "CyberScoop, UK says Russian actors \"almost certainly\" sought to interfere in the 2019 election (16 July 2020)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "slug": "stasi-zersetzung",
+  "slugEs": "zersetzung-de-la-stasi",
+  "title": "Stasi Zersetzung",
+  "titleEs": "Zersetzung de la Stasi",
+  "aliases": ["Zersetzung", "Directive 1/76", "Quiet terror"],
+  "icebergLevel": 2,
+  "era": "COLD_WAR",
+  "types": ["INFILTRATION", "SURVEILLANCE"],
+  "actors": ["East Germany", "Stasi"],
+  "targets": ["East German dissidents", "Peace and environmental groups", "Human rights activists", "Emigration applicants", "Church groups"],
+  "outcome": "PARTIAL",
+  "status": "DECLASSIFIED",
+  "excerpt": "Covert Stasi method, codified in Directive 1/76, for psychologically breaking dissidents through smears, sabotaged careers, rumours and informers instead of arrests.",
+  "excerptEs": "Método encubierto de la Stasi, fijado en la Directiva 1/76, para quebrar psicológicamente a disidentes con difamación, carreras saboteadas, rumores e informantes en vez de detenciones.",
+  "publishedAt": "2026-10-14",
+  "tags": ["east-germany", "civil-rights"],
+  "related": ["cointelpro", "operation-infektion"],
+  "sources": [
+    {
+      "url": "https://www.stasi-mediathek.de/medien/richtlinie-176-zur-bearbeitung-operativer-vorgaenge/",
+      "title": "Richtlinie 1/76 zur Bearbeitung Operativer Vorgänge, MfS, 1 January 1976 (BArch, MfS, AGM, Nr. 198), Stasi-Unterlagen-Archiv Mediathek",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.bundesarchiv.de/im-archiv-recherchieren/stasi-unterlagen-einsehen/hinweise-zum-mfs/mfs-lexikon/detail/zersetzung/",
+      "title": "MfS-Lexikon: Zersetzung (Bundesarchiv, Stasi Records Archive)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.bpb.de/themen/deutsche-teilung/stasi/218417/psychofolgen-bis-heute-zersetzungs-opfer-der-ddr-geheimpolizei/",
+      "title": "Stefan Trobisch-Lütge, Psychofolgen bis heute (Bundeszentrale für politische Bildung, 2016)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": "https://uniklinikum-jena.de/sedgesundheitsfolgen/en/Glossary/Decomposition+of+personalities.html",
+      "title": "Glossary: Decomposition of personalities (research network on the health consequences of SED injustice, Jena University Hospital)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": "https://www.bundesarchiv.de/nachricht/70-jahre-bundesarchiv-30-jahre-einsicht-in-die-stasi-unterlagen/",
+      "title": "70 Jahre Bundesarchiv, 30 Jahre Einsicht in die Stasi-Unterlagen (Bundesarchiv)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.bundesarchiv.de/nachricht/30-jahre-akteneinsicht-die-spuren-der-diktatur/",
+      "title": "30 Jahre Akteneinsicht: Die Spuren der Diktatur (Bundesarchiv)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    }
+  ]
+}

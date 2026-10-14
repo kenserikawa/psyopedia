@@ -1,0 +1,51 @@
+{
+  "slug": "operation-neptune",
+  "slugEs": "operacion-neptuno",
+  "title": "Operation Neptune (1964)",
+  "titleEs": "Operación Neptuno (1964)",
+  "aliases": ["Operation Neptun", "Black Lake documents"],
+  "icebergLevel": 3,
+  "era": "COLD_WAR",
+  "types": ["DISINFORMATION"],
+  "actors": ["Czechoslovakia", "StB", "KGB"],
+  "targets": ["West Germany", "West German intelligence", "Western public opinion"],
+  "outcome": "PARTIAL",
+  "status": "DECLASSIFIED",
+  "excerpt": "1964 Czechoslovak StB and KGB operation that staged the 'discovery' of Nazi documents in a Bohemian lake to embarrass West Germany, later exposed by defector Ladislav Bittman.",
+  "excerptEs": "Operación de 1964 del StB checoslovaco y el KGB que escenificó el «hallazgo» de documentos nazis en un lago de Bohemia para desacreditar a la RFA, revelada luego por el desertor Ladislav Bittman.",
+  "publishedAt": "2026-10-14",
+  "tags": ["disinformation", "media-manipulation"],
+  "related": ["operation-infektion", "fm-30-31b-forgery"],
+  "sources": [
+    {
+      "url": "https://www.wilsoncenter.org/blog-post/cold-war-disinformation-new-revelations-about-operation-neptune-czech-archives",
+      "title": "Calder Walton, Cold War Disinformation: New Revelations about Operation NEPTUNE from Czech Archives (Wilson Center, 2021)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": "https://ct24.ceskatelevize.cz/clanek/archiv/operace-neptun-nejuspesnejsi-dezinformacni-akce-komunisticke-tajne-sluzby-310845",
+      "title": "Operace Neptun: nejúspěšnější dezinformační akce komunistické tajné služby (ČT24, Czech Television, 2013)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://www.csmonitor.com/1985/0301/zdis4c.html",
+      "title": "Case study: West Germany. A Czech ploy that worked, but only briefly (The Christian Science Monitor, 1985)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://ibadatelna.minulost.cz/en/dictionary/operation-neptun",
+      "title": "Operation Neptun (iBadatelna dictionary, Centre for the Documentation of Totalitarian Regimes)",
+      "type": "WEBSITE",
+      "credibility": 3
+    },
+    {
+      "url": null,
+      "title": "Ladislav Bittman, The Deception Game: Czechoslovak Intelligence in Soviet Political Warfare (1972)",
+      "type": "BOOK",
+      "credibility": 4
+    }
+  ]
+}

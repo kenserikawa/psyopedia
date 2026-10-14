@@ -1,0 +1,63 @@
+{
+  "slug": "doppelganger-campaign",
+  "slugEs": "campana-doppelganger",
+  "title": "Doppelganger Campaign",
+  "titleEs": "Campaña Doppelganger",
+  "aliases": ["Doppelgänger", "Reliable Recent News (RRN)"],
+  "icebergLevel": 2,
+  "era": "DIGITAL_AGE",
+  "types": ["DISINFORMATION", "INFLUENCE_OP"],
+  "actors": ["Russia", "Social Design Agency", "Structura"],
+  "targets": ["Ukraine", "Germany", "France", "United States", "European public opinion"],
+  "outcome": "ONGOING",
+  "status": "DECLASSIFIED",
+  "excerpt": "Russian operation that cloned European news sites to spread anti-Ukraine fakes; sanctioned by the EU and U.S., which tie it to the Kremlin.",
+  "excerptEs": "Operación rusa que clonaba webs de medios europeos para difundir bulos contra Ucrania; sancionada por la UE y EE. UU., que la vinculan al Kremlin.",
+  "publishedAt": "2026-10-14",
+  "tags": ["russia", "disinformation", "media-manipulation", "social-media"],
+  "related": ["internet-research-agency", "secondary-infektion"],
+  "sources": [
+    {
+      "url": "https://www.disinfo.eu/doppelganger/",
+      "title": "EU DisinfoLab, \"Doppelganger: Media clones serving Russian propaganda\" (27 September 2022)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": "https://about.fb.com/news/2022/09/removing-coordinated-inauthentic-behavior-from-china-and-russia/",
+      "title": "Meta, \"Removing Coordinated Inauthentic Behavior From China and Russia\" (27 September 2022)",
+      "type": "WEBSITE",
+      "credibility": 4
+    },
+    {
+      "url": "https://about.fb.com/news/2022/11/metas-adversarial-threat-report-q3-2022/",
+      "title": "Meta, Adversarial Threat Report Q3 2022, with 15 December 2022 attribution update",
+      "type": "WEBSITE",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "Meta, Adversarial Threat Report Q1 2024 (May 2024), section \"Doppelganger's attempts to stay afloat across the internet\"",
+      "type": "WEBSITE",
+      "credibility": 4
+    },
+    {
+      "url": "https://cyberscoop.com/russian-influence-op-keeps-trying-but-struggles-to-win-hearts-and-minds/",
+      "title": "CyberScoop, \"Russian influence op keeps trying but struggles to win hearts and minds\" (29 May 2024), on Meta's Q1 2024 report",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://home.treasury.gov/news/press-releases/jy2195",
+      "title": "U.S. Department of the Treasury, \"Treasury Sanctions Actors Supporting Kremlin-Directed Malign Influence Efforts\" (20 March 2024)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://therecord.media/doj-seizes-russian-disinfo-domains-election",
+      "title": "The Record, \"DOJ seizes dozens of domains used in Russian influence campaigns targeting swing states\" (4 September 2024)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    }
+  ]
+}

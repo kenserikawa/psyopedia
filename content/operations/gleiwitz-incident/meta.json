@@ -1,0 +1,57 @@
+{
+  "slug": "gleiwitz-incident",
+  "slugEs": "incidente-de-gleiwitz",
+  "title": "Gleiwitz Incident",
+  "titleEs": "Incidente de Gleiwitz",
+  "aliases": ["Gleiwitz provocation", "Gliwice provocation"],
+  "icebergLevel": 1,
+  "era": "WWII",
+  "types": ["FALSE_FLAG", "PROPAGANDA"],
+  "actors": ["Nazi Germany", "SS", "SD", "Gestapo"],
+  "targets": ["Poland", "International public opinion", "German public"],
+  "outcome": "PARTIAL",
+  "status": "DECLASSIFIED",
+  "excerpt": "Staged attack on a German radio station by SD men posing as Poles on 31 August 1939, used as a pretext for the invasion of Poland and exposed at Nuremberg.",
+  "excerptEs": "Ataque simulado contra una emisora alemana por hombres del SD disfrazados de polacos el 31 de agosto de 1939, usado como pretexto para invadir Polonia y destapado en Núremberg.",
+  "publishedAt": "2026-10-14",
+  "tags": ["wwii", "false-flag", "propaganda"],
+  "related": ["operation-northwoods", "lavon-affair"],
+  "sources": [
+    {
+      "url": "https://nuremberg.law.harvard.edu/documents/1202-affidavit-concerning-the-staging",
+      "title": "Harvard Law School Nuremberg Trials Project: Affidavit of Alfred Naujocks on the staging of the Gleiwitz attack (document 2751-PS, 20 November 1945)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://avalon.law.yale.edu/imt/11-30-45.asp",
+      "title": "Avalon Project (Yale Law School): IMT proceedings, 30 November 1945 – testimony of Erwin von Lahousen",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://nuremberg.law.harvard.edu/documents/452263-speech-to-the-military",
+      "title": "Harvard Law School Nuremberg Trials Project: Hitler's speech to military commanders, 22 August 1939 (document 1014-PS)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://avalon.law.yale.edu/wwii/blbk106.asp",
+      "title": "Avalon Project (Yale Law School): British War Blue Book No. 106 – Hitler's speech to the Reichstag, 1 September 1939",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://historynet.com/man-who-started-world-war-ii/",
+      "title": "Roger Moorhouse, \"The Man Who Started World War II Was a 'Killer Without Shame'\", HistoryNet / World War II magazine (2019)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://gliwice.eu/en/business-card/muzea-zabytki-ciekawe-miejsca/radio-station",
+      "title": "City of Gliwice: Radio Station (site of the 1939 provocation, branch of the Gliwice Museum)",
+      "type": "WEBSITE",
+      "credibility": 3
+    }
+  ]
+}

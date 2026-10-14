@@ -1,0 +1,57 @@
+{
+  "slug": "operation-bodyguard",
+  "slugEs": "operacion-bodyguard",
+  "title": "Operation Bodyguard (Fortitude)",
+  "titleEs": "Operación Bodyguard (Fortitude)",
+  "aliases": ["Plan Jael", "Operation Fortitude", "FUSAG"],
+  "icebergLevel": 1,
+  "era": "WWII",
+  "types": ["DECEPTION"],
+  "actors": ["United Kingdom", "United States", "London Controlling Section", "MI5"],
+  "targets": ["Nazi Germany", "German High Command", "Abwehr"],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "Allied deception plan of 1944 whose Fortitude component used a phantom army and double agents to convince Germany that Normandy was a diversion before a main landing in the Pas-de-Calais.",
+  "excerptEs": "Plan aliado de engaño de 1944 cuya parte Fortitude usó un ejército fantasma y agentes dobles para hacer creer a Alemania que Normandía era una diversión previa al desembarco principal en Calais.",
+  "publishedAt": "2026-10-14",
+  "tags": ["wwii", "military", "disinformation"],
+  "related": ["operation-mincemeat", "ghost-army", "sefton-delmer-black-radio"],
+  "sources": [
+    {
+      "url": "https://www.mi5.gov.uk/history/world-war-ii/agent-garbo",
+      "title": "MI5 – The Security Service: Agent GARBO and Operation FORTITUDE",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.nationalarchives.gov.uk/explore-the-collection/explore-by-time-period/second-world-war/operation-overlord-and-d-day/",
+      "title": "The National Archives (UK): Operation Overlord and D-Day, including GARBO's message of 9 June 1944 (WO 208/4374)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://discovery.nationalarchives.gov.uk/details/r/C3961",
+      "title": "The National Archives (UK), CAB 154: London Controlling Section correspondence and papers (series description)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.cia.gov/resources/csi/static/Review-Bodyguard-of-Lies.pdf",
+      "title": "CIA Center for the Study of Intelligence: Russell J. Bowen, review of Bodyguard of Lies by Anthony Cave Brown",
+      "type": "GOVERNMENT",
+      "credibility": 4
+    },
+    {
+      "url": "https://www.nationalww2museum.org/war/podcasts/secret-wwii-spies-special-ops/part-5-d-day-and-deception",
+      "title": "The National WWII Museum podcast: D-Day and Deception (with historian Mary Kathryn Barbier)",
+      "type": "WEBSITE",
+      "credibility": 3
+    },
+    {
+      "url": null,
+      "title": "Winston S. Churchill, The Second World War, Vol. V: Closing the Ring (1951) – source of the \"bodyguard of lies\" remark at Tehran",
+      "type": "BOOK",
+      "credibility": 4
+    }
+  ]
+}

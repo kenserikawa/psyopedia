@@ -1,0 +1,57 @@
+{
+  "slug": "sefton-delmer-black-radio",
+  "slugEs": "radios-negras-de-sefton-delmer",
+  "title": "Sefton Delmer's Black Radio",
+  "titleEs": "Las radios negras de Sefton Delmer",
+  "aliases": ["Gustav Siegfried Eins", "Soldatensender Calais", "Atlantiksender"],
+  "icebergLevel": 2,
+  "era": "WWII",
+  "types": ["PROPAGANDA", "DISINFORMATION"],
+  "actors": ["United Kingdom", "Political Warfare Executive", "Special Operations Executive"],
+  "targets": ["Wehrmacht", "Kriegsmarine", "German public"],
+  "outcome": "PARTIAL",
+  "status": "DECLASSIFIED",
+  "excerpt": "British black propaganda stations run by Sefton Delmer that posed as German broadcasters, mixing real news with invented Nazi scandal to undermine morale from 1941 to 1945.",
+  "excerptEs": "Emisoras británicas de propaganda negra dirigidas por Sefton Delmer que se hacían pasar por alemanas y mezclaban noticias reales con escándalos nazis inventados para minar la moral (1941-1945).",
+  "publishedAt": "2026-10-14",
+  "tags": ["wwii", "propaganda", "information-warfare"],
+  "related": ["operation-bodyguard", "information-research-department"],
+  "sources": [
+    {
+      "url": "https://discovery.nationalarchives.gov.uk/details/r/C8197",
+      "title": "The National Archives (UK), FO 898: Political Warfare Executive papers (series description and administrative history)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://discovery.nationalarchives.gov.uk/details/r/C11341828",
+      "title": "The National Archives (UK), KV 2/2586: Security Service file on Dennis Sefton Delmer",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.smithsonianmag.com/history/fake-british-radio-show-helped-defeat-nazis-180962320/",
+      "title": "Marc Wortman, \"The Fake British Radio Show That Helped Defeat the Nazis\", Smithsonian Magazine (2017)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://archive.nymas.org/text_resources/Gray+and+Black+Radio+Propaganda+against+Nazi+Germany/radioproppaper.htm",
+      "title": "Robert Rowen, \"Gray and Black Radio Propaganda against Nazi Germany\", New York Military Affairs Symposium (2003)",
+      "type": "WEBSITE",
+      "credibility": 3
+    },
+    {
+      "url": "https://www.newstatesman.com/culture/books/book-of-the-day/2024/04/hitler-putin-and-the-information-wars",
+      "title": "Sonia Purnell, review of Peter Pomerantsev's How to Win an Information War, New Statesman (2024)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": null,
+      "title": "Sefton Delmer, Black Boomerang (Secker & Warburg, 1962)",
+      "type": "BOOK",
+      "credibility": 3
+    }
+  ]
+}

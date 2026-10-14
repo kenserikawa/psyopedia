@@ -177,11 +177,12 @@ test("el content/ real carga todas sus carpetas con relaciones simétricas", () 
       assert.ok(other?.relatedOps.some((r) => r.slug === op.slug), `${op.slug} ↔ ${related.slug}`);
     }
   }
-  const relatedOf = (slug: string) => operations.find((o) => o.slug === slug)?.relatedOps.map((o) => o.slug);
-  assert.deepEqual(relatedOf("mkultra"), ["project-artichoke"]);
-  assert.deepEqual(relatedOf("project-artichoke"), ["mkultra"]);
-  assert.deepEqual(relatedOf("operation-mockingbird"), ["cointelpro"]);
-  assert.deepEqual(relatedOf("internet-research-agency"), ["cambridge-analytica"]);
+  // Los pares de la migración siguen presentes; el contenido nuevo puede añadir más relaciones.
+  const relatedOf = (slug: string) => operations.find((o) => o.slug === slug)?.relatedOps.map((o) => o.slug) ?? [];
+  assert.ok(relatedOf("mkultra").includes("project-artichoke"));
+  assert.ok(relatedOf("project-artichoke").includes("mkultra"));
+  assert.ok(relatedOf("operation-mockingbird").includes("cointelpro"));
+  assert.ok(relatedOf("internet-research-agency").includes("cambridge-analytica"));
   assert.equal(operations.find((o) => o.slug === "operation-paperclip")?.slugEs, "operacion-paperclip");
   assert.equal(tags.find((t) => t.slug === "latin-america")?.nameEs, "Latinoamérica");
 });

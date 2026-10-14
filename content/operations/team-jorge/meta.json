@@ -1,0 +1,59 @@
+{
+  "slug": "team-jorge",
+  "slugEs": "team-jorge",
+  "title": "Team Jorge",
+  "titleEs": "Team Jorge",
+  "aliases": [],
+  "icebergLevel": 3,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "INFLUENCE_OP",
+    "DISINFORMATION"
+  ],
+  "actors": [
+    "Israel",
+    "Team Jorge",
+    "Demoman International"
+  ],
+  "targets": [
+    "Elections",
+    "Political campaigns",
+    "Corporate rivals"
+  ],
+  "outcome": "UNKNOWN",
+  "status": "LEAKED",
+  "excerpt": "Israel-based private unit filmed by undercover reporters in 2022 selling hacking, bot armies and election disinformation; its leader denied any wrongdoing.",
+  "excerptEs": "Unidad privada con sede en Israel grabada en 2022 por periodistas encubiertos mientras ofrecía hackeo, ejércitos de bots y desinformación electoral; su líder niega irregularidades.",
+  "publishedAt": "2026-10-14",
+  "tags": [
+    "israel",
+    "elections",
+    "disinformation",
+    "astroturfing"
+  ],
+  "related": [
+    "cambridge-analytica",
+    "pegasus-spyware",
+    "operation-earnest-voice-sockpuppets"
+  ],
+  "sources": [
+    {
+      "url": "https://forbiddenstories.org/team-jorge-disinformation/",
+      "title": "Team Jorge: In the heart of a global disinformation machine (Forbidden Stories, Story Killers, February 2023)",
+      "type": "JOURNALISM",
+      "credibility": 4
+    },
+    {
+      "url": "https://www.theguardian.com/world/2023/feb/15/revealed-disinformation-team-jorge-claim-meddling-elections-tal-hanan",
+      "title": "Revealed: the hacking and disinformation team meddling in elections (The Guardian, February 2023)",
+      "type": "JOURNALISM",
+      "credibility": 4
+    },
+    {
+      "url": "https://www.timesofisrael.com/french-news-channel-fires-anchor-linked-to-israeli-disinformation-network-scandal/",
+      "title": "French news channel fires anchor linked to Israeli disinformation network scandal (The Times of Israel/AFP, February 2023)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "slug": "operation-mincemeat",
+  "slugEs": "operacion-mincemeat",
+  "title": "Operation Mincemeat",
+  "titleEs": "Operación Mincemeat",
+  "aliases": ["The Man Who Never Was"],
+  "icebergLevel": 1,
+  "era": "WWII",
+  "types": ["DECEPTION"],
+  "actors": ["United Kingdom", "MI5", "Naval Intelligence Division"],
+  "targets": ["Nazi Germany", "Abwehr", "German High Command"],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "1943 British deception that floated a corpse carrying forged letters off Spain to convince Germany that the Allies would invade Greece and Sardinia instead of Sicily.",
+  "excerptEs": "Engaño británico de 1943 que dejó a la deriva frente a España un cadáver con cartas falsas para convencer a Alemania de que los Aliados invadirían Grecia y Cerdeña, no Sicilia.",
+  "publishedAt": "2026-10-14",
+  "tags": ["wwii", "military", "disinformation"],
+  "related": ["operation-bodyguard"],
+  "sources": [
+    {
+      "url": "https://www.iwm.org.uk/history/second-world-war/intelligence/the-war-on-paper-operation-mincemeat",
+      "title": "Imperial War Museums: The War on Paper – Operation Mincemeat (Ewen Montagu papers)",
+      "type": "WEBSITE",
+      "credibility": 4
+    },
+    {
+      "url": "https://www.nationalww2museum.org/war/articles/secret-agents-secret-armies-operation-mincemeat",
+      "title": "The National WWII Museum: Secret Agents, Secret Armies – Operation Mincemeat (Walter Wolf III, 2022)",
+      "type": "WEBSITE",
+      "credibility": 4
+    },
+    {
+      "url": "https://discovery.nationalarchives.gov.uk/details/r/C4412726",
+      "title": "The National Archives (UK), WO 208/3163: Operation MINCEMEAT – German reaction to deception plan (1945)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Ben Macintyre, Operation Mincemeat (Bloomsbury, 2010)",
+      "type": "BOOK",
+      "credibility": 4
+    }
+  ]
+}

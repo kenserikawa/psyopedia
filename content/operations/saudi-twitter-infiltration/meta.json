@@ -1,0 +1,87 @@
+{
+  "slug": "saudi-twitter-infiltration",
+  "slugEs": "infiltracion-saudi-en-twitter",
+  "title": "Saudi Infiltration of Twitter",
+  "titleEs": "Infiltración saudí en Twitter",
+  "aliases": [
+    "Twitter Saudi spy case",
+    "United States v. Abouammo"
+  ],
+  "icebergLevel": 2,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "INFILTRATION",
+    "SURVEILLANCE"
+  ],
+  "actors": [
+    "Saudi Arabia"
+  ],
+  "targets": [
+    "Saudi dissidents",
+    "Anonymous Twitter critics",
+    "Twitter"
+  ],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "Two Twitter employees passed private data on Saudi government critics to Riyadh in 2014–2015, according to US prosecutors; one was convicted by a US jury in 2022.",
+  "excerptEs": "Dos empleados de Twitter pasaron a Riad datos privados de críticos del Gobierno saudí en 2014-2015, según la fiscalía de EE. UU.; un jurado condenó a uno de ellos en 2022.",
+  "publishedAt": "2026-10-14",
+  "tags": [
+    "saudi-arabia",
+    "social-media",
+    "digital-privacy"
+  ],
+  "related": [
+    "pegasus-spyware"
+  ],
+  "sources": [
+    {
+      "url": "https://www.justice.gov/archives/opa/pr/two-former-twitter-employees-and-saudi-national-charged-acting-illegal-agents-saudi-arabia",
+      "title": "Two Former Twitter Employees and a Saudi National Charged as Acting as Illegal Agents of Saudi Arabia (US Department of Justice, November 2019)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.justice.gov/usao-ndca/united-states-v-ahmad-abouammo",
+      "title": "United States v. Ahmad Abouammo: case page and jury verdict (US Attorney's Office, Northern District of California)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://cdn.ca9.uscourts.gov/datastore/opinions/2024/12/04/22-10348.pdf",
+      "title": "United States v. Abouammo, No. 22-10348 (US Court of Appeals for the Ninth Circuit, December 2024)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.supremecourt.gov/opinions/25pdf/25-5146_e29f.pdf",
+      "title": "Abouammo v. United States, No. 25-5146 (US Supreme Court, June 2026)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.nbcbayarea.com/news/tech/former-twitter-manager-sentenced-spying-saudi-royal-family/3105696/",
+      "title": "Former Twitter manager sentenced for spying for Saudi royal family (NBC Bay Area, December 2022)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://www.theregister.com/2019/11/07/twitter_employees_saudi_spy/",
+      "title": "Ex-Twitter staff charged with spying for Saudi royals (The Register, November 2019)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://www.theguardian.com/world/2021/apr/09/saudi-arabia-jails-alleged-satirist-identified-in-twitter-infiltration",
+      "title": "Saudi Arabia jails alleged satirist 'identified in Twitter infiltration' (The Guardian, April 2021)",
+      "type": "JOURNALISM",
+      "credibility": 4
+    },
+    {
+      "url": "https://citizenlab.ca/research/the-kingdom-came-to-canada-how-saudi-linked-digital-espionage-reached-canadian-soil/",
+      "title": "The Kingdom Came to Canada: How Saudi-Linked Digital Espionage Reached Canadian Soil (Citizen Lab, October 2018)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    }
+  ]
+}

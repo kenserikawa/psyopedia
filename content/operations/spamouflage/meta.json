@@ -1,0 +1,81 @@
+{
+  "slug": "spamouflage",
+  "slugEs": "spamouflage",
+  "title": "Spamouflage (Dragonbridge)",
+  "titleEs": "Spamouflage (Dragonbridge)",
+  "aliases": [
+    "Spamouflage Dragon",
+    "DRAGONBRIDGE"
+  ],
+  "icebergLevel": 2,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "INFLUENCE_OP",
+    "PROPAGANDA",
+    "DISINFORMATION"
+  ],
+  "actors": [
+    "China"
+  ],
+  "targets": [
+    "Chinese dissidents abroad",
+    "Hong Kong protesters",
+    "Taiwan",
+    "United States",
+    "Canada",
+    "Chinese-speaking audiences"
+  ],
+  "outcome": "ONGOING",
+  "status": "DECLASSIFIED",
+  "excerpt": "Pro-Beijing network of fake and hijacked accounts on 50+ platforms that hides propaganda among spam; Meta tied it to Chinese law enforcement in 2023.",
+  "excerptEs": "Red pro-Pekín de cuentas falsas y secuestradas en más de 50 plataformas que esconde propaganda entre spam; Meta la vinculó en 2023 a las fuerzas de seguridad chinas.",
+  "publishedAt": "2026-10-14",
+  "tags": [
+    "china",
+    "social-media",
+    "astroturfing",
+    "disinformation"
+  ],
+  "related": [
+    "fifty-cent-army",
+    "doppelganger-campaign"
+  ],
+  "sources": [
+    {
+      "url": "https://www.graphika.com/reports/spamouflage",
+      "title": "Spamouflage: Cross-Platform Spam Network Targeted Hong Kong Protests (Graphika, September 2019)",
+      "type": "WEBSITE",
+      "credibility": 4
+    },
+    {
+      "url": "https://blog.google/threat-analysis-group/over-50000-instances-of-dragonbridge-activity-disrupted-in-2022/",
+      "title": "Over 50,000 instances of DRAGONBRIDGE activity disrupted in 2022 (Google Threat Analysis Group, January 2023)",
+      "type": "WEBSITE",
+      "credibility": 4
+    },
+    {
+      "url": "https://blog.google/threat-analysis-group/google-disrupted-dragonbridge-activity-q1-2024/",
+      "title": "Google disrupted over 10,000 instances of DRAGONBRIDGE activity in Q1 2024 (Google Threat Analysis Group, June 2024)",
+      "type": "WEBSITE",
+      "credibility": 4
+    },
+    {
+      "url": "https://www.voanews.com/a/meta-fights-sprawling-chinese-spamouflage-operation/7246057.html",
+      "title": "Meta Fights Sprawling Chinese 'Spamouflage' Operation (VOA/AFP, August 2023)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://www.justice.gov/usao-edny/pr/34-officers-peoples-republic-china-national-police-charged-perpetrating-transnational",
+      "title": "34 Officers of People's Republic of China National Police Charged with Perpetrating Transnational Repression Scheme (US Department of Justice, April 2023)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://international.canada.ca/en/global-affairs/corporate/reports/rapid-response-mechanism/news/2025-china-spamouflage",
+      "title": "Canada targeted in a new Chinese transnational repression campaign linked to 'Spamouflage' (Global Affairs Canada, Rapid Response Mechanism)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    }
+  ]
+}

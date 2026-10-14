@@ -1,0 +1,57 @@
+{
+  "slug": "information-research-department",
+  "slugEs": "departamento-de-investigacion-de-la-informacion",
+  "title": "Information Research Department (IRD)",
+  "titleEs": "Departamento de Investigación de la Información (IRD)",
+  "aliases": ["IRD"],
+  "icebergLevel": 2,
+  "era": "COLD_WAR",
+  "types": ["PROPAGANDA"],
+  "actors": ["United Kingdom", "Foreign Office"],
+  "targets": ["Soviet Union", "International communist movement", "Indonesian Communist Party (PKI)", "Provisional IRA"],
+  "outcome": "PARTIAL",
+  "status": "DECLASSIFIED",
+  "excerpt": "Semi-secret Foreign Office unit that from 1948 to 1977 fed unattributable anti-communist material to journalists, writers and governments, and ran black propaganda abroad.",
+  "excerptEs": "Unidad semisecreta del Foreign Office que de 1948 a 1977 suministró material anticomunista sin atribución a periodistas, escritores y gobiernos, y practicó propaganda negra en el extranjero.",
+  "publishedAt": "2026-10-14",
+  "tags": ["propaganda", "media-manipulation"],
+  "related": ["operation-mockingbird"],
+  "sources": [
+    {
+      "url": "https://beta.nationalarchives.gov.uk/catalogue/id/C8409",
+      "title": "FO 1110: Information Research Department, General Correspondence, series description (The National Archives, Kew)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://wrap.warwick.ac.uk/id/eprint/152751/",
+      "title": "Giselle Gwinnett, The demise of the Information Research Department in 1977 (PhD thesis, University of Warwick, 2021)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": "https://writing.upenn.edu/~afilreis/50s/orwell-informer",
+      "title": "Orwell offered writers' blacklist to anti-Soviet propaganda unit (The Guardian, 11 July 1996; reproduced by the University of Pennsylvania)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://www.nybooks.com/articles/2002/09/26/orwells-list/",
+      "title": "Christopher Hitchens, Orwell's List (The New York Review of Books, 2002)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://deceptioninhighplaces.com/home/documents/kenjataan2-facts/",
+      "title": "Kenjataan2 ('Facts'): IRD black newsletter for Indonesia, documents from The National Archives (Nicholas Gilby)",
+      "type": "WEBSITE",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "Paul Lashmar and James Oliver, Britain's Secret Propaganda War 1948-1977 (Sutton, 1998)",
+      "type": "BOOK",
+      "credibility": 4
+    }
+  ]
+}

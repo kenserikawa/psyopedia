@@ -1,0 +1,57 @@
+{
+  "slug": "georgi-markov-assassination",
+  "slugEs": "asesinato-de-georgi-markov",
+  "title": "Assassination of Georgi Markov",
+  "titleEs": "Asesinato de Georgi Markov",
+  "aliases": ["Umbrella Murder", "Bulgarian Umbrella"],
+  "icebergLevel": 1,
+  "era": "COLD_WAR",
+  "types": ["ASSASSINATION"],
+  "actors": ["Bulgaria", "Committee for State Security (DS)", "KGB"],
+  "targets": ["Georgi Markov", "Bulgarian émigrés"],
+  "outcome": "SUCCESSFUL",
+  "status": "LEAKED",
+  "excerpt": "Bulgarian dissident broadcaster killed in London in 1978 with a ricin pellet; attributed to Bulgarian State Security with KGB help, but never solved.",
+  "excerptEs": "Locutor disidente búlgaro asesinado en Londres en 1978 con un perdigón de ricina; se atribuye a la Seguridad del Estado búlgara con ayuda del KGB, pero nunca se resolvió.",
+  "publishedAt": "2026-10-14",
+  "tags": ["assassination", "bulgaria"],
+  "related": ["litvinenko-poisoning"],
+  "sources": [
+    {
+      "url": "https://unredacted.com/2010/07/16/document-friday-the-poisonous-umbrella-and-the-assassination-of-georgi-markov/",
+      "title": "Document Friday: The Poisonous Umbrella and the Assassination of Georgi Markov (National Security Archive, 2010)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": "https://www.rferl.org/a/1081550.html",
+      "title": "Bulgaria: Georgi Markov, Victim Of An Unknown Cold War Assassin (RFE/RL, 1996)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://cpj.org/2008/09/beyond-the-bulgarian-umbrella/amp/",
+      "title": "Beyond the Bulgarian umbrella (Committee to Protect Journalists, 2008)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://www.arabnews.com/world/bulgaria-closes-probe-in-cold-war-umbrella-killing-464423",
+      "title": "Bulgaria closes probe in Cold War umbrella killing (Associated Press via Arab News, 2013)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://www.ilpost.it/2023/03/31/francesco-gullino-caso-documentario-ombrello-bulgaro/",
+      "title": "Francesco Gullino and the Bulgarian umbrella case (Il Post, 2023)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": null,
+      "title": "Hristo Hristov, The Double Life of Agent Piccadilly (2008)",
+      "type": "BOOK",
+      "credibility": 4
+    }
+  ]
+}

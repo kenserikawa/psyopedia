@@ -170,5 +170,41 @@
   "weather": {
     "name": "Weather Modification",
     "nameEs": "Modificación del Clima"
+  },
+  "assassination": {
+    "name": "Assassination",
+    "nameEs": "Asesinato"
+  },
+  "bulgaria": {
+    "name": "Bulgaria",
+    "nameEs": "Bulgaria"
+  },
+  "east-germany": {
+    "name": "East Germany",
+    "nameEs": "Alemania Oriental (RDA)"
+  },
+  "forgery": {
+    "name": "Forgery",
+    "nameEs": "Falsificación"
+  },
+  "belarus": {
+    "name": "Belarus",
+    "nameEs": "Bielorrusia"
+  },
+  "hack-and-leak": {
+    "name": "Hack-and-Leak",
+    "nameEs": "Hackeo y filtración"
+  },
+  "china": {
+    "name": "China",
+    "nameEs": "China"
+  },
+  "iran": {
+    "name": "Iran",
+    "nameEs": "Irán"
+  },
+  "saudi-arabia": {
+    "name": "Saudi Arabia",
+    "nameEs": "Arabia Saudí"
   }
 }

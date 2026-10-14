@@ -1,0 +1,45 @@
+{
+  "slug": "fm-30-31b-forgery",
+  "slugEs": "falsificacion-fm-30-31b",
+  "title": "FM 30-31B Forgery",
+  "titleEs": "Falsificación del FM 30-31B",
+  "aliases": ["Westmoreland Manual", "Supplement B", "Stability Operations—Intelligence"],
+  "icebergLevel": 3,
+  "era": "COLD_WAR",
+  "types": ["DISINFORMATION"],
+  "actors": ["Soviet Union", "KGB"],
+  "targets": ["United States", "U.S. Army", "Western European public opinion"],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "Soviet forgery of a U.S. Army manual claiming Washington would use leftist terrorism to sway allies; replayed in over 20 countries from 1975.",
+  "excerptEs": "Falsificación soviética de un manual del Ejército de EE. UU. que atribuía a Washington el uso del terrorismo izquierdista; reapareció en más de 20 países.",
+  "publishedAt": "2026-10-14",
+  "tags": ["russia", "disinformation", "forgery"],
+  "related": ["operation-infektion", "operation-gladio", "secondary-infektion"],
+  "sources": [
+    {
+      "url": "https://www.reaganlibrary.gov/public/digitallibrary/smof/nscintelligence/degraffenreid/r27/40-139-39149351-R27-003-2019.pdf",
+      "title": "U.S. International Communication Agency, \"Forgeries of U.S. Documents\" (R-5-82, February 1982), Reagan Library, DeGraffenreid Files",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://web.archive.org/web/20080328042037/http://usinfo.state.gov/media/Archive/2006/Jan/20-127177.html",
+      "title": "U.S. Department of State, \"Misinformation about 'Gladio/Stay Behind' Networks Resurfaces\" (20 January 2006, archived)",
+      "type": "GOVERNMENT",
+      "credibility": 4
+    },
+    {
+      "url": "https://covertactionmagazine.com/wp-content/uploads/2020/01/CAIB03-1979-1.pdf",
+      "title": "Covert Action Information Bulletin No. 3, \"The Mysterious Supplement B\" (January 1979), argument for authenticity",
+      "type": "JOURNALISM",
+      "credibility": 2
+    },
+    {
+      "url": null,
+      "title": "Soviet Covert Action (The Forgery Offensive), Hearings before the Subcommittee on Oversight, House Permanent Select Committee on Intelligence, 96th Congress, 6 and 19 February 1980",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    }
+  ]
+}

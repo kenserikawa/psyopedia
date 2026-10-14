@@ -1,0 +1,45 @@
+{
+  "slug": "ghost-army",
+  "slugEs": "ejercito-fantasma",
+  "title": "The Ghost Army",
+  "titleEs": "El Ejército Fantasma",
+  "aliases": ["23rd Headquarters Special Troops"],
+  "icebergLevel": 2,
+  "era": "WWII",
+  "types": ["DECEPTION"],
+  "actors": ["United States", "United States Army", "23rd Headquarters Special Troops"],
+  "targets": ["Nazi Germany", "Wehrmacht"],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "Secret U.S. Army unit of artists and technicians that used inflatable tanks, sound effects and fake radio traffic to impersonate whole divisions in Europe in 1944-45.",
+  "excerptEs": "Unidad secreta del Ejército de EE. UU. formada por artistas y técnicos que usó tanques hinchables, efectos de sonido y radio falsa para suplantar divisiones enteras en Europa en 1944-45.",
+  "publishedAt": "2026-10-14",
+  "tags": ["wwii", "military"],
+  "related": ["operation-bodyguard"],
+  "sources": [
+    {
+      "url": "https://www.govinfo.gov/content/pkg/PLAW-117publ85/html/PLAW-117publ85.htm",
+      "title": "U.S. Congress: Ghost Army Congressional Gold Medal Act, Public Law 117-85 (2022), findings",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.nationalww2museum.org/war/articles/ghost-army-canvas-and-camouflage",
+      "title": "The National WWII Museum: The Ghost Army – Canvas and Camouflage (Chase Tomlin, 2024)",
+      "type": "WEBSITE",
+      "credibility": 4
+    },
+    {
+      "url": "https://arlingtoncemetery.mil/Blog/Post/13492/Ghost-Army-Soldiers-receive-Congressional-Gold-Medal",
+      "title": "Arlington National Cemetery: Ghost Army Soldiers receive Congressional Gold Medal",
+      "type": "GOVERNMENT",
+      "credibility": 4
+    },
+    {
+      "url": "https://ghostarmy.org/about/congress-presents-ghost-army-a-congressional-gold-medal",
+      "title": "Ghost Army Legacy Project: Congress presents Ghost Army a Congressional Gold Medal",
+      "type": "WEBSITE",
+      "credibility": 3
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "slug": "endless-mayfly",
+  "slugEs": "endless-mayfly",
+  "title": "Endless Mayfly",
+  "titleEs": "Endless Mayfly",
+  "aliases": [],
+  "icebergLevel": 3,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "DISINFORMATION",
+    "DECEPTION"
+  ],
+  "actors": [
+    "Iran"
+  ],
+  "targets": [
+    "Saudi Arabia",
+    "Israel",
+    "United States",
+    "Journalists"
+  ],
+  "outcome": "PARTIAL",
+  "status": "LEAKED",
+  "excerpt": "Iran-aligned network that faked articles on lookalike news sites, pushed them through bogus personas, then deleted them; exposed by Citizen Lab in 2019.",
+  "excerptEs": "Red alineada con Irán que publicaba artículos falsos en webs que imitaban a medios reales, los difundía con identidades ficticias y luego los borraba; Citizen Lab la destapó en 2019.",
+  "publishedAt": "2026-10-14",
+  "tags": [
+    "iran",
+    "disinformation",
+    "media-manipulation",
+    "social-media"
+  ],
+  "related": [
+    "doppelganger-campaign",
+    "secondary-infektion"
+  ],
+  "sources": [
+    {
+      "url": "https://citizenlab.ca/research/burned-after-reading-endless-mayflys-ephemeral-disinformation-campaign/",
+      "title": "Burned After Reading: Endless Mayfly's Ephemeral Disinformation Campaign (Citizen Lab, University of Toronto, May 2019)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": "https://deibert.citizenlab.ca/2019/05/endless-mayfly/",
+      "title": "Endless Mayfly: an invasive species in the social media ecosystem (Ronald Deibert, Citizen Lab director, May 2019)",
+      "type": "WEBSITE",
+      "credibility": 4
+    },
+    {
+      "url": "https://foreignpolicy.com/2019/05/14/how-pro-iran-hackers-spoofed-fp-and-the-news-media/",
+      "title": "How Pro-Iran Hackers Spoofed FP and the News Media (Foreign Policy, May 2019)",
+      "type": "JOURNALISM",
+      "credibility": 4
+    }
+  ]
+}

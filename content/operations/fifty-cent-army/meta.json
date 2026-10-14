@@ -1,0 +1,65 @@
+{
+  "slug": "fifty-cent-army",
+  "slugEs": "ejercito-de-los-50-centimos",
+  "title": "50 Cent Army",
+  "titleEs": "Ejército de los 50 Céntimos",
+  "aliases": [
+    "50 Cent Party",
+    "Wumao",
+    "Internet commentators"
+  ],
+  "icebergLevel": 2,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "PROPAGANDA",
+    "INFLUENCE_OP"
+  ],
+  "actors": [
+    "China",
+    "Chinese Communist Party",
+    "Cyberspace Administration of China"
+  ],
+  "targets": [
+    "Chinese internet users"
+  ],
+  "outcome": "ONGOING",
+  "status": "LEAKED",
+  "excerpt": "Chinese officials posting pro-government comments disguised as ordinary opinion; leaked 2014 emails let researchers estimate 448 million fabricated posts a year.",
+  "excerptEs": "Funcionarios chinos que publican comentarios progubernamentales disfrazados de opinión corriente; correos filtrados en 2014 permitieron estimar 448 millones de mensajes al año.",
+  "publishedAt": "2026-10-14",
+  "tags": [
+    "china",
+    "astroturfing",
+    "propaganda",
+    "censorship"
+  ],
+  "related": [
+    "operation-earnest-voice-sockpuppets"
+  ],
+  "sources": [
+    {
+      "url": "https://gking.harvard.edu/50c",
+      "title": "King, Pan and Roberts, How the Chinese Government Fabricates Social Media Posts for Strategic Distraction, Not Engaged Argument, American Political Science Review 111(3), 2017",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": "https://chinadigitaltimes.net/2014/12/leaks-reveal-chinas-elaborate-internet-propaganda-machine/",
+      "title": "Leaks Reveal China's Elaborate Internet Propaganda Machine (China Digital Times, December 2014)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://www.nextgov.com/digital-government/2014/12/inside-chinas-elaborate-and-absurd-internet-propaganda-machine/101610/",
+      "title": "Inside China's Elaborate and Absurd Internet Propaganda Machine (Quartz, republished by Nextgov, December 2014)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://www.propublica.org/article/leaked-documents-show-how-chinas-army-of-paid-internet-trolls-helped-censor-the-coronavirus",
+      "title": "Leaked Documents Show How China's Army of Paid Internet Trolls Helped Censor the Coronavirus (The New York Times and ProPublica, December 2020)",
+      "type": "JOURNALISM",
+      "credibility": 4
+    }
+  ]
+}

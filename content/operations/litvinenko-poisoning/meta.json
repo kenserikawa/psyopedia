@@ -1,0 +1,39 @@
+{
+  "slug": "litvinenko-poisoning",
+  "slugEs": "envenenamiento-de-litvinenko",
+  "title": "Poisoning of Alexander Litvinenko",
+  "titleEs": "Envenenamiento de Alexander Litvinenko",
+  "aliases": ["Litvinenko affair", "Polonium-210 poisoning"],
+  "icebergLevel": 1,
+  "era": "MODERN",
+  "types": ["ASSASSINATION"],
+  "actors": ["Russia", "FSB"],
+  "targets": ["Alexander Litvinenko"],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "Ex-FSB officer fatally poisoned with polonium-210 in London in 2006; a UK public inquiry found the FSB operation was probably approved by Putin.",
+  "excerptEs": "Exagente del FSB envenenado con polonio-210 en Londres en 2006; una investigación pública británica concluyó que Putin probablemente aprobó la operación del FSB.",
+  "publishedAt": "2026-10-14",
+  "tags": ["russia", "assassination", "whistleblower"],
+  "related": ["georgi-markov-assassination"],
+  "sources": [
+    {
+      "url": "https://www.gov.uk/government/publications/the-litvinenko-inquiry-report-into-the-death-of-alexander-litvinenko",
+      "title": "The Litvinenko Inquiry: Report into the death of Alexander Litvinenko (Sir Robert Owen, HC 695, 21 January 2016)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.courthousenews.com/wp-content/uploads/2021/09/echr-carter-russia.pdf",
+      "title": "European Court of Human Rights, Carter v. Russia (application no. 20914/07), judgment of 21 September 2021",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.bbc.com/news/uk-35370621",
+      "title": "BBC News, \"Litvinenko suspects Andrei Lugovoi and Dmitry Kovtun\" (21 January 2016)",
+      "type": "JOURNALISM",
+      "credibility": 4
+    }
+  ]
+}

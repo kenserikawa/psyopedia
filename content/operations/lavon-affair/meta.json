@@ -1,0 +1,45 @@
+{
+  "slug": "lavon-affair",
+  "slugEs": "caso-lavon",
+  "title": "Lavon Affair (Operation Susannah)",
+  "titleEs": "Caso Lavon (Operación Susannah)",
+  "aliases": ["Operation Susannah", "The Unfortunate Affair"],
+  "icebergLevel": 2,
+  "era": "COLD_WAR",
+  "types": ["FALSE_FLAG"],
+  "actors": ["Israel", "Unit 131", "Military Intelligence Directorate (Aman)"],
+  "targets": ["Egypt", "United Kingdom", "United States"],
+  "outcome": "FAILED",
+  "status": "DECLASSIFIED",
+  "excerpt": "1954 Israeli military intelligence plot in which Egyptian Jews firebombed Western and Egyptian sites to blame local groups; its exposure toppled Defence Minister Lavon.",
+  "excerptEs": "Plan de la inteligencia militar israelí de 1954 en el que judíos egipcios incendiaron sedes occidentales y egipcias para culpar a grupos locales; su fracaso derribó al ministro Lavon.",
+  "publishedAt": "2026-10-14",
+  "tags": ["false-flag", "israel", "military"],
+  "related": ["operation-northwoods", "gleiwitz-incident"],
+  "sources": [
+    {
+      "url": "https://archives.mod.gov.il/sites/English/Exhibitions/Pages/The-Lavon-affair.aspx",
+      "title": "The \"Unfortunate\" or the Lavon affair (IDF and Defense Establishment Archives)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": "https://www.timesofisrael.com/new-revelations-in-lavon-affair-raise-more-questions-then-they-answer/",
+      "title": "New revelations in Lavon Affair raise more questions than they answer (The Times of Israel, 2015)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://www.ynetnews.com/articles/0,7340,L-3065838,00.html",
+      "title": "Israel honors 9 Egyptian spies (Reuters via Ynetnews, 2005)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": "https://www.jewishvirtuallibrary.org/the-lavon-affair",
+      "title": "The Lavon Affair (Jewish Virtual Library)",
+      "type": "WEBSITE",
+      "credibility": 3
+    }
+  ]
+}
