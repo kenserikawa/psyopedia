@@ -1,8 +1,11 @@
-import type { Operation, Tag } from "@/generated/prisma/client";
-import { Era, OperationType, Outcome, OperationStatus } from "@/generated/prisma/enums";
+import { Era, OperationType, Outcome, OperationStatus } from "@/lib/content/enums";
+import type { OperationSummary } from "@/lib/content/types";
 
-export const CATALOG_SORTS = ["newest", "oldest", "most-viewed", "level", "title"] as const;
+export type { OperationSummary } from "@/lib/content/types";
+
+export const CATALOG_SORTS = ["newest", "oldest", "level", "title"] as const;
 export const CATALOG_FILTER_PARAMS = ["search", "q", "level", "era", "type", "outcome", "status", "actor", "sort"] as const;
+export type CatalogSort = (typeof CATALOG_SORTS)[number];
 
 export interface CatalogFilters {
   search?: string;
@@ -12,18 +15,19 @@ export interface CatalogFilters {
   outcomes?: Outcome[];
   statuses?: OperationStatus[];
   actor?: string;
-  sort?: (typeof CATALOG_SORTS)[number];
+  sort?: CatalogSort;
   page?: number;
   pageSize?: number;
   locale?: string;
 }
 
-export type OperationSummary = Pick<Operation,
-  | "id" | "slug" | "slugEs" | "title" | "titleEs" | "excerpt" | "excerptEs"
-  | "icebergLevel" | "era" | "status" | "types" | "actors" | "targets"
-  | "outcome" | "aliases" | "coverImage" | "viewCount" | "createdAt"
-  | "updatedAt" | "moderationStatus"
-> & { tags: Tag[]; _count?: { sources: number } };
+export interface CatalogPage {
+  operations: OperationSummary[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}
 
 type CatalogSearchParams = URLSearchParams | Record<string, string | string[] | undefined>;
 
@@ -94,4 +98,44 @@ export function parseCatalogFilters(input: CatalogSearchParams): CatalogParseRes
     locale,
   };
   return errors.length ? { success: false, errors } : { success: true, filters };
+}
+
+/** Minúsculas y sin tildes, para comparar búsquedas en los dos idiomas. */
+export function normalizeSearch(value: string): string {
+  return value.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+}
+
+const byId = (a: OperationSummary, b: OperationSummary) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+
+/** Filtra, ordena y pagina en memoria. Mismo contrato que la antigua consulta de Prisma. */
+export function filterCatalog(all: readonly OperationSummary[], filters: CatalogFilters = {}): CatalogPage {
+  const { levels, eras, types, outcomes, statuses, actor, sort = "newest", locale } = filters;
+  const needle = normalizeSearch(filters.search ?? "");
+  const matches = all.filter(
+    (op) =>
+      (!needle ||
+        [op.title, op.titleEs, op.excerpt, op.excerptEs, ...op.aliases].some((text) =>
+          normalizeSearch(text).includes(needle),
+        )) &&
+      (!levels?.length || levels.includes(op.icebergLevel)) &&
+      (!eras?.length || eras.includes(op.era)) &&
+      (!types?.length || op.types.some((type) => types.includes(type))) &&
+      (!outcomes?.length || outcomes.includes(op.outcome)) &&
+      (!statuses?.length || statuses.includes(op.status)) &&
+      (!actor || op.actors.includes(actor)),
+  );
+
+  const compare: Record<CatalogSort, (a: OperationSummary, b: OperationSummary) => number> = {
+    newest: (a, b) => b.publishedAt.localeCompare(a.publishedAt),
+    oldest: (a, b) => a.publishedAt.localeCompare(b.publishedAt),
+    level: (a, b) => a.icebergLevel - b.icebergLevel,
+    title: (a, b) => (locale === "es" ? a.titleEs.localeCompare(b.titleEs) : a.title.localeCompare(b.title)),
+  };
+  const sorted = [...matches].sort((a, b) => compare[sort](a, b) || byId(a, b));
+
+  const pageSize = Math.min(100, Math.max(1, Math.trunc(filters.pageSize ?? 12)));
+  const total = sorted.length;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const page = Math.min(totalPages, Math.max(1, Math.trunc(filters.page ?? 1)));
+  return { operations: sorted.slice((page - 1) * pageSize, page * pageSize), total, page, pageSize, totalPages };
 }
