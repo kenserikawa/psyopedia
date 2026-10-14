@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 
 const CONTACT_EMAIL = "contact@psyopedia.org";
 
@@ -131,6 +132,7 @@ export default async function PrivacyPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const c = content[locale] ?? content.en;
 
   return (

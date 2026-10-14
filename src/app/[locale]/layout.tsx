@@ -2,9 +2,8 @@ import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { EB_Garamond } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Analytics } from "@vercel/analytics/next";
 import { routing } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/site";
 import { Header } from "@/components/layout/Header";
@@ -22,6 +21,8 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
@@ -38,6 +39,7 @@ export const metadata: Metadata = {
     siteName: "Psyopedia",
     type: "website",
   },
+  referrer: "strict-origin-when-cross-origin",
 };
 
 export default async function LocaleLayout({ children, params }: Props) {
@@ -47,6 +49,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     notFound();
   }
 
+  setRequestLocale(locale);
   const messages = await getMessages();
 
   return (
@@ -57,7 +60,6 @@ export default async function LocaleLayout({ children, params }: Props) {
           <main className="flex-1">{children}</main>
           <Footer />
         </NextIntlClientProvider>
-        <Analytics />
       </body>
     </html>
   );

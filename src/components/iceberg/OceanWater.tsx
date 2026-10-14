@@ -5,10 +5,11 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Water } from 'three/examples/jsm/objects/Water.js'
 import { useTexture } from '@react-three/drei'
+import { asset } from '@/lib/site'
 
 export default function OceanWater() {
   const ref = useRef<Water>(null)
-  const waterNormals = useTexture('/textures/waternormals.jpg')
+  const waterNormals = useTexture(asset('/textures/waternormals.jpg'))
 
   waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping
 

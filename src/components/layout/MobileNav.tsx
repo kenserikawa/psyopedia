@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
+import { asset } from "@/lib/site";
 
 export function MobileNav({ locale }: { locale: string }) {
   const t = useTranslations("nav");
@@ -39,7 +40,7 @@ export function MobileNav({ locale }: { locale: string }) {
               >
                 {link.icon && (
                   <Image
-                    src="/iceberg-emoji.png"
+                    src={asset("/iceberg-emoji.png")}
                     alt=""
                     width={18}
                     height={18}

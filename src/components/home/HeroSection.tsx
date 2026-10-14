@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { asset } from "@/lib/site";
 
 export function HeroSection({ locale }: { locale: string }) {
   const t = useTranslations("home");
@@ -9,7 +10,7 @@ export function HeroSection({ locale }: { locale: string }) {
     <section className="container mx-auto px-4 py-16 sm:py-20">
       <div className="flex flex-col items-center gap-8 md:flex-row md:items-center md:justify-center md:gap-12">
         <Image
-          src="/lucid-psyduck.png"
+          src={asset("/lucid-psyduck.png")}
           alt="Psyopedia mascot"
           width={280}
           height={280}
