@@ -5,7 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { SITE_URL } from "@/lib/site";
+import { ogImageUrl, SITE_URL } from "@/lib/site";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import "@/app/globals.css";
@@ -27,20 +27,30 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: {
-    template: "%s | Psyopedia",
-    default: "Psyopedia",
-  },
-  description:
-    "A comprehensive bilingual encyclopedia of psychological operations throughout history.",
-  openGraph: {
-    siteName: "Psyopedia",
-    type: "website",
-  },
-  referrer: "strict-origin-when-cross-origin",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  const image = ogImageUrl(locale);
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      template: "%s | Psyopedia",
+      default: "Psyopedia",
+    },
+    description:
+      "A comprehensive bilingual encyclopedia of psychological operations throughout history.",
+    openGraph: {
+      siteName: "Psyopedia",
+      type: "website",
+      images: [image],
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: [image],
+    },
+    referrer: "strict-origin-when-cross-origin",
+  };
+}
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;

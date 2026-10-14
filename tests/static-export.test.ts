@@ -54,3 +54,24 @@ test("el catálogo estático trae la primera página sin filtros", () => {
   const cards = read("en/catalog/index.html").match(new RegExp(`href="${BASE_PATH}/en/catalog/[a-z0-9-]+/?"`, "g")) ?? [];
   assert.ok(cards.length >= 12, `solo ${cards.length} enlaces a fichas`);
 });
+
+const PNG_SIGNATURE = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+
+test("las imágenes OG son ficheros PNG reales", () => {
+  const files = [
+    "og/en/home.png",
+    "og/es/home.png",
+    ...content.operations.flatMap((op) => [`og/en/catalog/${op.slug}.png`, `og/es/catalog/${op.slugEs}.png`]),
+  ];
+  for (const relative of files) {
+    assert.ok(exists(relative), relative);
+    assert.ok(fs.readFileSync(path.join(OUT, relative)).subarray(0, 8).equals(PNG_SIGNATURE), `${relative} no es PNG`);
+  }
+});
+
+test("las páginas enlazan su imagen OG", () => {
+  assert.ok(read("en/catalog/mkultra/index.html").includes(`${SITE_URL}/og/en/catalog/mkultra.png`));
+  assert.ok(read("es/catalog/operacion-paperclip/index.html").includes(`${SITE_URL}/og/es/catalog/operacion-paperclip.png`));
+  assert.ok(read("es/index.html").includes(`${SITE_URL}/og/es/home.png`));
+  assert.ok(read("en/catalog/index.html").includes(`${SITE_URL}/og/en/home.png`));
+});
