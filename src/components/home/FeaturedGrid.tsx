@@ -1,9 +1,9 @@
 import { useTranslations } from "next-intl";
 import { OperationCard } from "@/components/catalog/OperationCard";
-import type { Operation, Tag } from "@/generated/prisma/client";
+import type { OperationSummary } from "@/lib/content/types";
 
 interface FeaturedGridProps {
-  operations: (Operation & { tags: Tag[] })[];
+  operations: OperationSummary[];
   locale: string;
 }
 

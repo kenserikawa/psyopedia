@@ -15,7 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCallback, useTransition } from "react";
-import { Era, OperationType, Outcome, OperationStatus } from "@/generated/prisma/enums";
+import { Era, OperationType, Outcome, OperationStatus } from "@/lib/content/enums";
 import { CATALOG_FILTER_PARAMS } from "@/lib/catalog";
 
 interface CatalogFiltersProps {
@@ -142,7 +142,6 @@ export function CatalogFilters({ locale, actors }: CatalogFiltersProps) {
           <SelectContent>
             <SelectItem value="newest">{t("sort.newest")}</SelectItem>
             <SelectItem value="oldest">{t("sort.oldest")}</SelectItem>
-            <SelectItem value="most-viewed">{t("sort.mostViewed")}</SelectItem>
             <SelectItem value="level">{t("sort.icebergLevel")}</SelectItem>
             <SelectItem value="title">{t("sort.title")}</SelectItem>
           </SelectContent>

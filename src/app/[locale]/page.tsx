@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
-import { getHomepageData } from "@/lib/queries";
-import { SITE_URL } from "@/lib/seo";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getHomepageData } from "@/lib/content";
+import { ogImageUrl, pageUrl } from "@/lib/site";
 import { HeroSection } from "@/components/home/HeroSection";
 import { StatsBar } from "@/components/home/StatsBar";
 import { FeaturedGrid } from "@/components/home/FeaturedGrid";
@@ -13,6 +13,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "home" });
+  const image = ogImageUrl(locale);
 
   return {
     description: t("subtitle"),
@@ -21,19 +22,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: "Psyopedia",
       title: "Psyopedia",
       description: t("subtitle"),
-      url: `${SITE_URL}/${locale}`,
+      url: pageUrl(`/${locale}`),
       locale: locale === "es" ? "es_ES" : "en_US",
+      images: [image],
     },
     twitter: {
       card: "summary_large_image",
       title: "Psyopedia",
       description: t("subtitle"),
+      images: [image],
     },
     alternates: {
-      canonical: `${SITE_URL}/${locale}`,
+      canonical: pageUrl(`/${locale}`),
       languages: {
-        en: `${SITE_URL}/en`,
-        es: `${SITE_URL}/es`,
+        en: pageUrl("/en"),
+        es: pageUrl("/es"),
       },
     },
   };
@@ -41,7 +44,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
-  const { featuredOperations, stats } = await getHomepageData();
+  setRequestLocale(locale);
+  const { featuredOperations, stats } = getHomepageData();
 
   return (
     <>

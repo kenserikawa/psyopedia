@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
-import type { Operation } from "@/generated/prisma/client";
+import type { Operation } from "@/lib/content/types";
 
 const levelColors: Record<number, string> = {
   1: "bg-sky-100 text-sky-800",

@@ -1,32 +1,28 @@
 import type { MetadataRoute } from "next";
-import { getAllOperationSlugs } from "@/lib/queries";
+import { getCatalogSummaries } from "@/lib/content";
+import { pageUrl } from "@/lib/site";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://psyopedia.org";
-
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const operations = await getAllOperationSlugs();
-
+export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = ["", "/catalog", "/iceberg", "/legal/privacy", "/legal/terms"].flatMap((path) =>
     ["en", "es"].map((locale) => ({
-      url: `${SITE_URL}/${locale}${path}`,
-      lastModified: new Date(),
+      url: pageUrl(`/${locale}${path}`),
       changeFrequency: "weekly" as const,
       priority: path === "" ? 1.0 : 0.8,
     }))
   );
 
-  const operationPages = operations.flatMap((op) => [
+  const operationPages = getCatalogSummaries().flatMap((op) => [
     {
-      url: `${SITE_URL}/en/catalog/${op.slug}`,
-      lastModified: new Date(),
+      url: pageUrl(`/en/catalog/${op.slug}`),
+      lastModified: op.updatedAt,
       changeFrequency: "monthly" as const,
       priority: 0.6,
     },
     {
-      url: `${SITE_URL}/es/catalog/${op.slugEs}`,
-      lastModified: new Date(),
+      url: pageUrl(`/es/catalog/${op.slugEs}`),
+      lastModified: op.updatedAt,
       changeFrequency: "monthly" as const,
       priority: 0.6,
     },

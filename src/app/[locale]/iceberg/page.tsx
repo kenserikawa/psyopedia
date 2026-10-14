@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
-import { getIcebergData } from "@/lib/queries";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getIcebergData } from "@/lib/content";
+import { ogImageUrl, pageUrl } from "@/lib/site";
 import IcebergJourneyWrapper from "@/components/iceberg/IcebergJourneyWrapper";
 
 interface Props {
@@ -16,19 +17,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: t("title"),
       description: t("subtitle"),
+      images: [ogImageUrl(locale)],
     },
     alternates: {
-      canonical: `/${locale}/iceberg`,
-      languages: { en: "/en/iceberg", es: "/es/iceberg" },
+      canonical: pageUrl(`/${locale}/iceberg`),
+      languages: { en: pageUrl("/en/iceberg"), es: pageUrl("/es/iceberg") },
     },
   };
 }
 
 export default async function IcebergPage({ params }: Props) {
   const { locale } = await params;
-  const rawOperations = await getIcebergData();
+  setRequestLocale(locale);
 
-  const operations = rawOperations.map((op) => ({
+  const operations = getIcebergData().map((op) => ({
     id: op.id,
     title: locale === "es" ? op.titleEs : op.title,
     excerpt: locale === "es" ? op.excerptEs : op.excerpt,
@@ -39,7 +41,7 @@ export default async function IcebergPage({ params }: Props) {
     types: op.types,
     outcome: op.outcome,
     actors: op.actors,
-    sourceCount: op._count.sources,
+    sourceCount: op.sourceCount,
   }));
 
   return <IcebergJourneyWrapper operations={operations} locale={locale} />;

@@ -1,27 +1,29 @@
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { getOperationBySlug, getOperationBySlugEs } from "@/lib/queries";
+import { getAllOperationSlugs, getOperationForLocale } from "@/lib/content";
 import { OperationHeader } from "@/components/operation/OperationHeader";
 import { OperationBody } from "@/components/operation/OperationBody";
 import { SourcesList } from "@/components/operation/SourcesList";
 import { RelatedOps } from "@/components/operation/RelatedOps";
 import { ShareButtons } from "@/components/operation/ShareButtons";
-import { generateOperationMetadata, generateOperationJsonLd, SITE_URL } from "@/lib/seo";
+import { generateOperationMetadata, generateOperationJsonLd, operationUrl } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
 }
 
-async function fetchOperation(locale: string, slug: string) {
-  return locale === "es" ? getOperationBySlugEs(slug) : getOperationBySlug(slug);
+export const dynamicParams = false;
+
+export function generateStaticParams({ params }: { params: { locale: string } }) {
+  return getAllOperationSlugs().map((op) => ({ slug: params.locale === "es" ? op.slugEs : op.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
-  const operation = await fetchOperation(locale, slug);
+  const operation = getOperationForLocale(locale, slug);
 
   if (!operation) {
     return { title: "Not Found" };
@@ -32,7 +34,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function OperationDetailPage({ params }: Props) {
   const { locale, slug } = await params;
-  const operation = await fetchOperation(locale, slug);
+  setRequestLocale(locale);
+  const operation = getOperationForLocale(locale, slug);
 
   if (!operation) {
     notFound();
@@ -41,7 +44,6 @@ export default async function OperationDetailPage({ params }: Props) {
   const tOp = await getTranslations({ locale, namespace: "operation" });
 
   const bodyContent = locale === "es" ? operation.bodyEs : operation.bodyEn;
-  const relatedOps = operation.relatedOps ?? [];
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -58,7 +60,7 @@ export default async function OperationDetailPage({ params }: Props) {
       {/* Share */}
       <div className="mt-6">
         <ShareButtons
-          url={`${SITE_URL}/${locale}/catalog/${slug}`}
+          url={operationUrl(operation, locale)}
           title={locale === "es" ? operation.titleEs : operation.title}
         />
       </div>
@@ -94,10 +96,10 @@ export default async function OperationDetailPage({ params }: Props) {
       )}
 
       {/* Related operations */}
-      {relatedOps.length > 0 && (
+      {operation.relatedOps.length > 0 && (
         <>
           <Separator className="my-6" />
-          <RelatedOps operations={relatedOps} locale={locale} />
+          <RelatedOps operations={operation.relatedOps} locale={locale} />
         </>
       )}
     </div>

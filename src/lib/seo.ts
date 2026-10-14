@@ -1,19 +1,30 @@
-import type { Operation } from "@/generated/prisma/client";
+import type { Operation } from "@/lib/content/types";
+import { ogImageUrl, pageUrl } from "@/lib/site";
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://psyopedia.org";
+function localized(operation: Operation, locale: string) {
+  const es = locale === "es";
+  return {
+    title: es ? operation.titleEs : operation.title,
+    description: es ? operation.excerptEs : operation.excerpt,
+    slug: es ? operation.slugEs : operation.slug,
+  };
+}
+
+/** URL canónica de la ficha en el idioma dado. */
+export function operationUrl(operation: Pick<Operation, "slug" | "slugEs">, locale: string): string {
+  return pageUrl(`/${locale}/catalog/${locale === "es" ? operation.slugEs : operation.slug}`);
+}
 
 export function generateOperationJsonLd(operation: Operation, locale: string) {
-  const title = locale === "es" ? operation.titleEs : operation.title;
-  const description = locale === "es" ? operation.excerptEs : operation.excerpt;
-  const slug = locale === "es" ? operation.slugEs : operation.slug;
+  const { title, description } = localized(operation, locale);
 
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: title,
     description,
-    url: `${SITE_URL}/${locale}/catalog/${slug}`,
-    datePublished: operation.createdAt,
+    url: operationUrl(operation, locale),
+    datePublished: operation.publishedAt,
     dateModified: operation.updatedAt,
     author: {
       "@type": "Organization",
@@ -22,7 +33,7 @@ export function generateOperationJsonLd(operation: Operation, locale: string) {
     publisher: {
       "@type": "Organization",
       name: "Psyopedia",
-      url: SITE_URL,
+      url: pageUrl("/"),
     },
     inLanguage: locale === "es" ? "es" : "en",
     about: operation.types.map((t) => ({
@@ -33,9 +44,9 @@ export function generateOperationJsonLd(operation: Operation, locale: string) {
 }
 
 export function generateOperationMetadata(operation: Operation, locale: string) {
-  const title = locale === "es" ? operation.titleEs : operation.title;
-  const description = locale === "es" ? operation.excerptEs : operation.excerpt;
-  const slug = locale === "es" ? operation.slugEs : operation.slug;
+  const { title, description, slug } = localized(operation, locale);
+  const url = operationUrl(operation, locale);
+  const image = ogImageUrl(locale, slug);
 
   return {
     title,
@@ -44,19 +55,20 @@ export function generateOperationMetadata(operation: Operation, locale: string) 
       title: `${title} | Psyopedia`,
       description,
       type: "article" as const,
-      url: `${SITE_URL}/${locale}/catalog/${slug}`,
-      images: [`${SITE_URL}/api/og/${operation.slug}`],
+      url,
+      images: [image],
     },
     twitter: {
       card: "summary_large_image" as const,
       title: `${title} | Psyopedia`,
       description,
+      images: [image],
     },
     alternates: {
-      canonical: `${SITE_URL}/${locale}/catalog/${slug}`,
+      canonical: url,
       languages: {
-        en: `${SITE_URL}/en/catalog/${operation.slug}`,
-        es: `${SITE_URL}/es/catalog/${operation.slugEs}`,
+        en: operationUrl(operation, "en"),
+        es: operationUrl(operation, "es"),
       },
     },
   };
