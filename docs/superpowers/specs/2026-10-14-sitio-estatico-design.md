@@ -275,20 +275,22 @@ En GitHub Pages un fichero sin extensión se sirve como `application/octet-strea
 crawlers sociales pueden no tratarlo como imagen. Por eso no se usan las convenciones
 `opengraph-image.tsx`.
 
-- **Nuevo route handler** `src/app/og/[locale]/[file]/route.tsx` (`GET`, sin leer `Request`).
-  Su `generateStaticParams` produce `home.png` por idioma y `<slug>.png` por operación (con
-  `slugEs` en español). Devuelve un `ImageResponse` de `next/og`.
+- **Dos route handlers** (`GET`, sin leer `Request`), que comparten plantillas en `src/lib/og.tsx`:
+  - `src/app/og/[locale]/home.png/route.tsx` → `og/<locale>/home.png`.
+  - `src/app/og/[locale]/catalog/[file]/route.tsx` → `og/<locale>/catalog/<slug>.png` (con
+    `slugEs` en español). Ir en su propia carpeta evita que una operación con slug `home`
+    pise la imagen de la home.
 - **Diseño:** el de la home sale del actual `[locale]/opengraph-image.tsx` y el de las
   operaciones del actual `/api/og/[slug]`. Ahora los títulos y etiquetas de nivel salen en el
   idioma de la página.
-- **Metadatos:** `seo.ts` y la home referencian `${SITE_URL}/og/<locale>/<file>.png` de
-  forma explícita.
+- **Metadatos:** el layout, la home, el iceberg y `seo.ts` referencian la imagen de forma
+  explícita con `ogImageUrl(locale, slug?)` de `src/lib/site.ts`.
 - Se borra `src/app/[locale]/opengraph-image.tsx`.
 
-**Riesgo a verificar primero:** que `next build` con `output: "export"` emita
-`out/og/en/mkultra.png` como fichero PNG. Si no lo hace, la alternativa es un script
-`scripts/build-og.ts` que, tras el build, renderiza las mismas plantillas con `ImageResponse`
-y escribe los PNG en `out/og/`.
+**Verificado (2026-10-14)** con una app mínima de Next 16.2.1 y `output: "export"`,
+`trailingSlash: true` y `basePath`: el route handler emite `out/og/en/home.png` como PNG real
+(1200×630), y una carpeta de ruta estática `home.png/` también. No hace falta el plan B del
+script.
 
 ---
 
@@ -300,8 +302,7 @@ y escribe los PNG en `out/og/`.
   `https://kenserikawa.github.io/psyopedia` da `/psyopedia` y `https://psyopedia.org` da `""`.
   Con dos variables no se podría: en las expresiones de GitHub Actions un valor vacío cae al
   valor por defecto, así que el `basePath` vacío del dominio propio sería imposible.
-- **`src/lib/site.ts`** concentra las URL del sitio y no importa nada de Next, para que
-  `next.config.ts` también pueda importarlo:
+- **`src/lib/site.ts`** concentra las URL del sitio:
   - `SITE_URL`: la URL pública sin barra final (por defecto `https://psyopedia.org`).
     `seo.ts`, `robots.ts`, `sitemap.ts` y las páginas lo importan de aquí.
   - `BASE_PATH`: la ruta de `SITE_URL` sin barra final.
@@ -327,12 +328,14 @@ y escribe los PNG en `out/og/`.
 ### `next.config.ts`
 
 ```ts
-import { BASE_PATH } from "./src/lib/site";
+// next.config.ts no puede importar módulos TS locales (verificado con Next 16.2.1):
+// repite el cálculo de BASE_PATH de src/lib/site.ts. test:export comprueba que coinciden.
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://psyopedia.org").replace(/\/+$/, "");
 
 const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
-  basePath: BASE_PATH,
+  basePath: new URL(SITE_URL).pathname.replace(/\/+$/, ""),
   images: { unoptimized: true },
   allowedDevOrigins: ["*.ngrok-free.app"],
 };
@@ -355,9 +358,8 @@ Se eliminan `headers()` y `poweredByHeader`. El layout añade
 
 ### Otros ficheros
 
-- `public/.nojekyll` vacío, para que `_next/` se sirva aunque se publique desde una rama. Si
-  el export no copia ficheros ocultos de `public/`, el workflow lo crea con
-  `touch out/.nojekyll` antes de subir el artefacto.
+- `public/.nojekyll` vacío, para que `_next/` se sirva aunque se publique desde una rama.
+  Verificado: el export lo copia a `out/`.
 - `.env.example` se queda solo con `NEXT_PUBLIC_SITE_URL`.
 - **Dominio propio (futuro):** crear `public/CNAME` y poner la variable del repo `SITE_URL`
   a `https://<dominio>`. No requiere cambios de código.
@@ -408,8 +410,10 @@ Se ejecuta después de `npm run build` e inspecciona `out/`:
   `en/index.html`, `es/index.html`, `en/catalog/index.html`, `en/iceberg/index.html` y las
   legales.
 - Existen las 50 fichas: `en/catalog/<slug>/index.html` y `es/catalog/<slugEs>/index.html`.
-- `og/en/home.png`, `og/es/home.png` y `og/<locale>/<file>.png` de cada operación empiezan
-  por los bytes mágicos de PNG.
+- `og/en/home.png`, `og/es/home.png` y `og/<locale>/catalog/<slug>.png` de cada operación
+  empiezan por los bytes mágicos de PNG.
+- Los assets de `_next/` del HTML llevan el `BASE_PATH` de `src/lib/site.ts`, lo que confirma
+  que coincide con el calculado en `next.config.ts`.
 - `sitemap.xml` contiene las URL de todas las fichas, con el `basePath` y la barra final.
 - No existe `out/api/`.
 
@@ -441,19 +445,16 @@ Sin `next dev` en marcha (comparte `.next` con el build):
 
 ## 13. Fases de implementación (orden sugerido para el plan)
 
-1. **Spike de export:** `output: "export"` + route handler OG mínimo; confirmar que emite
-   `.png` (§7) y que `setRequestLocale` deja el i18n estático. Se decide aquí si las OG
-   necesitan el script alternativo.
-2. **Capa de contenido:** enums, tipos, esquema, loader y tests (TDD).
-3. **Migración:** script desechable → `content/`, validado por el loader.
-4. **Páginas sobre el loader:** home, ficha, iceberg, sitemap y robots.
-5. **Catálogo en cliente:** `filterCatalog` (TDD) y `CatalogBrowser`.
-6. **Retirada de usuarios y base de datos:** borrado de rutas, libs, componentes, mensajes,
+1. **Capa de contenido:** enums, tipos, esquema, loader y tests (TDD).
+2. **Migración:** script desechable → `content/`, validado por el loader.
+3. **Páginas sobre el loader:** home, ficha, iceberg, sitemap y robots.
+4. **Catálogo en cliente:** `filterCatalog` (TDD) y `CatalogBrowser`.
+5. **Retirada de usuarios y base de datos:** borrado de rutas, libs, componentes, mensajes,
    Prisma y dependencias.
-7. **URLs y despliegue:** `basePath`, `asset()`, `pageUrl()`, raíz, 404, OG definitivas,
+6. **URLs y despliegue:** `basePath`, `asset()`, `pageUrl()`, raíz, 404, OG definitivas,
    `.nojekyll` y workflow.
-8. **Legales y documentación.**
-9. **Verificación:** `test:export` y recorrido manual.
+7. **Legales y documentación.**
+8. **Verificación:** `test:export` y recorrido manual.
 
 ---
 
