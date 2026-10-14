@@ -55,7 +55,7 @@ One-time setup: in the GitHub repository, **Settings → Pages → Source: GitHu
 
 The public URL comes from `NEXT_PUBLIC_SITE_URL`, and its path is the basePath. By default the workflow builds for `https://kenserikawa.github.io/psyopedia` (basePath `/psyopedia`).
 
-**Custom domain:** add `public/CNAME` with the domain, set the repository variable `SITE_URL` to `https://<domain>` (Settings → Secrets and variables → Actions → Variables), and point the DNS to GitHub Pages. No code changes are needed.
+**Custom domain:** in **Settings → Pages → Custom domain**, enter the domain and save; set the repository variable `SITE_URL` to `https://<domain>` (Settings → Secrets and variables → Actions → Variables); then point the DNS to GitHub Pages (`A`/`ALIAS` for an apex domain, `CNAME` for a subdomain). Add the domain in GitHub before configuring DNS. With an Actions deployment GitHub ignores any `CNAME` file, so none is needed. No code changes are needed.
 
 GitHub Pages does not allow custom HTTP headers; the referrer policy is set with a `<meta>` tag.
 

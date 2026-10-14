@@ -361,8 +361,9 @@ Se eliminan `headers()` y `poweredByHeader`. El layout añade
 - `public/.nojekyll` vacío, para que `_next/` se sirva aunque se publique desde una rama.
   Verificado: el export lo copia a `out/`.
 - `.env.example` se queda solo con `NEXT_PUBLIC_SITE_URL`.
-- **Dominio propio (futuro):** crear `public/CNAME` y poner la variable del repo `SITE_URL`
-  a `https://<dominio>`. No requiere cambios de código.
+- **Dominio propio (futuro):** configurarlo en Settings → Pages → Custom domain y poner la
+  variable del repo `SITE_URL` a `https://<dominio>`. Con despliegue por Actions GitHub ignora
+  `public/CNAME`, así que no hace falta. No requiere cambios de código.
 
 ### Pasos manuales del usuario
 

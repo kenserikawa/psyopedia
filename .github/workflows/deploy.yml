@@ -15,7 +15,8 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  # Su ruta es el basePath. Para un dominio propio: variable del repo SITE_URL=https://<dominio> y public/CNAME.
+  # Su ruta es el basePath. Para un dominio propio: Settings → Pages → Custom domain y variable del repo
+  # SITE_URL=https://<dominio>. Con despliegue por Actions GitHub ignora public/CNAME.
   NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://kenserikawa.github.io/psyopedia' }}
 
 jobs:
