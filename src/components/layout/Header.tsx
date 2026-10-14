@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { UserMenu } from "@/components/auth/UserMenu";
 import { MobileNav } from "@/components/layout/MobileNav";
 
 export function Header({ locale }: { locale: string }) {
@@ -22,16 +21,12 @@ export function Header({ locale }: { locale: string }) {
           <Link href={`/${locale}/iceberg`} className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
             <Image src="/iceberg-emoji.png" alt={t("iceberg")} width={22} height={22} className="inline" style={{ width: 22, height: 'auto' }} />
           </Link>
-          <Link href={`/${locale}/contribute`} className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
-            {t("contribute")}
-          </Link>
           <Link
             href={`/${otherLocale}`}
             className="rounded-md border px-2 py-1 text-xs font-medium uppercase hover:bg-accent transition-colors"
           >
             {otherLocale}
           </Link>
-          <UserMenu locale={locale} />
           <MobileNav locale={locale} />
         </nav>
       </div>

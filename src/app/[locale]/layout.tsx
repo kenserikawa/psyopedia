@@ -9,7 +9,6 @@ import { routing } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/seo";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { SessionProvider } from "@/components/auth/SessionProvider";
 import "@/app/globals.css";
 
 const ebGaramond = EB_Garamond({
@@ -54,11 +53,9 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale} suppressHydrationWarning className={ebGaramond.variable}>
       <body className="min-h-screen bg-background font-sans antialiased">
         <NextIntlClientProvider messages={messages}>
-          <SessionProvider>
-            <Header locale={locale} />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </SessionProvider>
+          <Header locale={locale} />
+          <main className="flex-1">{children}</main>
+          <Footer />
         </NextIntlClientProvider>
         <Analytics />
       </body>

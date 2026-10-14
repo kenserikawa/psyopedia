@@ -74,11 +74,6 @@ export function OperationHeader({ operation, locale }: OperationHeaderProps) {
           </span>
         )}
       </div>
-
-      {/* View count */}
-      <p className="text-xs text-muted-foreground">
-        {tOp("viewCount", { count: operation.viewCount })}
-      </p>
     </header>
   );
 }

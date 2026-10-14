@@ -3,10 +3,6 @@
     "home": "Inicio",
     "catalog": "Catálogo",
     "iceberg": "El Iceberg",
-    "contribute": "Contribuir",
-    "admin": "Admin",
-    "signIn": "Iniciar Sesión",
-    "signOut": "Cerrar Sesión",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú"
   },
@@ -60,13 +56,10 @@
   "operation": {
     "sources": "Fuentes",
     "relatedOps": "Operaciones Relacionadas",
-    "comments": "Comentarios",
-    "suggestEdit": "Sugerir una Edición",
     "share": "Compartir",
     "copyLink": "Copiar enlace",
     "linkCopied": "¡Enlace copiado!",
     "icebergLevel": "Nivel del Iceberg {level}",
-    "viewCount": "{count} vistas",
     "tags": "Etiquetas"
   },
   "iceberg": {
@@ -94,24 +87,6 @@
       "out": "Alejar"
     },
     "goToLevel": "Ir al nivel {level}"
-  },
-  "contribute": {
-    "title": "Contribuir",
-    "subtitle": "Ayuda a expandir la base de datos enviando nuevas operaciones o correcciones",
-    "newOperation": "Enviar Nueva Operación",
-    "editOperation": "Sugerir una Edición",
-    "addSource": "Añadir una Fuente",
-    "thankYou": "¡Gracias! Tu envío está en revisión.",
-    "loginRequired": "Por favor inicia sesión para contribuir"
-  },
-  "admin": {
-    "dashboard": "Panel de Control",
-    "queue": "Cola de Moderación",
-    "operations": "Todas las Operaciones",
-    "pendingCount": "{count} pendientes",
-    "approve": "Aprobar",
-    "reject": "Rechazar",
-    "comments": "Moderación de Comentarios"
   },
   "enums": {
     "era": {

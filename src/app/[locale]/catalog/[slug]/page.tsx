@@ -1,16 +1,13 @@
 import { notFound } from "next/navigation";
-import { after } from "next/server";
-import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { getOperationBySlug, getOperationBySlugEs, getApprovedComments, incrementOperationView } from "@/lib/queries";
+import { getOperationBySlug, getOperationBySlugEs } from "@/lib/queries";
 import { OperationHeader } from "@/components/operation/OperationHeader";
 import { OperationBody } from "@/components/operation/OperationBody";
 import { SourcesList } from "@/components/operation/SourcesList";
 import { RelatedOps } from "@/components/operation/RelatedOps";
-import { CommentSection } from "@/components/operation/CommentSection";
 import { ShareButtons } from "@/components/operation/ShareButtons";
 import { generateOperationMetadata, generateOperationJsonLd, SITE_URL } from "@/lib/seo";
 
@@ -35,7 +32,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function OperationDetailPage({ params }: Props) {
   const { locale, slug } = await params;
-  const requestHeaders = await headers();
   const operation = await fetchOperation(locale, slug);
 
   if (!operation) {
@@ -46,15 +42,6 @@ export default async function OperationDetailPage({ params }: Props) {
 
   const bodyContent = locale === "es" ? operation.bodyEs : operation.bodyEn;
   const relatedOps = operation.relatedOps ?? [];
-  const comments = await getApprovedComments(operation.id);
-
-  if (
-    !requestHeaders.has("next-router-prefetch") &&
-    !requestHeaders.get("purpose")?.includes("prefetch") &&
-    !requestHeaders.get("sec-purpose")?.includes("prefetch")
-  ) {
-    after(() => incrementOperationView(operation.id));
-  }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -113,20 +100,6 @@ export default async function OperationDetailPage({ params }: Props) {
           <RelatedOps operations={relatedOps} locale={locale} />
         </>
       )}
-
-      {/* Comments */}
-      <Separator className="my-6" />
-      <CommentSection
-        operationId={operation.id}
-        comments={comments.map((c) => ({
-          id: c.id,
-          body: c.body,
-          author: { name: c.author.name ?? null },
-          createdAt: c.createdAt,
-          status: c.status,
-        }))}
-        locale={locale}
-      />
     </div>
   );
 }

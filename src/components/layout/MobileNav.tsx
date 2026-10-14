@@ -13,7 +13,6 @@ export function MobileNav({ locale }: { locale: string }) {
   const links = [
     { href: `/${locale}/catalog`, label: t("catalog") },
     { href: `/${locale}/iceberg`, label: t("iceberg"), icon: true },
-    { href: `/${locale}/contribute`, label: t("contribute") },
   ];
 
   return (

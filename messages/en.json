@@ -3,10 +3,6 @@
     "home": "Home",
     "catalog": "Catalog",
     "iceberg": "The Iceberg",
-    "contribute": "Contribute",
-    "admin": "Admin",
-    "signIn": "Sign In",
-    "signOut": "Sign Out",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
   },
@@ -60,13 +56,10 @@
   "operation": {
     "sources": "Sources",
     "relatedOps": "Related Operations",
-    "comments": "Comments",
-    "suggestEdit": "Suggest an Edit",
     "share": "Share",
     "copyLink": "Copy link",
     "linkCopied": "Link copied!",
     "icebergLevel": "Iceberg Level {level}",
-    "viewCount": "{count} views",
     "tags": "Tags"
   },
   "iceberg": {
@@ -94,24 +87,6 @@
       "out": "Zoom out"
     },
     "goToLevel": "Go to level {level}"
-  },
-  "contribute": {
-    "title": "Contribute",
-    "subtitle": "Help expand the database by submitting new operations or corrections",
-    "newOperation": "Submit New Operation",
-    "editOperation": "Suggest an Edit",
-    "addSource": "Add a Source",
-    "thankYou": "Thank you! Your submission is under review.",
-    "loginRequired": "Please sign in to contribute"
-  },
-  "admin": {
-    "dashboard": "Dashboard",
-    "queue": "Moderation Queue",
-    "operations": "All Operations",
-    "pendingCount": "{count} pending",
-    "approve": "Approve",
-    "reject": "Reject",
-    "comments": "Comment Moderation"
   },
   "enums": {
     "era": {

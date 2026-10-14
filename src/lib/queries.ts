@@ -171,15 +171,6 @@ export const getOperationBySlugEs = cache(async (slugEs: string) => {
   });
 });
 
-export async function incrementOperationView(operationId: string) {
-  // A visit must not change the article's editorial updatedAt timestamp.
-  await prisma.$executeRaw`
-    UPDATE "Operation"
-    SET "viewCount" = "viewCount" + 1
-    WHERE "id" = ${operationId} AND "moderationStatus" = 'APPROVED'
-  `;
-}
-
 // ─── Static Generation Helpers ────────────────────────
 
 export async function getAllOperationSlugs() {
@@ -212,96 +203,6 @@ export async function getIcebergData() {
       _count: { select: { sources: true } },
     },
     orderBy: { viewCount: "desc" },
-  });
-
-  return operations;
-}
-
-// ─── Admin Queries ────────────────────────────────────
-
-export async function getAdminStats() {
-  const [pendingContributions, pendingComments, totalOperations, totalUsers] =
-    await Promise.all([
-      prisma.contribution.count({ where: { status: "PENDING" } }),
-      prisma.comment.count({ where: { status: "PENDING" } }),
-      prisma.operation.count(),
-      prisma.user.count(),
-    ]);
-
-  return { pendingContributions, pendingComments, totalOperations, totalUsers };
-}
-
-export async function getPendingContributions() {
-  return prisma.contribution.findMany({
-    where: { status: "PENDING" },
-    include: { submittedBy: true, operation: true },
-    orderBy: { createdAt: "desc" },
-  });
-}
-
-export async function getAllOperationsAdmin() {
-  return prisma.operation.findMany({
-    orderBy: { createdAt: "desc" },
-    select: {
-      id: true,
-      slug: true,
-      title: true,
-      icebergLevel: true,
-      era: true,
-      status: true,
-      moderationStatus: true,
-      viewCount: true,
-      createdAt: true,
-    },
-  });
-}
-
-// ─── Comment Queries ──────────────────────────────────
-
-export async function getApprovedComments(operationId: string) {
-  return prisma.comment.findMany({
-    where: { operationId, status: "APPROVED" },
-    include: { author: { select: { name: true, image: true } } },
-    orderBy: { createdAt: "desc" },
-  });
-}
-
-export async function getPendingComments() {
-  return prisma.comment.findMany({
-    where: { status: "PENDING" },
-    include: {
-      author: { select: { name: true } },
-      operation: { select: { title: true, slug: true } },
-    },
-    orderBy: { createdAt: "desc" },
-  });
-}
-
-// ─── Search ───────────────────────────────────────────
-
-export async function searchOperations(query: string) {
-  if (!query || query.trim().length < 2) {
-    return [];
-  }
-
-  const searchTerm = query.trim();
-
-  const operations = await prisma.operation.findMany({
-    where: {
-      moderationStatus: ModerationStatus.APPROVED,
-      OR: [
-        { title: { contains: searchTerm, mode: "insensitive" } },
-        { titleEs: { contains: searchTerm, mode: "insensitive" } },
-        { excerpt: { contains: searchTerm, mode: "insensitive" } },
-        { excerptEs: { contains: searchTerm, mode: "insensitive" } },
-        { aliases: { has: searchTerm } },
-        { actors: { has: searchTerm } },
-        { bodyEn: { contains: searchTerm, mode: "insensitive" } },
-        { bodyEs: { contains: searchTerm, mode: "insensitive" } },
-      ],
-    },
-    select: operationSummarySelect,
-    take: 20,
   });
 
   return operations;
