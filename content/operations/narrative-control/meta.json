@@ -33,13 +33,13 @@
   "related": [],
   "sources": [
     {
-      "url": null,
+      "url": "https://www.racket.news/p/capsule-summaries-of-all-twitter",
       "title": "The Twitter Files (multiple journalists, 2022-2023)",
       "type": "JOURNALISM",
       "credibility": 3
     },
     {
-      "url": null,
+      "url": "https://www.supremecourt.gov/opinions/23pdf/23-411_3dq3.pdf",
       "title": "Murthy v. Missouri, Supreme Court Case No. 23-411",
       "type": "GOVERNMENT",
       "credibility": 4

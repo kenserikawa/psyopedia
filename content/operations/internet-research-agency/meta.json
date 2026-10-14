@@ -34,13 +34,13 @@
   "related": [],
   "sources": [
     {
-      "url": null,
+      "url": "https://www.justice.gov/archives/sco/file/1373816/dl",
       "title": "Mueller Report",
       "type": "GOVERNMENT",
       "credibility": 5
     },
     {
-      "url": null,
+      "url": "https://doi.org/10.1017/9781108914628",
       "title": "The Disinformation Age by Bennett and Livingston",
       "type": "ACADEMIC",
       "credibility": 4
