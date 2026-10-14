@@ -377,7 +377,9 @@ Un script de un solo uso, que no se versiona, convierte el array de `prisma/seed
 `content/`:
 
 - Una carpeta por operación, con `meta.json` (campos de §3), `body.en.md` y `body.es.md`.
-- `tags.json` con la unión de todas las etiquetas.
+- `tags.json` con la unión de todas las etiquetas (43). Si una etiqueta aparece con nombres
+  distintos, gana la primera aparición, igual que hacía el seed: `latin-america` queda con
+  `nameEs: "Latinoamerica"`.
 - `publishedAt: "2026-03-29"` en todas, la fecha en que entraron al repo.
 - `related` con los tres pares que hoy crea el seed (`mkultra`→`project-artichoke`,
   `cointelpro`→`operation-mockingbird`, `cambridge-analytica`→`internet-research-agency`).
@@ -394,7 +396,7 @@ El resultado se valida con el propio loader y se revisa el diff antes de borrar 
   - Con carpetas de prueba temporales, un caso por regla de §3 que comprueba que falla y que
     el mensaje nombra el fichero y el campo.
   - Un caso válido mínimo.
-  - El `content/` real carga 25 operaciones, todas las relaciones son simétricas y no hay
+  - El `content/` real carga 46 operaciones, todas las relaciones son simétricas y no hay
     slugs repetidos.
 - **`src/lib/catalog.test.ts`** (ampliado):
   - `filterCatalog`: cada filtro, búsqueda insensible a tildes y mayúsculas, los cuatro
@@ -409,7 +411,7 @@ Se ejecuta después de `npm run build` e inspecciona `out/`:
 - Existen `index.html`, `404.html`, `robots.txt`, `sitemap.xml`, `.nojekyll`,
   `en/index.html`, `es/index.html`, `en/catalog/index.html`, `en/iceberg/index.html` y las
   legales.
-- Existen las 50 fichas: `en/catalog/<slug>/index.html` y `es/catalog/<slugEs>/index.html`.
+- Existen las 92 fichas: `en/catalog/<slug>/index.html` y `es/catalog/<slugEs>/index.html`.
 - `og/en/home.png`, `og/es/home.png` y `og/<locale>/catalog/<slug>.png` de cada operación
   empiezan por los bytes mágicos de PNG.
 - Los assets de `_next/` del HTML llevan el `BASE_PATH` de `src/lib/site.ts`, lo que confirma
