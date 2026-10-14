@@ -8,48 +8,33 @@ type Section = { heading: string; paragraphs: string[] };
 const content: Record<string, { title: string; updated: string; intro: string; sections: Section[] }> = {
   en: {
     title: "Privacy Policy",
-    updated: "Last updated: July 9, 2026",
+    updated: "Last updated: October 14, 2026",
     intro:
-      "Psyopedia is a bilingual encyclopedia of historical psychological operations. This policy explains what personal data we process, why, and what rights you have over it.",
+      "Psyopedia is a bilingual encyclopedia of historical psychological operations. It is a static website: it has no accounts, no comments, and no forms. This policy explains the little data involved in visiting it.",
     sections: [
       {
         heading: "Data we collect",
         paragraphs: [
-          "Account data: when you sign in with Google or GitHub we receive your name, email address, and avatar from the provider. We never see your password.",
-          "Content you submit: contributions and comments you post are stored together with your account.",
-          "Technical data: our hosting provider keeps standard server logs (IP address, user agent) for security purposes. Site analytics are cookieless and aggregated — we cannot identify individual visitors.",
+          "We do not ask for, collect, or store any personal data.",
+          "Technical data: the site is hosted on GitHub Pages. GitHub logs the IP address of visitors for security purposes, as described in the GitHub Privacy Statement. We have no access to those logs.",
         ],
       },
       {
-        heading: "Why we process it",
+        heading: "Cookies and analytics",
         paragraphs: [
-          "To operate your account and attribute your contributions (performance of the service you request).",
-          "To moderate community content and keep the site safe (legitimate interest).",
-          "To measure aggregate site usage and improve the encyclopedia (legitimate interest).",
+          "We do not set cookies and we do not use analytics, advertising, or tracking scripts. The language of the home page is chosen from your browser settings, inside your browser, and is not stored.",
         ],
       },
       {
-        heading: "Cookies",
+        heading: "Third parties",
         paragraphs: [
-          "We only use cookies that are strictly necessary for authentication sessions. We do not use advertising or cross-site tracking cookies.",
-        ],
-      },
-      {
-        heading: "Sharing and processors",
-        paragraphs: [
-          "We do not sell personal data. Data is processed by our infrastructure providers (hosting and database) and, for sign-in, by the OAuth provider you choose (Google or GitHub). These providers may process data outside the EEA under standard contractual clauses.",
-        ],
-      },
-      {
-        heading: "Retention",
-        paragraphs: [
-          "Account data is kept while your account exists. Published contributions may remain after account deletion in anonymized form, unless you request their removal.",
+          "The only provider involved is GitHub, Inc. (hosting), which may process data outside the EEA under standard contractual clauses. Links to external sources lead to sites with their own privacy policies.",
         ],
       },
       {
         heading: "Your rights",
         paragraphs: [
-          `You can request access, rectification, deletion, portability, or object to processing at any time by writing to ${CONTACT_EMAIL}. If you are in the EU/EEA you may also lodge a complaint with your supervisory authority.`,
+          `For any question about this policy or to exercise your data protection rights, write to ${CONTACT_EMAIL}. If you are in the EU/EEA you may also lodge a complaint with your supervisory authority.`,
         ],
       },
       {
@@ -62,48 +47,33 @@ const content: Record<string, { title: string; updated: string; intro: string; s
   },
   es: {
     title: "Política de privacidad",
-    updated: "Última actualización: 9 de julio de 2026",
+    updated: "Última actualización: 14 de octubre de 2026",
     intro:
-      "Psyopedia es una enciclopedia bilingüe de operaciones psicológicas históricas. Esta política explica qué datos personales tratamos, con qué finalidad y qué derechos tienes sobre ellos.",
+      "Psyopedia es una enciclopedia bilingüe de operaciones psicológicas históricas. Es un sitio web estático: no tiene cuentas, ni comentarios, ni formularios. Esta política explica los pocos datos que intervienen al visitarlo.",
     sections: [
       {
         heading: "Datos que recogemos",
         paragraphs: [
-          "Datos de cuenta: al iniciar sesión con Google o GitHub recibimos tu nombre, dirección de correo y avatar del proveedor. Nunca vemos tu contraseña.",
-          "Contenido que envías: las contribuciones y comentarios que publicas se almacenan asociados a tu cuenta.",
-          "Datos técnicos: nuestro proveedor de hosting conserva registros estándar del servidor (dirección IP, agente de usuario) con fines de seguridad. La analítica del sitio no usa cookies y es agregada — no podemos identificar visitantes individuales.",
+          "No pedimos, recogemos ni almacenamos ningún dato personal.",
+          "Datos técnicos: el sitio está alojado en GitHub Pages. GitHub registra la dirección IP de los visitantes con fines de seguridad, como se describe en la Declaración de Privacidad de GitHub. No tenemos acceso a esos registros.",
         ],
       },
       {
-        heading: "Finalidades del tratamiento",
+        heading: "Cookies y analítica",
         paragraphs: [
-          "Gestionar tu cuenta y atribuir tus contribuciones (ejecución del servicio que solicitas).",
-          "Moderar el contenido de la comunidad y mantener el sitio seguro (interés legítimo).",
-          "Medir el uso agregado del sitio y mejorar la enciclopedia (interés legítimo).",
+          "No usamos cookies ni scripts de analítica, publicidad o seguimiento. El idioma de la página de inicio se elige a partir de la configuración de tu navegador, dentro de tu navegador, y no se guarda.",
         ],
       },
       {
-        heading: "Cookies",
+        heading: "Terceros",
         paragraphs: [
-          "Solo utilizamos cookies estrictamente necesarias para las sesiones de autenticación. No usamos cookies publicitarias ni de seguimiento entre sitios.",
-        ],
-      },
-      {
-        heading: "Destinatarios y encargados",
-        paragraphs: [
-          "No vendemos datos personales. Los datos son tratados por nuestros proveedores de infraestructura (hosting y base de datos) y, para el inicio de sesión, por el proveedor OAuth que elijas (Google o GitHub). Estos proveedores pueden tratar datos fuera del EEE bajo cláusulas contractuales tipo.",
-        ],
-      },
-      {
-        heading: "Conservación",
-        paragraphs: [
-          "Los datos de cuenta se conservan mientras exista tu cuenta. Las contribuciones publicadas pueden permanecer de forma anonimizada tras la eliminación de la cuenta, salvo que solicites su retirada.",
+          "El único proveedor que interviene es GitHub, Inc. (alojamiento), que puede tratar datos fuera del EEE bajo cláusulas contractuales tipo. Los enlaces a fuentes externas llevan a sitios con sus propias políticas de privacidad.",
         ],
       },
       {
         heading: "Tus derechos",
         paragraphs: [
-          `Puedes ejercer tus derechos de acceso, rectificación, supresión, portabilidad u oposición en cualquier momento escribiendo a ${CONTACT_EMAIL}. Si resides en la UE/EEE también puedes reclamar ante tu autoridad de control (en España, la AEPD).`,
+          `Para cualquier duda sobre esta política o para ejercer tus derechos de protección de datos, escribe a ${CONTACT_EMAIL}. Si resides en la UE/EEE también puedes reclamar ante tu autoridad de control (en España, la AEPD).`,
         ],
       },
       {

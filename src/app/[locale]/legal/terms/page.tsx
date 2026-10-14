@@ -8,7 +8,7 @@ type Section = { heading: string; paragraphs: string[] };
 const content: Record<string, { title: string; updated: string; intro: string; sections: Section[] }> = {
   en: {
     title: "Terms of Use",
-    updated: "Last updated: July 9, 2026",
+    updated: "Last updated: October 14, 2026",
     intro:
       "By using Psyopedia you agree to these terms. Please read them — they are short and written for humans.",
     sections: [
@@ -19,22 +19,9 @@ const content: Record<string, { title: string; updated: string; intro: string; s
         ],
       },
       {
-        heading: "Accounts",
-        paragraphs: [
-          "You sign in through Google or GitHub. You are responsible for activity under your account. We may suspend accounts that violate these terms.",
-        ],
-      },
-      {
-        heading: "Your content",
-        paragraphs: [
-          "By submitting contributions or comments you grant Psyopedia a non-exclusive, worldwide, royalty-free license to publish, edit, translate, and display that content on the site. You keep ownership of what you write.",
-          "All submissions pass through moderation. We may edit for accuracy and style, or reject content that is defamatory, hateful, deliberately misleading, or unsourced.",
-        ],
-      },
-      {
         heading: "Acceptable use",
         paragraphs: [
-          "Do not use the site to harass, defame, incite violence, or spread deliberate disinformation presented as fact. Do not scrape the site at abusive rates or attempt to disrupt the service.",
+          "Do not scrape the site at abusive rates or attempt to disrupt the service.",
         ],
       },
       {
@@ -46,14 +33,14 @@ const content: Record<string, { title: string; updated: string; intro: string; s
       {
         heading: "Contact and changes",
         paragraphs: [
-          `Questions about these terms: ${CONTACT_EMAIL}. We may update these terms; continued use after changes constitutes acceptance.`,
+          `Questions about these terms, corrections, and suggestions for new entries: ${CONTACT_EMAIL}. We may update these terms; continued use after changes constitutes acceptance.`,
         ],
       },
     ],
   },
   es: {
     title: "Términos de uso",
-    updated: "Última actualización: 9 de julio de 2026",
+    updated: "Última actualización: 14 de octubre de 2026",
     intro:
       "Al usar Psyopedia aceptas estos términos. Léelos — son breves y están escritos para humanos.",
     sections: [
@@ -64,22 +51,9 @@ const content: Record<string, { title: string; updated: string; intro: string; s
         ],
       },
       {
-        heading: "Cuentas",
-        paragraphs: [
-          "El acceso se realiza mediante Google o GitHub. Eres responsable de la actividad de tu cuenta. Podemos suspender cuentas que incumplan estos términos.",
-        ],
-      },
-      {
-        heading: "Tu contenido",
-        paragraphs: [
-          "Al enviar contribuciones o comentarios concedes a Psyopedia una licencia no exclusiva, mundial y gratuita para publicar, editar, traducir y mostrar ese contenido en el sitio. Conservas la titularidad de lo que escribes.",
-          "Todos los envíos pasan por moderación. Podemos editar por precisión y estilo, o rechazar contenido difamatorio, de odio, deliberadamente engañoso o sin fuentes.",
-        ],
-      },
-      {
         heading: "Uso aceptable",
         paragraphs: [
-          "No uses el sitio para acosar, difamar, incitar a la violencia o difundir desinformación deliberada presentada como hecho. No hagas scraping a ritmos abusivos ni intentes interrumpir el servicio.",
+          "No hagas scraping a ritmos abusivos ni intentes interrumpir el servicio.",
         ],
       },
       {
@@ -91,7 +65,7 @@ const content: Record<string, { title: string; updated: string; intro: string; s
       {
         heading: "Contacto y cambios",
         paragraphs: [
-          `Dudas sobre estos términos: ${CONTACT_EMAIL}. Podemos actualizar estos términos; el uso continuado tras los cambios implica su aceptación.`,
+          `Dudas sobre estos términos, correcciones y propuestas de nuevas entradas: ${CONTACT_EMAIL}. Podemos actualizar estos términos; el uso continuado tras los cambios implica su aceptación.`,
         ],
       },
     ],
