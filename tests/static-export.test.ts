@@ -75,3 +75,12 @@ test("las páginas enlazan su imagen OG", () => {
   assert.ok(read("es/index.html").includes(`${SITE_URL}/og/es/home.png`));
   assert.ok(read("en/catalog/index.html").includes(`${SITE_URL}/og/en/home.png`));
 });
+
+test("en la raíz el meta refresh solo actúa sin JavaScript y nada bloquea el script de idioma", () => {
+  const html = read("index.html");
+  assert.match(html, /<noscript>\s*<meta http-equiv="refresh"/i, "el meta refresh debe ir dentro de <noscript>");
+  assert.doesNotMatch(html.replace(/<noscript>[\s\S]*?<\/noscript>/gi, ""), /http-equiv="refresh"/i, "meta refresh fuera de <noscript>");
+  const script = html.indexOf(rootRedirectScript());
+  const stylesheet = html.search(/<link[^>]+rel="stylesheet"/i);
+  assert.ok(stylesheet === -1 || stylesheet > script, "una hoja de estilos bloquea el script de idioma");
+});
