@@ -18,7 +18,7 @@ Postgres, sin Prisma, sin NextAuth y sin ninguna funcionalidad de usuario.
 | Fuente de datos | **Una carpeta por operación:** `meta.json` + `body.en.md` + `body.es.md`, y un `tags.json` compartido. |
 | Lectura del contenido | **Loader propio en build** (`src/lib/content/`), validado con Zod, con la misma API que el antiguo `queries.ts`. |
 | Hosting | **GitHub Pages**, desplegado con GitHub Actions. |
-| URL pública | **Configurable al compilar:** `NEXT_PUBLIC_BASE_PATH` y `NEXT_PUBLIC_SITE_URL`. Hoy `kenserikawa.github.io/psyopedia`; mañana un dominio propio sin tocar código. |
+| URL pública | **Configurable al compilar** con una sola variable, `NEXT_PUBLIC_SITE_URL`; el `basePath` sale de su ruta. Hoy `kenserikawa.github.io/psyopedia`; mañana un dominio propio sin tocar código. |
 | Relacionadas | **Relación en los dos sentidos:** se declara una vez y aparece en ambas fichas. |
 | Analítica | **Ninguna** de momento. Se elimina `@vercel/analytics`. |
 
@@ -216,10 +216,9 @@ Los componentes que hoy importan tipos o enums de `@/generated/prisma/*`
 
 ### Iceberg
 
-Además del cambio de datos, se corrige un fallo que ya existe: `IcebergJourney.tsx` e
-`IcebergScene.tsx` navegan a `/${locale}/catalog/${operation.slug}`, y en español deben usar
-`slugEs`. Hoy esos clics dan 404 en `/es/` para las operaciones cuyo slug cambia, y en
-estático serían enlaces rotos.
+Solo cambia el origen de los datos. `iceberg/page.tsx` ya entrega a los componentes el slug
+del idioma de la página, así que la navegación a la ficha no se toca. (`IcebergScene` y
+`IcebergClientWrapper` no los usa ninguna página; quedan como están.)
 
 ### Legales
 
@@ -282,7 +281,7 @@ crawlers sociales pueden no tratarlo como imagen. Por eso no se usan las convenc
 - **Diseño:** el de la home sale del actual `[locale]/opengraph-image.tsx` y el de las
   operaciones del actual `/api/og/[slug]`. Ahora los títulos y etiquetas de nivel salen en el
   idioma de la página.
-- **Metadatos:** `seo.ts` y el layout referencian `${SITE_URL}/og/<locale>/<file>.png` de
+- **Metadatos:** `seo.ts` y la home referencian `${SITE_URL}/og/<locale>/<file>.png` de
   forma explícita.
 - Se borra `src/app/[locale]/opengraph-image.tsx`.
 
@@ -297,12 +296,18 @@ y escribe los PNG en `out/og/`.
 
 - **`trailingSlash: true`:** cada página se exporta como `<ruta>/index.html`, que es como
   GitHub Pages sirve un directorio sin redirecciones intermedias.
-- **`SITE_URL`** (en `seo.ts`, única definición; `robots.ts` y `sitemap.ts` lo importan)
-  incluye el `basePath`: `https://kenserikawa.github.io/psyopedia`.
-- **Helper `pageUrl(path)`** en `seo.ts`: devuelve la URL absoluta con barra final. Lo usan
-  las canónicas, `hreflang`, el sitemap, el JSON-LD y los botones de compartir.
-- **Helper `asset(path)`** en `src/lib/utils.ts`: antepone `NEXT_PUBLIC_BASE_PATH` a las rutas
-  de `public/`. Lo necesitan `next/image` (`HeroSection`, `Header`, `MobileNav`; la
+- **Una sola variable, `NEXT_PUBLIC_SITE_URL`.** El `basePath` es la ruta de esa URL:
+  `https://kenserikawa.github.io/psyopedia` da `/psyopedia` y `https://psyopedia.org` da `""`.
+  Con dos variables no se podría: en las expresiones de GitHub Actions un valor vacío cae al
+  valor por defecto, así que el `basePath` vacío del dominio propio sería imposible.
+- **`src/lib/site.ts`** concentra las URL del sitio y no importa nada de Next, para que
+  `next.config.ts` también pueda importarlo:
+  - `SITE_URL`: la URL pública sin barra final (por defecto `https://psyopedia.org`).
+    `seo.ts`, `robots.ts`, `sitemap.ts` y las páginas lo importan de aquí.
+  - `BASE_PATH`: la ruta de `SITE_URL` sin barra final.
+  - `pageUrl(path)`: URL absoluta con barra final. Lo usan las canónicas, `hreflang`, el
+    sitemap, el JSON-LD y los botones de compartir.
+  - `asset(path)`: antepone `BASE_PATH` a las rutas de `public/`. Lo necesitan `next/image` (`HeroSection`, `Header`, `MobileNav`; la
   documentación de Next 16 confirma que `next/image` no añade el `basePath`),
   `useTexture('/textures/waternormals.jpg')` en `OceanWater` y `coverImage` si se usa.
   `next/link` y `router.push` ya lo añaden solos.
@@ -322,10 +327,12 @@ y escribe los PNG en `out/og/`.
 ### `next.config.ts`
 
 ```ts
+import { BASE_PATH } from "./src/lib/site";
+
 const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH ?? "",
+  basePath: BASE_PATH,
   images: { unoptimized: true },
   allowedDevOrigins: ["*.ngrok-free.app"],
 };
@@ -341,9 +348,8 @@ Se eliminan `headers()` y `poweredByHeader`. El layout añade
 - **Job `build`:** Node 22 → `npm ci` → `npm test` → `npm run lint` → `npm run build` →
   `npm run test:export` → `actions/upload-pages-artifact` (ruta `out`).
 - **Job `deploy`:** `actions/deploy-pages`.
-- **Variables de entorno del build**, tomadas de variables del repo con valor por defecto:
-  `NEXT_PUBLIC_BASE_PATH` (`/psyopedia`) y `NEXT_PUBLIC_SITE_URL`
-  (`https://kenserikawa.github.io/psyopedia`).
+- **Variable de entorno del build:** `NEXT_PUBLIC_SITE_URL`, tomada de la variable del repo
+  `SITE_URL` con valor por defecto `https://kenserikawa.github.io/psyopedia`.
 - No se usa la opción `static_site_generator: next` de `configure-pages`: el `basePath` lo
   controlamos nosotros.
 
@@ -352,9 +358,9 @@ Se eliminan `headers()` y `poweredByHeader`. El layout añade
 - `public/.nojekyll` vacío, para que `_next/` se sirva aunque se publique desde una rama. Si
   el export no copia ficheros ocultos de `public/`, el workflow lo crea con
   `touch out/.nojekyll` antes de subir el artefacto.
-- `.env.example` se queda con `NEXT_PUBLIC_SITE_URL` y `NEXT_PUBLIC_BASE_PATH`.
-- **Dominio propio (futuro):** crear `public/CNAME` y cambiar las dos variables del repo.
-  No requiere cambios de código.
+- `.env.example` se queda solo con `NEXT_PUBLIC_SITE_URL`.
+- **Dominio propio (futuro):** crear `public/CNAME` y poner la variable del repo `SITE_URL`
+  a `https://<dominio>`. No requiere cambios de código.
 
 ### Pasos manuales del usuario
 
@@ -411,11 +417,11 @@ Se ejecuta después de `npm run build` e inspecciona `out/`:
 
 Sin `next dev` en marcha (comparte `.next` con el build):
 
-1. Build con `NEXT_PUBLIC_BASE_PATH=/psyopedia`.
+1. Build con `NEXT_PUBLIC_SITE_URL=http://localhost:4173/psyopedia`.
 2. Servir `out/` bajo `/psyopedia/` imitando GitHub Pages.
 3. Recorrer con Chrome DevTools: redirección de `/`, home EN/ES, catálogo (filtros,
    búsqueda con y sin tilde, paginación, recarga con query), ficha EN/ES con relacionadas en
-   los dos sentidos, iceberg (incluido el clic en español), 404, imágenes y textura con
+   los dos sentidos, iceberg (incluido el clic a una ficha en español), 404, imágenes y textura con
    `basePath`, y consola sin errores.
 
 ---
@@ -440,8 +446,7 @@ Sin `next dev` en marcha (comparte `.next` con el build):
    necesitan el script alternativo.
 2. **Capa de contenido:** enums, tipos, esquema, loader y tests (TDD).
 3. **Migración:** script desechable → `content/`, validado por el loader.
-4. **Páginas sobre el loader:** home, ficha, iceberg (con el fix de `slugEs`), sitemap y
-   robots.
+4. **Páginas sobre el loader:** home, ficha, iceberg, sitemap y robots.
 5. **Catálogo en cliente:** `filterCatalog` (TDD) y `CatalogBrowser`.
 6. **Retirada de usuarios y base de datos:** borrado de rutas, libs, componentes, mensajes,
    Prisma y dependencias.
