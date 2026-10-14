@@ -2,7 +2,7 @@
 
 La Operación Paperclip fue un programa secreto de inteligencia de Estados Unidos en el que más de 1,600 científicos alemanes fueron reclutados de la Alemania post-nazi.
 
-## Metodos
+## Métodos
 
 - Blanqueo de registros nazis
 - Proporcionar nuevas identidades y documentación migratoria

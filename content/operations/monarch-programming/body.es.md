@@ -6,6 +6,6 @@ La Programación Monarca es un presunto control mental basado en trauma, como co
 
 **No hay evidencia creíble.** Parece confundir la historia real de MKUltra con afirmaciones infundadas.
 
-## Por Que Importa
+## Por Qué Importa
 
 Ilustra cómo operaciones confirmadas sirven como "semilla de verdad" para teorías infundadas.

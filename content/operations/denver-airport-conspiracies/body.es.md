@@ -1,12 +1,12 @@
 ## Resumen
 
-El Aeropuerto Internacional de Denver (DIA), inaugurado en 1995, ha sido objeto de teorías conspirativas persistentes debido a su arte inusual, piedra masónica, tuneles subterráneos y su construcción $2 mil millones por encima del presupuesto.
+El Aeropuerto Internacional de Denver (DIA), inaugurado en 1995, ha sido objeto de teorías conspirativas persistentes debido a su arte inusual, piedra masónica, túneles subterráneos y su construcción $2 mil millones por encima del presupuesto.
 
 ## La Evidencia Citada
 
-- **Murales** — Los murales de Leo Tanguma muestran escenas apocalípticas con un soldado con mascara de gas y niños muertos
+- **Murales** — Los murales de Leo Tanguma muestran escenas apocalípticas con un soldado con máscara de gas y niños muertos
 - **Piedra masónica** — Una cápsula del tiempo masónica está incrustada en el suelo del terminal
-- **Tuneles subterráneos** — Un sistema de equipaje automatizado fue construido bajo tierra
+- **Túneles subterráneos** — Un sistema de equipaje automatizado fue construido bajo tierra
 - **Mustang Azul** — Una escultura de caballo de 10 metros con ojos rojos brillantes mató a su creador
 - **Sobrecostos** — De $1.7 mil millones a $4.8 mil millones sin explicación clara
 

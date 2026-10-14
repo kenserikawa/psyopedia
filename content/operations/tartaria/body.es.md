@@ -11,12 +11,12 @@ La teoría conspirativa de Tartaria afirma que una vasta civilización tecnológ
 
 ## Base Histórica
 
-"Tartaria" sí aparece en mapas históricos como un termino geográfico vago para Asia Central y del Norte. Los pueblos tátaros son reales. Pero la conspiración extrapola esto a un imperio avanzado unificado.
+"Tartaria" sí aparece en mapas históricos como un término geográfico vago para Asia Central y del Norte. Los pueblos tátaros son reales. Pero la conspiración extrapola esto a un imperio avanzado unificado.
 
 ## Estado de la Evidencia
 
 **Sin evidencia creíble.** La teoría se basa en arquitectura malinterpretada y lectura selectiva de mapas antiguos.
 
-## Por Que Importa
+## Por Qué Importa
 
 Tartaria es una conspiración únicamente de la era de internet, surgida en Reddit y YouTube alrededor de 2016-2018.

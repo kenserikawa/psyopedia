@@ -4,7 +4,7 @@ Alegaciones persistentes de que la CIA facilitó el narcotráfico de cocaína ha
 
 ## Evidencia Clave
 
-- **Comite Kerry (1989)** — Concluyó que miembros del Departamento de Estado proporcionaron asistencia a narcotraficantes
+- **Comité Kerry (1989)** — Concluyó que miembros del Departamento de Estado proporcionaron asistencia a narcotraficantes
 - **"Dark Alliance" de Gary Webb (1996)** — Serie vinculando Contras respaldados por la CIA con el crack en Los Ángeles
 - **Informe del Inspector General de la CIA (1998)** — Reconoció que la CIA trabajó con figuras Contras involucradas en narcotráfico
 
@@ -14,4 +14,4 @@ Su reportaje fue atacado por grandes periódicos. Fue forzado fuera del periodis
 
 ## Estado de la Evidencia
 
-**Mixto.** Los informes oficiales confirman tolerancia de la CIA al narcotráfico de aliados Contras. La afirmación mas amplia de introducción deliberada de crack sigue debatida.
+**Mixto.** Los informes oficiales confirman tolerancia de la CIA al narcotráfico de aliados Contras. La afirmación más amplia de introducción deliberada de crack sigue debatida.

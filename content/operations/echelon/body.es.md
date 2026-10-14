@@ -6,12 +6,12 @@ ECHELON es una red de recopilación y análisis de inteligencia de señales oper
 
 El sistema data del Acuerdo UKUSA de 1966. Su existencia fue negada hasta que denunciantes y periodistas la expusieron en los 90.
 
-## Metodos
+## Métodos
 
 - Estaciones de interceptación satelital globales
 - Computadoras filtrando comunicaciones por palabras clave
 - Análisis automatizado de voz, texto y datos
-- Intercambio de datos entre naciones Five Eyes para eludir leyes de vigilancia domestica
+- Intercambio de datos entre naciones Five Eyes para eludir leyes de vigilancia doméstica
 
 ## Exposición
 

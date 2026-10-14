@@ -1,12 +1,12 @@
 ## Resumen
 
-El Proyecto MKUltra fue un programa ultrasecreto de la CIA que realizó experimentos ilegales en sujetos humanos para desarrollar tecnicas de control mental.
+El Proyecto MKUltra fue un programa ultrasecreto de la CIA que realizó experimentos ilegales en sujetos humanos para desarrollar técnicas de control mental.
 
 ## Antecedentes
 
-Iniciado en 1953 durante la Guerra Fría, MKUltra fue motivado por temores de que la Unión Sovietica estaba usando control mental en prisioneros de guerra.
+Iniciado en 1953 durante la Guerra Fría, MKUltra fue motivado por temores de que la Unión Soviética estaba usando control mental en prisioneros de guerra.
 
-## Metodos
+## Métodos
 
 - Administración de LSD y otras drogas psicoactivas a sujetos sin su conocimiento
 - Experimentos de hipnosis y privación sensorial

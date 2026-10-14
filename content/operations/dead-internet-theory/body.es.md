@@ -6,7 +6,7 @@ La Teoría del Internet Muerto postula que la mayoría del tráfico, contenido e
 
 - La mayoría del engagement en redes sociales proviene de cuentas automatizadas
 - El contenido generado por IA ha reemplazado la creación humana orgánica
-- Los resultados de busqueda están cada vez mas manipulados
+- Los resultados de búsqueda están cada vez más manipulados
 
 ## Evidencia a Favor
 
@@ -19,6 +19,6 @@ La Teoría del Internet Muerto postula que la mayoría del tráfico, contenido e
 - La teoría exagera la proporción
 - El tráfico de bots es mayormente comercial, no ideológico
 
-## Por Que Importa
+## Por Qué Importa
 
-Incluso exagerada, la observación central sobre contenido artificial creciente se ha vuelto mas relevante con la IA generativa.
+Incluso exagerada, la observación central sobre contenido artificial creciente se ha vuelto más relevante con la IA generativa.

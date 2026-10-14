@@ -6,7 +6,7 @@ La Operación Ajax fue el golpe de estado orquestado por la CIA/MI6 que derrocó
 
 Mosaddegh había nacionalizado la industria petrolera iraní, amenazando el monopolio de British Petroleum.
 
-## Metodos
+## Métodos
 
 - Soborno a editores de periódicos, mulás y políticos
 - Contratación de turbas para protestas pro-Shah
@@ -15,7 +15,7 @@ Mosaddegh había nacionalizado la industria petrolera iraní, amenazando el mono
 
 ## Exposición
 
-La CIA reconoció publicamente su papel en 2013 con la desclasificación de documentos.
+La CIA reconoció públicamente su papel en 2013 con la desclasificación de documentos.
 
 ## Legado
 

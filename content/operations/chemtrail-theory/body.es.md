@@ -4,12 +4,12 @@ La teoría de los chemtrails alega que las estelas de aviones son agentes quími
 
 ## Estado de la Evidencia
 
-**Completamente desmentida.** Un estudio de 2016 de 77 científicos atmosfericos no encontró apoyo.
+**Completamente desmentida.** Un estudio de 2016 de 77 científicos atmosféricos no encontró apoyo.
 
 ## El Núcleo Interesante
 
 Programas reales SÍ existen: siembra de nubes, Operación LAC (1957-58).
 
-## Por Que Importa
+## Por Qué Importa
 
 Demuestra cómo programas reales pueden extrapolarse en narrativas conspirativas globales.

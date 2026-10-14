@@ -4,7 +4,7 @@ Los Archivos Epstein se refieren al conjunto de documentos judiciales, registros
 
 ## Antecedentes
 
-Jeffrey Epstein, un financiero con orígenes de riqueza turbios, operó una red de tráfico durante decadas. Su muerte en custodia en 2019 — dictaminada como suicidio — alimentó sospechas generalizadas de un encubrimiento.
+Jeffrey Epstein, un financiero con orígenes de riqueza turbios, operó una red de tráfico durante décadas. Su muerte en custodia en 2019 — dictaminada como suicidio — alimentó sospechas generalizadas de un encubrimiento.
 
 ## Evidencia Clave
 
@@ -15,7 +15,7 @@ Jeffrey Epstein, un financiero con orígenes de riqueza turbios, operó una red 
 
 ## El Ángulo de Inteligencia
 
-Multiples fuentes alegan que la operación de Epstein funcionaba como un esquema de chantaje sexual vinculado a servicios de inteligencia.
+Múltiples fuentes alegan que la operación de Epstein funcionaba como un esquema de chantaje sexual vinculado a servicios de inteligencia.
 
 ## Preguntas Sin Resolver
 

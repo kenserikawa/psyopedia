@@ -1,18 +1,18 @@
 ## Resumen
 
-La Operación CHAOS (1967-1974) fue un programa de espionaje domestico de la CIA que vigiló a activistas antiguerra y disidentes estadounidenses, violando la carta constitutiva de la CIA.
+La Operación CHAOS (1967-1974) fue un programa de espionaje doméstico de la CIA que vigiló a activistas antiguerra y disidentes estadounidenses, violando la carta constitutiva de la CIA.
 
-## Metodos
+## Métodos
 
-- Compiló archivos de mas de 300,000 estadounidenses
+- Compiló archivos de más de 300,000 estadounidenses
 - Infiltró organizaciones antiguerra con agentes encubiertos
 - Indexó 7,200 individuos en una base de datos computarizada
 - Se coordinó con COINTELPRO del FBI
 
 ## Exposición
 
-Revelada por el periodista Seymour Hersh en 1974 e investigada por la Comisión Rockefeller y el Comite Church.
+Revelada por el periodista Seymour Hersh en 1974 e investigada por la Comisión Rockefeller y el Comité Church.
 
 ## Legado
 
-Llevó a la Orden Ejecutiva 12333 restringiendo actividades domesticas de la CIA.
+Llevó a la Orden Ejecutiva 12333 restringiendo actividades domésticas de la CIA.

@@ -6,7 +6,7 @@ Timber Sycamore fue un programa clasificado de la CIA para entrenar y armar a gr
 
 Lanzado en 2013 como esfuerzo conjunto con Arabia Saudita, que igualó la financiación de la CIA.
 
-## Metodos
+## Métodos
 
 - Entrenamiento de rebeldes en Jordania y Turquía
 - Suministro de misiles antitanque TOW y armamento

@@ -9,4 +9,4 @@ La Operación Voz Sincera es una campaña de astroturfing del ejército de EE.UU
 
 ## Importancia
 
-Demuestra que las mismas tecnicas atribuidas a adversarios son empleadas por el gobierno de EE.UU.
+Demuestra que las mismas técnicas atribuidas a adversarios son empleadas por el gobierno de EE.UU.

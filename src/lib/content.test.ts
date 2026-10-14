@@ -183,7 +183,7 @@ test("el content/ real carga todas sus carpetas con relaciones simétricas", () 
   assert.deepEqual(relatedOf("operation-mockingbird"), ["cointelpro"]);
   assert.deepEqual(relatedOf("internet-research-agency"), ["cambridge-analytica"]);
   assert.equal(operations.find((o) => o.slug === "operation-paperclip")?.slugEs, "operacion-paperclip");
-  assert.equal(tags.find((t) => t.slug === "latin-america")?.nameEs, "Latinoamerica");
+  assert.equal(tags.find((t) => t.slug === "latin-america")?.nameEs, "Latinoamérica");
 });
 
 test("la home muestra las 6 más recientes (desempate por nivel y título) y las estadísticas reales", () => {

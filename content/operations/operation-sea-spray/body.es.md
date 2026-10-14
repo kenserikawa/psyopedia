@@ -2,7 +2,7 @@
 
 En septiembre de 1950, la Marina de EE.UU. roció bacterias Serratia marcescens sobre San Francisco desde un barco para probar cómo se dispersaría un ataque con armas biológicas. Los 800,000 residentes fueron sujetos de prueba involuntarios.
 
-## Metodos
+## Métodos
 
 - Buque naval roció aerosol bacteriano a lo largo de la costa
 - Casi todos los 800,000 residentes inhalaron las bacterias
@@ -21,4 +21,4 @@ En septiembre de 1950, la Marina de EE.UU. roció bacterias Serratia marcescens 
 
 ## Exposición
 
-Desclasificado en los 70 durante las investigaciones del Comite Church.
+Desclasificado en los 70 durante las investigaciones del Comité Church.

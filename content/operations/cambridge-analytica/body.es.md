@@ -2,9 +2,9 @@
 
 Cambridge Analytica recopiló datos personales de 87 millones de usuarios de Facebook sin consentimiento para publicidad política.
 
-## Metodos
+## Métodos
 
-- Recopiló datos via cuestionario de personalidad
+- Recopiló datos vía cuestionario de personalidad
 - Construyó perfiles psicográficos
 
 ## Exposición
