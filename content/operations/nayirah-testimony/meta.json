@@ -1,0 +1,49 @@
+{
+  "slug": "nayirah-testimony",
+  "slugEs": "testimonio-nayirah",
+  "title": "Nayirah Testimony",
+  "titleEs": "Testimonio de Nayirah",
+  "aliases": [
+    "Incubator Babies Hoax",
+    "Kuwait Incubator Lie"
+  ],
+  "icebergLevel": 2,
+  "era": "MODERN",
+  "types": [
+    "PROPAGANDA",
+    "DECEPTION"
+  ],
+  "actors": [
+    "United States",
+    "Kuwait",
+    "Hill & Knowlton (PR firm)"
+  ],
+  "targets": [
+    "U.S. Congress",
+    "American public"
+  ],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "PR firm coached the Kuwaiti ambassador's daughter to give fake testimony about baby murders — helped justify the Gulf War.",
+  "excerptEs": "Firma de PR preparó a la hija del embajador kuwaití para dar testimonio falso sobre asesinatos de bebes — ayudó a justificar la Guerra del Golfo.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "propaganda",
+    "media-manipulation"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Second Front by John MacArthur",
+      "type": "BOOK",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Human Rights Watch Gulf War report",
+      "type": "JOURNALISM",
+      "credibility": 5
+    }
+  ]
+}

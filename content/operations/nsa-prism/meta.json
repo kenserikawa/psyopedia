@@ -1,0 +1,46 @@
+{
+  "slug": "nsa-prism",
+  "slugEs": "nsa-prism",
+  "title": "NSA PRISM Program",
+  "titleEs": "Programa PRISM de la NSA",
+  "aliases": [
+    "PRISM"
+  ],
+  "icebergLevel": 3,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "SURVEILLANCE"
+  ],
+  "actors": [
+    "United States",
+    "NSA",
+    "GCHQ"
+  ],
+  "targets": [
+    "Global internet users"
+  ],
+  "outcome": "SUCCESSFUL",
+  "status": "LEAKED",
+  "excerpt": "NSA mass surveillance program collecting internet communications from Google, Facebook, Apple — leaked by Snowden.",
+  "excerptEs": "Programa de vigilancia masiva de la NSA recopilando comunicaciones de Google, Facebook, Apple — filtrado por Snowden.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "nsa",
+    "digital-privacy"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Permanent Record by Edward Snowden",
+      "type": "BOOK",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "No Place to Hide by Glenn Greenwald",
+      "type": "JOURNALISM",
+      "credibility": 5
+    }
+  ]
+}

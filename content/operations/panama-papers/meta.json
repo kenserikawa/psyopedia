@@ -1,0 +1,48 @@
+{
+  "slug": "panama-papers",
+  "slugEs": "papeles-de-panama",
+  "title": "Panama Papers",
+  "titleEs": "Papeles de Panamá",
+  "aliases": [
+    "Mossack Fonseca Leak"
+  ],
+  "icebergLevel": 3,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "DECEPTION",
+    "INFLUENCE_OP"
+  ],
+  "actors": [
+    "Mossack Fonseca",
+    "Global elites",
+    "Banks"
+  ],
+  "targets": [
+    "Tax authorities",
+    "General public"
+  ],
+  "outcome": "PARTIAL",
+  "status": "LEAKED",
+  "excerpt": "11.5 million leaked documents revealing global elite tax evasion — the journalist who investigated was murdered by car bomb.",
+  "excerptEs": "11.5 millones de documentos filtrados revelando evasión fiscal de élites globales — la periodista que investigó fue asesinada.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "corruption",
+    "whistleblower"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "ICIJ Panama Papers Investigation",
+      "type": "JOURNALISM",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Secrecy World by Jake Bernstein",
+      "type": "BOOK",
+      "credibility": 5
+    }
+  ]
+}

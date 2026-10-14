@@ -1,0 +1,44 @@
+{
+  "slug": "chemtrail-theory",
+  "slugEs": "teoria-chemtrails",
+  "title": "Chemtrail Theory",
+  "titleEs": "Teoria de los Chemtrails",
+  "aliases": [
+    "Chemical Trails"
+  ],
+  "icebergLevel": 5,
+  "era": "MODERN",
+  "types": [
+    "DECEPTION"
+  ],
+  "actors": [
+    "Unknown"
+  ],
+  "targets": [
+    "Global population"
+  ],
+  "outcome": "UNKNOWN",
+  "status": "ALLEGED",
+  "excerpt": "Debunked theory that aircraft contrails are chemical spraying — but real programs like Operation LAC provide factual anchors.",
+  "excerptEs": "Teoría desmentida de que estelas de aviones son fumigación química — pero programas reales proporcionan anclas factuales.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "conspiracy",
+    "weather"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Quantifying expert consensus (Environmental Research Letters, 2016)",
+      "type": "ACADEMIC",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Operation LAC declassified documents",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    }
+  ]
+}

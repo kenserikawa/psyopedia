@@ -1,0 +1,50 @@
+{
+  "slug": "constant-informational-struggle",
+  "slugEs": "lucha-informativa-constante",
+  "title": "Constant Informational Struggle",
+  "titleEs": "Lucha Informativa Constante",
+  "aliases": [
+    "Information Confrontation"
+  ],
+  "icebergLevel": 5,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "PROPAGANDA",
+    "INFLUENCE_OP",
+    "DISINFORMATION"
+  ],
+  "actors": [
+    "Russia",
+    "GRU",
+    "FSB",
+    "SVR"
+  ],
+  "targets": [
+    "Western democracies",
+    "NATO countries"
+  ],
+  "outcome": "ONGOING",
+  "status": "ALLEGED",
+  "excerpt": "Russia's alleged doctrine of permanent information warfare — individual ops are proven, unified doctrine is debated.",
+  "excerptEs": "Presunta doctrina rusa de guerra informativa permanente — operaciones individuales probadas, doctrina unificada debatida.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "russia",
+    "information-warfare"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "The Gerasimov Doctrine (Military-Industrial Kurier, 2013)",
+      "type": "GOVERNMENT",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "Active Measures by Thomas Rid",
+      "type": "BOOK",
+      "credibility": 5
+    }
+  ]
+}

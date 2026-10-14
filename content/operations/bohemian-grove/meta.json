@@ -1,0 +1,48 @@
+{
+  "slug": "bohemian-grove",
+  "slugEs": "bohemian-grove",
+  "title": "Bohemian Grove",
+  "titleEs": "Bohemian Grove",
+  "aliases": [
+    "Bohemian Club",
+    "Cremation of Care"
+  ],
+  "icebergLevel": 4,
+  "era": "MODERN",
+  "types": [
+    "INFLUENCE_OP"
+  ],
+  "actors": [
+    "Bohemian Club",
+    "U.S. political elite",
+    "Corporate leaders"
+  ],
+  "targets": [
+    "Public awareness",
+    "Democratic transparency"
+  ],
+  "outcome": "ONGOING",
+  "status": "ALLEGED",
+  "excerpt": "Elite annual retreat with confirmed powerful attendees and ritual ceremonies — real club, debated significance.",
+  "excerptEs": "Retiro anual de élite con asistentes poderosos confirmados y ceremonias rituales — club real, significado debatido.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "secret-societies",
+    "conspiracy"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Bohemian Grove and Other Retreats by G. William Domhoff",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "Dark Secrets: Inside Bohemian Grove (Alex Jones, 2000)",
+      "type": "WEBSITE",
+      "credibility": 2
+    }
+  ]
+}

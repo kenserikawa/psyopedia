@@ -1,0 +1,48 @@
+{
+  "slug": "narrative-control",
+  "slugEs": "control-narrativo",
+  "title": "Narrative Control Programs",
+  "titleEs": "Programas de Control Narrativo",
+  "aliases": [
+    "Strategic Communication"
+  ],
+  "icebergLevel": 4,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "PROPAGANDA",
+    "INFLUENCE_OP",
+    "DISINFORMATION"
+  ],
+  "actors": [
+    "United States",
+    "Department of Defense",
+    "Department of State"
+  ],
+  "targets": [
+    "Social media users"
+  ],
+  "outcome": "ONGOING",
+  "status": "ALLEGED",
+  "excerpt": "Alleged government programs shaping online discourse through content moderation pressure and social media influence tools.",
+  "excerptEs": "Presuntos programas gubernamentales moldeando el discurso en línea a traves de presión de moderación de contenido.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "censorship",
+    "social-media"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "The Twitter Files (multiple journalists, 2022-2023)",
+      "type": "JOURNALISM",
+      "credibility": 3
+    },
+    {
+      "url": null,
+      "title": "Murthy v. Missouri, Supreme Court Case No. 23-411",
+      "type": "GOVERNMENT",
+      "credibility": 4
+    }
+  ]
+}

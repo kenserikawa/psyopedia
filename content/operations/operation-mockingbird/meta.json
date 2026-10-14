@@ -1,0 +1,45 @@
+{
+  "slug": "operation-mockingbird",
+  "slugEs": "operacion-sinsonte",
+  "title": "Operation Mockingbird",
+  "titleEs": "Operacion Sinsonte",
+  "aliases": [],
+  "icebergLevel": 1,
+  "era": "COLD_WAR",
+  "types": [
+    "PROPAGANDA",
+    "INFLUENCE_OP"
+  ],
+  "actors": [
+    "United States",
+    "CIA"
+  ],
+  "targets": [
+    "American media",
+    "Public opinion"
+  ],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "CIA campaign to infiltrate American media, recruiting 400+ journalists and 25 organizations as propaganda assets.",
+  "excerptEs": "Campaña de la CIA para infiltrar los medios estadounidenses, reclutando a más de 400 periodistas.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "cia",
+    "media-manipulation"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "The Mighty Wurlitzer by Hugh Wilford",
+      "type": "BOOK",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "Church Committee Final Report, Book II",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    }
+  ]
+}

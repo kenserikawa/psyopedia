@@ -1,0 +1,49 @@
+{
+  "slug": "five-eyes",
+  "slugEs": "cinco-ojos",
+  "title": "Five Eyes Alliance",
+  "titleEs": "Alianza Cinco Ojos",
+  "aliases": [
+    "FVEY",
+    "UKUSA Agreement"
+  ],
+  "icebergLevel": 3,
+  "era": "COLD_WAR",
+  "types": [
+    "SURVEILLANCE"
+  ],
+  "actors": [
+    "United States",
+    "United Kingdom",
+    "Canada",
+    "Australia",
+    "New Zealand"
+  ],
+  "targets": [
+    "Global communications"
+  ],
+  "outcome": "ONGOING",
+  "status": "LEAKED",
+  "excerpt": "Intelligence alliance of 5 nations that circumvents domestic surveillance laws by spying on each other's citizens.",
+  "excerptEs": "Alianza de inteligencia de 5 naciones que elude las leyes de vigilancia espiando a los ciudadanos de las demás.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "nsa",
+    "international"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "The Snowden Files by Luke Harding",
+      "type": "JOURNALISM",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "@War by Shane Harris",
+      "type": "BOOK",
+      "credibility": 4
+    }
+  ]
+}

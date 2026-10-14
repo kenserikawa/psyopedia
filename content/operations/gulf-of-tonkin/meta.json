@@ -1,0 +1,48 @@
+{
+  "slug": "gulf-of-tonkin",
+  "slugEs": "golfo-de-tonkin",
+  "title": "Gulf of Tonkin Incident",
+  "titleEs": "Incidente del Golfo de Tonkin",
+  "aliases": [
+    "Tonkin Gulf Incident"
+  ],
+  "icebergLevel": 2,
+  "era": "COLD_WAR",
+  "types": [
+    "FALSE_FLAG",
+    "DECEPTION"
+  ],
+  "actors": [
+    "United States",
+    "NSA",
+    "U.S. Navy"
+  ],
+  "targets": [
+    "American public",
+    "U.S. Congress"
+  ],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "Fabricated 1964 naval confrontation used to justify U.S. escalation of the Vietnam War.",
+  "excerptEs": "Confrontación naval fabricada en 1964 usada para justificar la escalada de EE.UU. en Vietnam.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "vietnam",
+    "nsa"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "NSA Declassified Gulf of Tonkin Documents",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "The Fog of War (documentary, 2003)",
+      "type": "VIDEO",
+      "credibility": 4
+    }
+  ]
+}

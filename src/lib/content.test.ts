@@ -152,3 +152,22 @@ test("rechaza campos desconocidos, JSON roto y un tags.json inválido", () => {
   assertContentError(fixture([meta("alpha")], { files: { "operations/alpha/meta.json": "{ roto" } }), "operations/alpha/meta.json", "JSON");
   assertContentError(fixture([meta("alpha")], { tags: { cia: { name: "CIA" } } }), "tags.json", "nameEs");
 });
+
+test("el content/ real carga 46 operaciones con relaciones simétricas", () => {
+  const { operations, tags } = loadContent(path.join(process.cwd(), "content"));
+  assert.equal(operations.length, 46);
+  assert.equal(tags.length, 43);
+  for (const op of operations) {
+    for (const related of op.relatedOps) {
+      const other = operations.find((o) => o.slug === related.slug);
+      assert.ok(other?.relatedOps.some((r) => r.slug === op.slug), `${op.slug} ↔ ${related.slug}`);
+    }
+  }
+  const relatedOf = (slug: string) => operations.find((o) => o.slug === slug)?.relatedOps.map((o) => o.slug);
+  assert.deepEqual(relatedOf("mkultra"), ["project-artichoke"]);
+  assert.deepEqual(relatedOf("project-artichoke"), ["mkultra"]);
+  assert.deepEqual(relatedOf("operation-mockingbird"), ["cointelpro"]);
+  assert.deepEqual(relatedOf("internet-research-agency"), ["cambridge-analytica"]);
+  assert.equal(operations.find((o) => o.slug === "operation-paperclip")?.slugEs, "operacion-paperclip");
+  assert.equal(tags.find((t) => t.slug === "latin-america")?.nameEs, "Latinoamerica");
+});

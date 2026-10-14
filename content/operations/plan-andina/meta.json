@@ -1,0 +1,52 @@
+{
+  "slug": "plan-andina",
+  "slugEs": "plan-andina",
+  "title": "Plan Andina",
+  "titleEs": "Plan Andina",
+  "aliases": [
+    "Andean Initiative",
+    "Andean Counterdrug Initiative"
+  ],
+  "icebergLevel": 3,
+  "era": "MODERN",
+  "types": [
+    "INFLUENCE_OP",
+    "INFILTRATION"
+  ],
+  "actors": [
+    "United States",
+    "CIA",
+    "DEA"
+  ],
+  "targets": [
+    "Colombia",
+    "Peru",
+    "Bolivia",
+    "Andean region"
+  ],
+  "outcome": "PARTIAL",
+  "status": "LEAKED",
+  "excerpt": "U.S.-backed covert operations across the Andes — officially counter-narcotics, allegedly political influence and suppression of leftist movements.",
+  "excerptEs": "Operaciones encubiertas respaldadas por EE.UU. en los Andes — oficialmente antinarcóticos, presuntamente influencia politica y supresión de movimientos de izquierda.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "cia",
+    "latin-america",
+    "war-on-drugs"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "The Andean Counterdrug Initiative (Congressional Research Service)",
+      "type": "GOVERNMENT",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "Killing Hope by William Blum",
+      "type": "BOOK",
+      "credibility": 3
+    }
+  ]
+}

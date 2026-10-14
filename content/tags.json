@@ -1,0 +1,174 @@
+{
+  "fbi": {
+    "name": "FBI",
+    "nameEs": "FBI"
+  },
+  "civil-rights": {
+    "name": "Civil Rights",
+    "nameEs": "Derechos Civiles"
+  },
+  "cia": {
+    "name": "CIA",
+    "nameEs": "CIA"
+  },
+  "mind-control": {
+    "name": "Mind Control",
+    "nameEs": "Control Mental"
+  },
+  "nasa": {
+    "name": "NASA",
+    "nameEs": "NASA"
+  },
+  "wwii": {
+    "name": "World War II",
+    "nameEs": "Segunda Guerra Mundial"
+  },
+  "false-flag": {
+    "name": "False Flag",
+    "nameEs": "Falsa Bandera"
+  },
+  "cuba": {
+    "name": "Cuba",
+    "nameEs": "Cuba"
+  },
+  "media-manipulation": {
+    "name": "Media Manipulation",
+    "nameEs": "Manipulación de Medios"
+  },
+  "regime-change": {
+    "name": "Regime Change",
+    "nameEs": "Cambio de Regimen"
+  },
+  "latin-america": {
+    "name": "Latin America",
+    "nameEs": "Latinoamerica"
+  },
+  "russia": {
+    "name": "Russia",
+    "nameEs": "Rusia"
+  },
+  "disinformation": {
+    "name": "Disinformation",
+    "nameEs": "Desinformación"
+  },
+  "nato": {
+    "name": "NATO",
+    "nameEs": "OTAN"
+  },
+  "vietnam": {
+    "name": "Vietnam War",
+    "nameEs": "Guerra de Vietnam"
+  },
+  "nsa": {
+    "name": "NSA",
+    "nameEs": "NSA"
+  },
+  "digital-privacy": {
+    "name": "Digital Privacy",
+    "nameEs": "Privacidad Digital"
+  },
+  "international": {
+    "name": "International",
+    "nameEs": "Internacional"
+  },
+  "social-media": {
+    "name": "Social Media",
+    "nameEs": "Redes Sociales"
+  },
+  "conspiracy": {
+    "name": "Conspiracy Theory",
+    "nameEs": "Teoría Conspirativa"
+  },
+  "bioweapons": {
+    "name": "Bioweapons",
+    "nameEs": "Armas Biológicas"
+  },
+  "human-experimentation": {
+    "name": "Human Experimentation",
+    "nameEs": "Experimentación Humana"
+  },
+  "propaganda": {
+    "name": "War Propaganda",
+    "nameEs": "Propaganda Bélica"
+  },
+  "elections": {
+    "name": "Elections",
+    "nameEs": "Elecciones"
+  },
+  "torture": {
+    "name": "Torture",
+    "nameEs": "Tortura"
+  },
+  "corruption": {
+    "name": "Corruption",
+    "nameEs": "Corrupción"
+  },
+  "whistleblower": {
+    "name": "Whistleblower",
+    "nameEs": "Denunciante"
+  },
+  "war-on-drugs": {
+    "name": "War on Drugs",
+    "nameEs": "Guerra contra las Drogas"
+  },
+  "cover-up": {
+    "name": "Cover-up",
+    "nameEs": "Encubrimiento"
+  },
+  "information-warfare": {
+    "name": "Information Warfare",
+    "nameEs": "Guerra Informativa"
+  },
+  "censorship": {
+    "name": "Censorship",
+    "nameEs": "Censura"
+  },
+  "directed-energy": {
+    "name": "Directed Energy",
+    "nameEs": "Energía Dirigida"
+  },
+  "astroturfing": {
+    "name": "Astroturfing",
+    "nameEs": "Astroturfing"
+  },
+  "military": {
+    "name": "Military",
+    "nameEs": "Militar"
+  },
+  "spyware": {
+    "name": "Spyware",
+    "nameEs": "Software Espía"
+  },
+  "israel": {
+    "name": "Israel",
+    "nameEs": "Israel"
+  },
+  "unverified": {
+    "name": "Unverified",
+    "nameEs": "No Verificado"
+  },
+  "trafficking": {
+    "name": "Trafficking",
+    "nameEs": "Tráfico"
+  },
+  "blackmail": {
+    "name": "Blackmail",
+    "nameEs": "Chantaje"
+  },
+  "secret-societies": {
+    "name": "Secret Societies",
+    "nameEs": "Sociedades Secretas"
+  },
+  "moon-landing": {
+    "name": "Moon Landing",
+    "nameEs": "Alunizaje"
+  },
+  "hollywood": {
+    "name": "Hollywood",
+    "nameEs": "Hollywood"
+  },
+  "weather": {
+    "name": "Weather Modification",
+    "nameEs": "Modificación del Clima"
+  }
+}

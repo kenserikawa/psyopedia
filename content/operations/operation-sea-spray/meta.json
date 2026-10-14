@@ -1,0 +1,46 @@
+{
+  "slug": "operation-sea-spray",
+  "slugEs": "operacion-sea-spray",
+  "title": "Operation Sea-Spray",
+  "titleEs": "Operación Sea-Spray",
+  "aliases": [
+    "San Francisco Bio-Attack Test"
+  ],
+  "icebergLevel": 2,
+  "era": "COLD_WAR",
+  "types": [
+    "DECEPTION"
+  ],
+  "actors": [
+    "United States",
+    "U.S. Navy",
+    "U.S. Army"
+  ],
+  "targets": [
+    "San Francisco civilians"
+  ],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "U.S. Navy sprayed bacteria over San Francisco in 1950 — 800,000 unwitting test subjects, at least one death confirmed.",
+  "excerptEs": "La Marina de EE.UU. roció bacterias sobre San Francisco en 1950 — 800,000 sujetos de prueba involuntarios, al menos una muerte confirmada.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "bioweapons",
+    "human-experimentation"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Clouds of Secrecy by Leonard Cole",
+      "type": "BOOK",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "U.S. Army declassified biological testing records",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    }
+  ]
+}

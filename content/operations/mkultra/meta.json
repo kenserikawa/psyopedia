@@ -1,0 +1,50 @@
+{
+  "slug": "mkultra",
+  "slugEs": "mkultra",
+  "title": "MKUltra",
+  "titleEs": "MKUltra",
+  "aliases": [
+    "MK-Ultra",
+    "Project MKUltra"
+  ],
+  "icebergLevel": 1,
+  "era": "COLD_WAR",
+  "types": [
+    "MIND_CONTROL"
+  ],
+  "actors": [
+    "United States",
+    "CIA"
+  ],
+  "targets": [
+    "Civilians",
+    "Military personnel",
+    "Prisoners"
+  ],
+  "outcome": "PARTIAL",
+  "status": "DECLASSIFIED",
+  "excerpt": "CIA's illegal mind control program using LSD, hypnosis, and psychological torture on unwitting human subjects.",
+  "excerptEs": "Programa ilegal de control mental de la CIA usando LSD, hipnosis y tortura psicológica en sujetos humanos.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "cia",
+    "mind-control"
+  ],
+  "related": [
+    "project-artichoke"
+  ],
+  "sources": [
+    {
+      "url": "https://www.cia.gov/readingroom/collection/mkultra",
+      "title": "CIA FOIA Reading Room: MKUltra",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "The Search for the Manchurian Candidate by John Marks",
+      "type": "BOOK",
+      "credibility": 4
+    }
+  ]
+}

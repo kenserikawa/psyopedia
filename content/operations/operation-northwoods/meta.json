@@ -1,0 +1,45 @@
+{
+  "slug": "operation-northwoods",
+  "slugEs": "operacion-northwoods",
+  "title": "Operation Northwoods",
+  "titleEs": "Operacion Northwoods",
+  "aliases": [],
+  "icebergLevel": 1,
+  "era": "COLD_WAR",
+  "types": [
+    "FALSE_FLAG",
+    "DECEPTION"
+  ],
+  "actors": [
+    "United States",
+    "Joint Chiefs of Staff"
+  ],
+  "targets": [
+    "American public",
+    "Cuba"
+  ],
+  "outcome": "FAILED",
+  "status": "DECLASSIFIED",
+  "excerpt": "Proposed 1962 false flag operation by the Joint Chiefs of Staff to stage terrorist attacks on U.S. soil and blame Cuba.",
+  "excerptEs": "Operación de falsa bandera propuesta en 1962 para escenificar ataques terroristas en suelo estadounidense y culpar a Cuba.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "false-flag",
+    "cuba"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "National Security Archive: Northwoods Document",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Body of Secrets by James Bamford",
+      "type": "BOOK",
+      "credibility": 4
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "slug": "monarch-programming",
+  "slugEs": "programacion-monarca",
+  "title": "Monarch Programming",
+  "titleEs": "Programacion Monarca",
+  "aliases": [
+    "Project Monarch"
+  ],
+  "icebergLevel": 5,
+  "era": "COLD_WAR",
+  "types": [
+    "MIND_CONTROL"
+  ],
+  "actors": [
+    "Unknown",
+    "CIA (alleged)"
+  ],
+  "targets": [
+    "Individuals"
+  ],
+  "outcome": "UNKNOWN",
+  "status": "ALLEGED",
+  "excerpt": "Alleged MKUltra continuation using trauma-based mind control — no credible evidence exists.",
+  "excerptEs": "Presunta continuación de MKUltra usando control mental basado en trauma — no existe evidencia creíble.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "conspiracy",
+    "mind-control"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Conspiracy Culture by Peter Knight",
+      "type": "ACADEMIC",
+      "credibility": 3
+    },
+    {
+      "url": null,
+      "title": "The CIA Doctors by Colin A. Ross",
+      "type": "BOOK",
+      "credibility": 2
+    }
+  ]
+}

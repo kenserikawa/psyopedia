@@ -1,0 +1,44 @@
+{
+  "slug": "jade-helm-15",
+  "slugEs": "jade-helm-15",
+  "title": "Jade Helm 15",
+  "titleEs": "Jade Helm 15",
+  "aliases": [],
+  "icebergLevel": 2,
+  "era": "MODERN",
+  "types": [
+    "PROPAGANDA",
+    "DISINFORMATION"
+  ],
+  "actors": [
+    "United States",
+    "U.S. Special Operations Command"
+  ],
+  "targets": [
+    "American public"
+  ],
+  "outcome": "PARTIAL",
+  "status": "DECLASSIFIED",
+  "excerpt": "2015 U.S. military exercise that became a case study in Russian information warfare amplifying conspiracy theories.",
+  "excerptEs": "Ejercicio militar de EE.UU. en 2015 que se convirtió en caso de estudio en guerra informativa rusa.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "russia",
+    "disinformation"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Information Warfare and Jade Helm 15 (Journal of Strategic Studies)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "Computational Propaganda (Oxford)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    }
+  ]
+}

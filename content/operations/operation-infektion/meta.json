@@ -1,0 +1,49 @@
+{
+  "slug": "operation-infektion",
+  "slugEs": "operacion-infektion",
+  "title": "Operation INFEKTION",
+  "titleEs": "Operación INFEKTION",
+  "aliases": [
+    "Operation Denver",
+    "AIDS Disinformation Campaign"
+  ],
+  "icebergLevel": 1,
+  "era": "COLD_WAR",
+  "types": [
+    "DISINFORMATION",
+    "PROPAGANDA"
+  ],
+  "actors": [
+    "Soviet Union",
+    "KGB",
+    "Stasi"
+  ],
+  "targets": [
+    "United States",
+    "Global public opinion"
+  ],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "KGB campaign that convinced the world AIDS was a U.S. bioweapon — spread to 80 countries, the myth persists today.",
+  "excerptEs": "Campaña del KGB que convenció al mundo de que el SIDA era un arma biológica de EE.UU. — difundida en 80 países, el mito persiste.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "russia",
+    "disinformation"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Operation INFEKTION (U.S. State Department, 2019)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Disinformation by Ion Mihai Pacepa",
+      "type": "BOOK",
+      "credibility": 4
+    }
+  ]
+}

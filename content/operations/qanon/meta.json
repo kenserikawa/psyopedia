@@ -1,0 +1,48 @@
+{
+  "slug": "qanon",
+  "slugEs": "qanon",
+  "title": "QAnon",
+  "titleEs": "QAnon",
+  "aliases": [
+    "Q",
+    "The Storm"
+  ],
+  "icebergLevel": 4,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "INFLUENCE_OP",
+    "PROPAGANDA",
+    "DISINFORMATION"
+  ],
+  "actors": [
+    "Unknown"
+  ],
+  "targets": [
+    "American public",
+    "Global public"
+  ],
+  "outcome": "ONGOING",
+  "status": "ALLEGED",
+  "excerpt": "Decentralized conspiracy movement from 4chan that may be a deliberate psyop — amplified by foreign troll networks.",
+  "excerptEs": "Movimiento conspirativo descentralizado de 4chan que podría ser una operación psicológica deliberada.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "conspiracy",
+    "disinformation"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "The Genesis of a Conspiracy Theory (The Atlantic, 2020)",
+      "type": "JOURNALISM",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "QAnon and the Disinformation Megaplex (Journal of Online Trust and Safety)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    }
+  ]
+}

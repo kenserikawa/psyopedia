@@ -1,0 +1,60 @@
+{
+  "slug": "operation-earnest-voice-sockpuppets",
+  "slugEs": "ejercito-de-sockpuppets",
+  "title": "Sockpuppet Armies",
+  "titleEs": "Ejércitos de Sockpuppets",
+  "aliases": [
+    "Persona Management Software",
+    "JTRIG",
+    "50 Cent Army"
+  ],
+  "icebergLevel": 3,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "INFLUENCE_OP",
+    "PROPAGANDA",
+    "DISINFORMATION"
+  ],
+  "actors": [
+    "United States",
+    "CENTCOM",
+    "United Kingdom",
+    "GCHQ",
+    "China",
+    "Israel"
+  ],
+  "targets": [
+    "Social media users",
+    "Online discourse"
+  ],
+  "outcome": "ONGOING",
+  "status": "LEAKED",
+  "excerpt": "Governments running armies of fake social media personas — leaked contracts, Snowden docs, and academic studies confirm the practice.",
+  "excerptEs": "Gobiernos operando ejércitos de personas falsas en redes sociales — contratos filtrados, documentos de Snowden y estudios academicos confirman la práctica.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "social-media",
+    "information-warfare"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "HBGary Federal persona management leak (2011)",
+      "type": "LEAKED_DOC",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "JTRIG documents (Snowden/Greenwald, The Intercept)",
+      "type": "LEAKED_DOC",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "How the Chinese Government Fabricates Social Media Posts (Harvard, 2017)",
+      "type": "ACADEMIC",
+      "credibility": 5
+    }
+  ]
+}

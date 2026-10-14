@@ -1,0 +1,48 @@
+{
+  "slug": "pegasus-spyware",
+  "slugEs": "software-espia-pegasus",
+  "title": "Pegasus Spyware",
+  "titleEs": "Software Espía Pegasus",
+  "aliases": [
+    "NSO Group Spyware"
+  ],
+  "icebergLevel": 4,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "SURVEILLANCE"
+  ],
+  "actors": [
+    "Israel",
+    "NSO Group",
+    "Multiple governments"
+  ],
+  "targets": [
+    "Journalists",
+    "Activists",
+    "Political opposition"
+  ],
+  "outcome": "ONGOING",
+  "status": "LEAKED",
+  "excerpt": "Israeli-built spyware that silently infiltrates any smartphone — leaked list revealed 50,000+ targeted numbers across 45 countries.",
+  "excerptEs": "Software espía israelí que infiltra silenciosamente smartphones — lista filtrada reveló 50,000+ números objetivo.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "spyware",
+    "israel"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Pegasus Project (Forbidden Stories, 2021)",
+      "type": "JOURNALISM",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Amnesty International Forensic Methodology Report",
+      "type": "ACADEMIC",
+      "credibility": 5
+    }
+  ]
+}

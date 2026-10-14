@@ -1,0 +1,49 @@
+{
+  "slug": "malicious-simulation-theory",
+  "slugEs": "teoria-simulacion-maliciosa",
+  "title": "Malicious Simulation Theory",
+  "titleEs": "Teoría de la Simulación Maliciosa",
+  "aliases": [
+    "Prison Planet Simulation",
+    "Archon Simulation"
+  ],
+  "icebergLevel": 5,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "MIND_CONTROL",
+    "DECEPTION"
+  ],
+  "actors": [
+    "Unknown entities",
+    "Archons (alleged)",
+    "Demiurge (alleged)"
+  ],
+  "targets": [
+    "Humanity",
+    "Consciousness"
+  ],
+  "outcome": "UNKNOWN",
+  "status": "ALLEGED",
+  "excerpt": "Conspiratorial twist on simulation hypothesis — reality as a deliberate prison maintained by entities harvesting human suffering.",
+  "excerptEs": "Giro conspirativo de la hipótesis de simulación — la realidad como prisión deliberada mantenida por entidades que cosechan sufrimiento humano.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "conspiracy",
+    "unverified"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Are You Living in a Computer Simulation? by Nick Bostrom (2003)",
+      "type": "ACADEMIC",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "The Gnostic World (Routledge)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "slug": "operation-timber-sycamore",
+  "slugEs": "operacion-timber-sycamore",
+  "title": "Timber Sycamore",
+  "titleEs": "Timber Sycamore",
+  "aliases": [
+    "Syrian Rebel Program"
+  ],
+  "icebergLevel": 3,
+  "era": "MODERN",
+  "types": [
+    "INFLUENCE_OP",
+    "DECEPTION"
+  ],
+  "actors": [
+    "United States",
+    "CIA",
+    "Saudi Arabia",
+    "Jordan",
+    "Turkey"
+  ],
+  "targets": [
+    "Syria",
+    "Assad government"
+  ],
+  "outcome": "FAILED",
+  "status": "LEAKED",
+  "excerpt": "CIA's $1 billion/year Syrian rebel program — weapons leaked to jihadists, CIA and Pentagon-armed groups fought each other.",
+  "excerptEs": "Programa de $1 mil millones anuales de la CIA para rebeldes sirios — armas llegaron a yihadistas, grupos de la CIA y Pentágono se enfrentaron.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "cia",
+    "regime-change"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "CIA's covert Syria program (New York Times, 2016)",
+      "type": "JOURNALISM",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Joby Warrick, Black Flags: The Rise of ISIS",
+      "type": "BOOK",
+      "credibility": 5
+    }
+  ]
+}

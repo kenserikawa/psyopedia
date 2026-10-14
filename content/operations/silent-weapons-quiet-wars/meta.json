@@ -1,0 +1,45 @@
+{
+  "slug": "silent-weapons-quiet-wars",
+  "slugEs": "armas-silenciosas-guerras-tranquilas",
+  "title": "Silent Weapons for Quiet Wars",
+  "titleEs": "Armas Silenciosas para Guerras Tranquilas",
+  "aliases": [
+    "SWQW"
+  ],
+  "icebergLevel": 5,
+  "era": "COLD_WAR",
+  "types": [
+    "MIND_CONTROL",
+    "INFLUENCE_OP"
+  ],
+  "actors": [
+    "Unknown"
+  ],
+  "targets": [
+    "Global population"
+  ],
+  "outcome": "UNKNOWN",
+  "status": "ALLEGED",
+  "excerpt": "Alleged 1979 document describing social engineering via economics — almost certainly a hoax.",
+  "excerptEs": "Presunto documento de 1979 describiendo ingeniería social via economía — casi con certeza un engaño.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "conspiracy",
+    "unverified"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Conspiracy Theories in American History: An Encyclopedia (ABC-CLIO)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "Silent Weapons for Quiet Wars (original, unverified)",
+      "type": "WEBSITE",
+      "credibility": 1
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "slug": "project-artichoke",
+  "slugEs": "proyecto-alcachofa",
+  "title": "Project Artichoke",
+  "titleEs": "Proyecto Alcachofa",
+  "aliases": [
+    "Project Bluebird"
+  ],
+  "icebergLevel": 2,
+  "era": "COLD_WAR",
+  "types": [
+    "MIND_CONTROL"
+  ],
+  "actors": [
+    "United States",
+    "CIA"
+  ],
+  "targets": [
+    "Prisoners of war",
+    "Defectors"
+  ],
+  "outcome": "PARTIAL",
+  "status": "DECLASSIFIED",
+  "excerpt": "CIA precursor to MKUltra using drugs, hypnosis, and forced addiction to develop interrogation techniques.",
+  "excerptEs": "Precursor de la CIA a MKUltra usando drogas, hipnosis y adicción forzada.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "cia",
+    "mind-control"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "CIA Reading Room: Project Artichoke",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "A Terrible Mistake by H.P. Albarelli Jr.",
+      "type": "BOOK",
+      "credibility": 3
+    }
+  ]
+}

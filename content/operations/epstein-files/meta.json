@@ -1,0 +1,53 @@
+{
+  "slug": "epstein-files",
+  "slugEs": "archivos-epstein",
+  "title": "Epstein Files",
+  "titleEs": "Archivos Epstein",
+  "aliases": [
+    "Epstein Documents",
+    "Epstein Client List"
+  ],
+  "icebergLevel": 3,
+  "era": "MODERN",
+  "types": [
+    "INFILTRATION",
+    "SURVEILLANCE",
+    "INFLUENCE_OP"
+  ],
+  "actors": [
+    "Jeffrey Epstein",
+    "Ghislaine Maxwell",
+    "Unknown intelligence agencies (alleged)"
+  ],
+  "targets": [
+    "Politicians",
+    "Business leaders",
+    "Academics",
+    "Celebrities"
+  ],
+  "outcome": "PARTIAL",
+  "status": "LEAKED",
+  "excerpt": "Court documents and flight logs from Epstein's trafficking network — alleged connections to intelligence agencies and powerful figures worldwide.",
+  "excerptEs": "Documentos judiciales y registros de vuelo de la red de tráfico de Epstein — presuntas conexiones con agencias de inteligencia y figuras poderosas.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "trafficking",
+    "blackmail",
+    "cover-up"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Filthy Rich by James Patterson",
+      "type": "BOOK",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "Giuffre v. Maxwell court documents (PACER)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    }
+  ]
+}

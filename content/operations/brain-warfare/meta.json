@@ -1,0 +1,49 @@
+{
+  "slug": "brain-warfare",
+  "slugEs": "guerra-cerebral",
+  "title": "Brain Warfare / Neuro-Weapons",
+  "titleEs": "Guerra Cerebral / Neuro-Armas",
+  "aliases": [
+    "Havana Syndrome",
+    "Directed Energy Weapons"
+  ],
+  "icebergLevel": 4,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "MIND_CONTROL",
+    "SURVEILLANCE"
+  ],
+  "actors": [
+    "Unknown",
+    "Russia (alleged)",
+    "United States"
+  ],
+  "targets": [
+    "Diplomats",
+    "Intelligence officers"
+  ],
+  "outcome": "UNKNOWN",
+  "status": "ALLEGED",
+  "excerpt": "Alleged directed energy attacks causing neurological damage to diplomats — linked to possible Russian GRU unit.",
+  "excerptEs": "Presuntos ataques de energía dirigida causando daño neurológico a diplomáticos.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "directed-energy",
+    "russia"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "National Academy of Sciences Assessment (2020)",
+      "type": "ACADEMIC",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "The Insider / 60 Minutes Joint Investigation (2024)",
+      "type": "JOURNALISM",
+      "credibility": 4
+    }
+  ]
+}

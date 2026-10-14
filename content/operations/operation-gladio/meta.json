@@ -1,0 +1,49 @@
+{
+  "slug": "operation-gladio",
+  "slugEs": "operacion-gladio",
+  "title": "Operation Gladio",
+  "titleEs": "Operacion Gladio",
+  "aliases": [
+    "Stay-Behind Networks"
+  ],
+  "icebergLevel": 2,
+  "era": "COLD_WAR",
+  "types": [
+    "FALSE_FLAG",
+    "INFILTRATION"
+  ],
+  "actors": [
+    "NATO",
+    "CIA",
+    "MI6",
+    "Italy"
+  ],
+  "targets": [
+    "European civilians",
+    "Left-wing parties"
+  ],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "NATO's clandestine stay-behind armies across Western Europe, linked to false-flag terrorism and political manipulation.",
+  "excerptEs": "Ejércitos clandestinos de retaguardia de la OTAN en Europa Occidental, vinculados al terrorismo de falsa bandera.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "nato",
+    "false-flag"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "NATO's Secret Armies by Daniele Ganser",
+      "type": "BOOK",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "European Parliament Resolution on Gladio, Nov 22, 1990",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    }
+  ]
+}

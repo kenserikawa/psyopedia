@@ -1,0 +1,47 @@
+{
+  "slug": "operation-earnest-voice",
+  "slugEs": "operacion-voz-sincera",
+  "title": "Operation Earnest Voice",
+  "titleEs": "Operacion Voz Sincera",
+  "aliases": [
+    "OEV",
+    "Sock Puppet Army"
+  ],
+  "icebergLevel": 4,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "PROPAGANDA",
+    "INFLUENCE_OP"
+  ],
+  "actors": [
+    "United States",
+    "U.S. Central Command"
+  ],
+  "targets": [
+    "Foreign social media users"
+  ],
+  "outcome": "ONGOING",
+  "status": "ALLEGED",
+  "excerpt": "U.S. military astroturfing program using software to manage fake online personas for influence operations.",
+  "excerptEs": "Programa de astroturfing del ejército de EE.UU. usando software para personalidades falsas.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "astroturfing",
+    "military"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Revealed: US spy operation that manipulates social media (The Guardian, 2011)",
+      "type": "JOURNALISM",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "USCENTCOM Contract for Online Persona Management",
+      "type": "GOVERNMENT",
+      "credibility": 4
+    }
+  ]
+}

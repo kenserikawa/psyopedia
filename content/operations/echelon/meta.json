@@ -1,0 +1,51 @@
+{
+  "slug": "echelon",
+  "slugEs": "echelon",
+  "title": "ECHELON",
+  "titleEs": "ECHELON",
+  "aliases": [
+    "Five Eyes SIGINT Network"
+  ],
+  "icebergLevel": 2,
+  "era": "COLD_WAR",
+  "types": [
+    "SURVEILLANCE"
+  ],
+  "actors": [
+    "United States",
+    "United Kingdom",
+    "Canada",
+    "Australia",
+    "New Zealand",
+    "NSA",
+    "GCHQ"
+  ],
+  "targets": [
+    "Global communications"
+  ],
+  "outcome": "SUCCESSFUL",
+  "status": "LEAKED",
+  "excerpt": "Five Eyes global signals intelligence network — intercepting phone calls, emails, and fax worldwide since the Cold War.",
+  "excerptEs": "Red global de inteligencia de señales Five Eyes — interceptando llamadas, emails y fax a nivel mundial desde la Guerra Fría.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "nsa",
+    "digital-privacy",
+    "international"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "European Parliament ECHELON Report (2001)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Body of Secrets by James Bamford",
+      "type": "BOOK",
+      "credibility": 4
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "slug": "operation-pbsuccess",
+  "slugEs": "operacion-pbsuccess",
+  "title": "Operation PBSuccess",
+  "titleEs": "Operación PBSuccess",
+  "aliases": [
+    "1954 Guatemalan Coup",
+    "PBSUCCESS"
+  ],
+  "icebergLevel": 1,
+  "era": "COLD_WAR",
+  "types": [
+    "PROPAGANDA",
+    "DECEPTION",
+    "INFLUENCE_OP"
+  ],
+  "actors": [
+    "United States",
+    "CIA",
+    "United Fruit Company"
+  ],
+  "targets": [
+    "Guatemala",
+    "Jacobo Árbenz"
+  ],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "CIA coup in Guatemala using fake radio broadcasts and psychological warfare — triggered 36 years of civil war.",
+  "excerptEs": "Golpe de la CIA en Guatemala usando transmisiones de radio falsas y guerra psicológica — desencadenó 36 años de guerra civil.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "cia",
+    "latin-america",
+    "regime-change"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "CIA PBSUCCESS documents (National Security Archive)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Bitter Fruit by Stephen Schlesinger",
+      "type": "BOOK",
+      "credibility": 5
+    }
+  ]
+}

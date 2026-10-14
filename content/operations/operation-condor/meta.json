@@ -1,0 +1,54 @@
+{
+  "slug": "operation-condor",
+  "slugEs": "operacion-condor",
+  "title": "Operation Condor",
+  "titleEs": "Operacion Condor",
+  "aliases": [
+    "Plan Condor"
+  ],
+  "icebergLevel": 2,
+  "era": "COLD_WAR",
+  "types": [
+    "ASSASSINATION",
+    "INFILTRATION",
+    "SURVEILLANCE"
+  ],
+  "actors": [
+    "United States",
+    "CIA",
+    "Argentina",
+    "Chile",
+    "Brazil",
+    "Paraguay",
+    "Uruguay",
+    "Bolivia"
+  ],
+  "targets": [
+    "Left-wing dissidents",
+    "Civilians"
+  ],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "U.S.-backed campaign of political repression across South American dictatorships — 60,000 killed, 400,000 imprisoned.",
+  "excerptEs": "Campaña de represión política respaldada por EE.UU. en dictaduras sudamericanas — 60,000 muertos, 400,000 encarcelados.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "cia",
+    "latin-america"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "National Security Archive: Argentina Declassification",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Predatory States by J. Patrice McSherry",
+      "type": "ACADEMIC",
+      "credibility": 4
+    }
+  ]
+}

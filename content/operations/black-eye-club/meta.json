@@ -1,0 +1,41 @@
+{
+  "slug": "black-eye-club",
+  "slugEs": "club-del-ojo-negro",
+  "title": "The Black Eye Club",
+  "titleEs": "El Club del Ojo Negro",
+  "aliases": [
+    "Illuminati Black Eye",
+    "Black Left Eye Club"
+  ],
+  "icebergLevel": 4,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "INFLUENCE_OP"
+  ],
+  "actors": [
+    "Unknown"
+  ],
+  "targets": [
+    "World leaders",
+    "Celebrities",
+    "Public figures"
+  ],
+  "outcome": "UNKNOWN",
+  "status": "ALLEGED",
+  "excerpt": "Conspiracy theory noting world leaders and celebrities appearing with unexplained black left eyes — no credible evidence exists.",
+  "excerptEs": "Teoría conspirativa que señala líderes mundiales y celebridades con ojos negros inexplicables en el lado izquierdo — sin evidencia creíble.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "conspiracy",
+    "secret-societies"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Conspiracy Theories and the People Who Believe Them (Oxford University Press)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    }
+  ]
+}

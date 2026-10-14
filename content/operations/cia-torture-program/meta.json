@@ -1,0 +1,45 @@
+{
+  "slug": "cia-torture-program",
+  "slugEs": "programa-de-tortura-cia",
+  "title": "CIA Enhanced Interrogation Program",
+  "titleEs": "Programa de Interrogatorio Mejorado de la CIA",
+  "aliases": [
+    "CIA Torture Program"
+  ],
+  "icebergLevel": 3,
+  "era": "MODERN",
+  "types": [
+    "DECEPTION"
+  ],
+  "actors": [
+    "United States",
+    "CIA"
+  ],
+  "targets": [
+    "Terrorism suspects"
+  ],
+  "outcome": "FAILED",
+  "status": "DECLASSIFIED",
+  "excerpt": "CIA's post-9/11 torture program at global black sites — Senate report proved the agency lied about its effectiveness.",
+  "excerptEs": "Programa de tortura de la CIA post-11S — el informe del Senado demostró que mintió sobre su efectividad.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "cia",
+    "torture"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Senate Intelligence Committee Study of the CIA's Detention and Interrogation Program",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "The Report (film, 2019)",
+      "type": "VIDEO",
+      "credibility": 3
+    }
+  ]
+}

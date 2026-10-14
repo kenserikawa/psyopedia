@@ -1,0 +1,50 @@
+{
+  "slug": "cointelpro",
+  "slugEs": "cointelpro",
+  "title": "COINTELPRO",
+  "titleEs": "COINTELPRO",
+  "aliases": [
+    "Counter Intelligence Program"
+  ],
+  "icebergLevel": 1,
+  "era": "COLD_WAR",
+  "types": [
+    "INFILTRATION",
+    "SURVEILLANCE"
+  ],
+  "actors": [
+    "United States",
+    "FBI"
+  ],
+  "targets": [
+    "Civil rights groups",
+    "Political activists",
+    "Black Panther Party"
+  ],
+  "outcome": "SUCCESSFUL",
+  "status": "DECLASSIFIED",
+  "excerpt": "FBI's covert program to surveil, infiltrate, and disrupt domestic political organizations from 1956 to 1971.",
+  "excerptEs": "Programa encubierto del FBI para vigilar, infiltrar e interrumpir organizaciones politicas nacionales de 1956 a 1971.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "fbi",
+    "civil-rights"
+  ],
+  "related": [
+    "operation-mockingbird"
+  ],
+  "sources": [
+    {
+      "url": "https://vault.fbi.gov/cointel-pro",
+      "title": "FBI Vault: COINTELPRO",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "The COINTELPRO Papers by Ward Churchill",
+      "type": "BOOK",
+      "credibility": 4
+    }
+  ]
+}

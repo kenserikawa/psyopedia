@@ -1,0 +1,50 @@
+{
+  "slug": "kubrick-conspiracies",
+  "slugEs": "conspiraciones-kubrick",
+  "title": "Kubrick Conspiracies",
+  "titleEs": "Conspiraciones de Kubrick",
+  "aliases": [
+    "Kubrick Moon Landing",
+    "Eyes Wide Shut conspiracy",
+    "Kubrick Confessions"
+  ],
+  "icebergLevel": 4,
+  "era": "MODERN",
+  "types": [
+    "DECEPTION",
+    "PROPAGANDA"
+  ],
+  "actors": [
+    "Stanley Kubrick (alleged)",
+    "NASA (alleged)",
+    "U.S. Government (alleged)"
+  ],
+  "targets": [
+    "General public"
+  ],
+  "outcome": "UNKNOWN",
+  "status": "ALLEGED",
+  "excerpt": "Theories alleging Kubrick filmed the moon landing and hid confessions in The Shining and Eyes Wide Shut — no credible evidence.",
+  "excerptEs": "Teorías alegando que Kubrick filmó el alunizaje y escondió confesiones en El Resplandor y Eyes Wide Shut — sin evidencia creíble.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "conspiracy",
+    "moon-landing",
+    "hollywood"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Room 237 (documentary, 2012)",
+      "type": "WEBSITE",
+      "credibility": 2
+    },
+    {
+      "url": null,
+      "title": "Kubrick: An Odyssey by Robert P. Kolker",
+      "type": "BOOK",
+      "credibility": 4
+    }
+  ]
+}

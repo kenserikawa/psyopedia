@@ -1,0 +1,47 @@
+{
+  "slug": "denver-airport-conspiracies",
+  "slugEs": "conspiraciones-aeropuerto-denver",
+  "title": "Denver Airport Conspiracies",
+  "titleEs": "Conspiraciones del Aeropuerto de Denver",
+  "aliases": [
+    "DIA Conspiracy",
+    "Denver New World Order"
+  ],
+  "icebergLevel": 4,
+  "era": "MODERN",
+  "types": [
+    "DECEPTION"
+  ],
+  "actors": [
+    "New World Order (alleged)",
+    "Freemasons (alleged)",
+    "U.S. Government (alleged)"
+  ],
+  "targets": [
+    "General public"
+  ],
+  "outcome": "UNKNOWN",
+  "status": "ALLEGED",
+  "excerpt": "Apocalyptic murals, Masonic capstone, underground tunnels, and a killer horse sculpture — genuinely strange art fueling conspiracy theories.",
+  "excerptEs": "Murales apocalípticos, piedra masónica, tuneles subterráneos y una escultura de caballo asesino — arte genuinamente extraño alimentando conspiraciones.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "conspiracy",
+    "secret-societies"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "DIA Art Collection (official documentation)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Conspiracy Theories in American History (ABC-CLIO)",
+      "type": "ACADEMIC",
+      "credibility": 4
+    }
+  ]
+}

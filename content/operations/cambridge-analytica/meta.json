@@ -1,0 +1,51 @@
+{
+  "slug": "cambridge-analytica",
+  "slugEs": "cambridge-analytica",
+  "title": "Cambridge Analytica / Facebook",
+  "titleEs": "Cambridge Analytica / Facebook",
+  "aliases": [
+    "Facebook Data Scandal"
+  ],
+  "icebergLevel": 3,
+  "era": "DIGITAL_AGE",
+  "types": [
+    "INFLUENCE_OP",
+    "SURVEILLANCE"
+  ],
+  "actors": [
+    "United Kingdom",
+    "Cambridge Analytica",
+    "SCL Group",
+    "Facebook"
+  ],
+  "targets": [
+    "Voters",
+    "Social media users"
+  ],
+  "outcome": "SUCCESSFUL",
+  "status": "LEAKED",
+  "excerpt": "British firm that harvested 87 million Facebook profiles to build psychographic voter profiles using military psyop techniques.",
+  "excerptEs": "Firma británica que recopiló 87 millones de perfiles de Facebook para perfiles psicográficos de votantes.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "social-media",
+    "elections"
+  ],
+  "related": [
+    "internet-research-agency"
+  ],
+  "sources": [
+    {
+      "url": null,
+      "title": "The Great Hack (Netflix, 2019)",
+      "type": "VIDEO",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "Mindf*ck by Christopher Wylie",
+      "type": "BOOK",
+      "credibility": 5
+    }
+  ]
+}

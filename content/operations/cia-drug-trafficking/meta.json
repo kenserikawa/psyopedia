@@ -1,0 +1,57 @@
+{
+  "slug": "cia-drug-trafficking",
+  "slugEs": "narcotrafico-cia",
+  "title": "CIA Drug Trafficking Allegations",
+  "titleEs": "Alegaciones de Narcotráfico de la CIA",
+  "aliases": [
+    "CIA-Contra Cocaine",
+    "Dark Alliance",
+    "Mena Connection"
+  ],
+  "icebergLevel": 3,
+  "era": "COLD_WAR",
+  "types": [
+    "DECEPTION",
+    "INFLUENCE_OP"
+  ],
+  "actors": [
+    "United States",
+    "CIA",
+    "Nicaraguan Contras"
+  ],
+  "targets": [
+    "American inner cities",
+    "U.S. drug policy"
+  ],
+  "outcome": "PARTIAL",
+  "status": "LEAKED",
+  "excerpt": "CIA tolerated Contra cocaine trafficking per official reports — journalist who exposed it died of two gunshots to the head, ruled suicide.",
+  "excerptEs": "La CIA toleró narcotráfico de los Contras segun informes oficiales — el periodista que lo expuso murió de dos disparos en la cabeza, dictaminado suicidio.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "cia",
+    "war-on-drugs",
+    "cover-up"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "Kerry Committee Report (1989)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Dark Alliance by Gary Webb",
+      "type": "BOOK",
+      "credibility": 4
+    },
+    {
+      "url": null,
+      "title": "CIA Inspector General Report on Contra Drug Allegations (1998)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    }
+  ]
+}

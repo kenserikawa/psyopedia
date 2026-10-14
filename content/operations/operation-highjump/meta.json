@@ -1,0 +1,47 @@
+{
+  "slug": "operation-highjump",
+  "slugEs": "operacion-highjump",
+  "title": "Operation Highjump",
+  "titleEs": "Operación Highjump",
+  "aliases": [
+    "Task Force 68",
+    "Antarctic Development Project"
+  ],
+  "icebergLevel": 4,
+  "era": "COLD_WAR",
+  "types": [
+    "DECEPTION"
+  ],
+  "actors": [
+    "United States",
+    "U.S. Navy",
+    "Admiral Richard Byrd"
+  ],
+  "targets": [
+    "Antarctica"
+  ],
+  "outcome": "UNKNOWN",
+  "status": "ALLEGED",
+  "excerpt": "1947 massive U.S. Navy Antarctic expedition surrounded by theories of secret Nazi bases and flying objects — real mission, no evidence for conspiracies.",
+  "excerptEs": "Expedición naval masiva a la Antártida en 1947 rodeada de teorías sobre bases nazis secretas — misión real, sin evidencia conspirativa.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "conspiracy",
+    "military"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "U.S. Navy Operation Highjump records (National Archives)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Antarctica: An Encyclopedia by John Stewart",
+      "type": "BOOK",
+      "credibility": 4
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "slug": "tartaria",
+  "slugEs": "tartaria",
+  "title": "Tartaria",
+  "titleEs": "Tartaria",
+  "aliases": [
+    "Tartarian Empire",
+    "Mud Flood Theory",
+    "Great Reset (historical)"
+  ],
+  "icebergLevel": 5,
+  "era": "MODERN",
+  "types": [
+    "DECEPTION",
+    "PROPAGANDA"
+  ],
+  "actors": [
+    "Unknown",
+    "Academic establishment (alleged)"
+  ],
+  "targets": [
+    "Historical record",
+    "General public"
+  ],
+  "outcome": "UNKNOWN",
+  "status": "ALLEGED",
+  "excerpt": "Alleged erased advanced civilization whose buildings we inherited — born on Reddit, fueled by architectural ignorance.",
+  "excerptEs": "Presunta civilización avanzada borrada cuyos edificios heredamos — nacida en Reddit, alimentada por desconocimiento arquitectónico.",
+  "publishedAt": "2026-03-29",
+  "tags": [
+    "conspiracy",
+    "unverified"
+  ],
+  "related": [],
+  "sources": [
+    {
+      "url": null,
+      "title": "The Tartaria Conspiracy Theory (Smithsonian Magazine)",
+      "type": "JOURNALISM",
+      "credibility": 5
+    },
+    {
+      "url": null,
+      "title": "Historical Maps of Tartary (Library of Congress)",
+      "type": "GOVERNMENT",
+      "credibility": 5
+    }
+  ]
+}
