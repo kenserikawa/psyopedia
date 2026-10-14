@@ -1,5 +1,9 @@
 # Motor de señales sociales — detección de psyops emergentes
 
+> **Aparcada (2026-10-14).** Psyopedia pasó a ser un sitio estático sin base de datos ni
+> usuarios (`2026-10-14-sitio-estatico-design.md`). Este diseño necesita base de datos, cron y
+> panel de administración; retomarlo exige reintroducir un backend.
+
 **Fecha:** 2026-09-19
 **Rutas afectadas:** `/[locale]/admin/signals` (nueva), `/api/cron/signals` (nueva)
 **Objetivo:** Dotar a Psyopedia de un motor de recogida de datos que rastree redes sociales
