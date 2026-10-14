@@ -16,7 +16,7 @@ test("pageUrl deja una sola barra entre segmentos y siempre barra final", () => 
   assert.equal(pageUrl("/", site), `${site}/`);
   assert.equal(pageUrl("/en", site), `${site}/en/`);
   assert.equal(pageUrl("en/catalog//mkultra/", site), `${site}/en/catalog/mkultra/`);
-  assert.equal(pageUrl("/es/catalog/operacion-paperclip"), "https://psyopedia.org/es/catalog/operacion-paperclip/");
+  assert.equal(pageUrl("/es/catalog/operacion-paperclip", "https://psyopedia.org"), "https://psyopedia.org/es/catalog/operacion-paperclip/");
 });
 
 test("asset y ogImageUrl respetan el basePath", () => {
