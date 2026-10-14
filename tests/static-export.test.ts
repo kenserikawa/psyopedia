@@ -25,7 +25,6 @@ test("el export contiene la estructura estática del sitio", () => {
 });
 
 test("cada operación tiene su ficha en los dos idiomas", () => {
-  assert.equal(content.operations.length, 46);
   for (const op of content.operations) {
     assert.ok(exists(`en/catalog/${op.slug}/index.html`), op.slug);
     assert.ok(exists(`es/catalog/${op.slugEs}/index.html`), op.slugEs);

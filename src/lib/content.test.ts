@@ -161,10 +161,16 @@ test("rechaza campos desconocidos, JSON roto y un tags.json inválido", () => {
   assertContentError(fixture([meta("alpha")], { tags: { cia: { name: "CIA" } } }), "tags.json", "nameEs");
 });
 
-test("el content/ real carga 46 operaciones con relaciones simétricas", () => {
-  const { operations, tags } = loadContent(path.join(process.cwd(), "content"));
-  assert.equal(operations.length, 46);
-  assert.equal(tags.length, 43);
+// Recuentos derivados de content/: añadir una operación no debe romper los tests.
+const CONTENT_DIR = path.join(process.cwd(), "content");
+const operationFolderCount = fs
+  .readdirSync(path.join(CONTENT_DIR, "operations"), { withFileTypes: true })
+  .filter((entry) => entry.isDirectory()).length;
+
+test("el content/ real carga todas sus carpetas con relaciones simétricas", () => {
+  const { operations, tags } = loadContent(CONTENT_DIR);
+  assert.equal(operations.length, operationFolderCount);
+  assert.equal(tags.length, Object.keys(JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, "tags.json"), "utf8"))).length);
   for (const op of operations) {
     for (const related of op.relatedOps) {
       const other = operations.find((o) => o.slug === related.slug);
@@ -183,7 +189,12 @@ test("el content/ real carga 46 operaciones con relaciones simétricas", () => {
 test("la home muestra las 6 más recientes (desempate por nivel y título) y las estadísticas reales", () => {
   const { featuredOperations, stats } = getHomepageData();
   assert.equal(featuredOperations.length, 6);
-  assert.deepEqual(stats, { operationCount: 46, eraCount: 4, sourceCount: 93 });
+  const { operations } = loadContent(CONTENT_DIR);
+  assert.deepEqual(stats, {
+    operationCount: operationFolderCount,
+    eraCount: new Set(operations.map((op) => op.era)).size,
+    sourceCount: operations.reduce((sum, op) => sum + op.sources.length, 0),
+  });
   for (let i = 1; i < featuredOperations.length; i++) {
     const [a, b] = [featuredOperations[i - 1], featuredOperations[i]];
     const ordered =
@@ -202,14 +213,14 @@ test("busca la operación por el slug del idioma", () => {
 });
 
 test("expone slugs, resúmenes, actores e iceberg coherentes", () => {
-  assert.equal(getAllOperationSlugs().length, 46);
-  assert.equal(getCatalogSummaries().length, 46);
+  assert.equal(getAllOperationSlugs().length, operationFolderCount);
+  assert.equal(getCatalogSummaries().length, operationFolderCount);
   assert.equal("bodyEn" in getCatalogSummaries()[0], false);
   const actors = getDistinctActors();
   assert.deepEqual(actors, [...new Set(actors)].sort());
   assert.ok(actors.includes("CIA"));
   const iceberg = getIcebergData();
-  assert.equal(iceberg.length, 46);
+  assert.equal(iceberg.length, operationFolderCount);
   for (let i = 1; i < iceberg.length; i++) {
     const [a, b] = [iceberg[i - 1], iceberg[i]];
     assert.ok(
