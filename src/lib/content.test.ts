@@ -4,6 +4,14 @@ import os from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { ContentError, loadContent } from "./content/load";
+import {
+  getAllOperationSlugs,
+  getCatalogSummaries,
+  getDistinctActors,
+  getHomepageData,
+  getIcebergData,
+  getOperationForLocale,
+} from "./content/index";
 
 type Meta = Record<string, unknown>;
 
@@ -170,4 +178,43 @@ test("el content/ real carga 46 operaciones con relaciones simétricas", () => {
   assert.deepEqual(relatedOf("internet-research-agency"), ["cambridge-analytica"]);
   assert.equal(operations.find((o) => o.slug === "operation-paperclip")?.slugEs, "operacion-paperclip");
   assert.equal(tags.find((t) => t.slug === "latin-america")?.nameEs, "Latinoamerica");
+});
+
+test("la home muestra las 6 más recientes (desempate por nivel y título) y las estadísticas reales", () => {
+  const { featuredOperations, stats } = getHomepageData();
+  assert.equal(featuredOperations.length, 6);
+  assert.deepEqual(stats, { operationCount: 46, eraCount: 4, sourceCount: 93 });
+  for (let i = 1; i < featuredOperations.length; i++) {
+    const [a, b] = [featuredOperations[i - 1], featuredOperations[i]];
+    const ordered =
+      a.publishedAt > b.publishedAt ||
+      (a.publishedAt === b.publishedAt &&
+        (a.icebergLevel < b.icebergLevel || (a.icebergLevel === b.icebergLevel && a.title.localeCompare(b.title) <= 0)));
+    assert.ok(ordered, `${a.slug} antes que ${b.slug}`);
+  }
+});
+
+test("busca la operación por el slug del idioma", () => {
+  assert.equal(getOperationForLocale("es", "operacion-paperclip")?.slug, "operation-paperclip");
+  assert.equal(getOperationForLocale("en", "operation-paperclip")?.slugEs, "operacion-paperclip");
+  assert.equal(getOperationForLocale("en", "operacion-paperclip"), undefined);
+  assert.equal(getOperationForLocale("es", "operation-paperclip"), undefined);
+});
+
+test("expone slugs, resúmenes, actores e iceberg coherentes", () => {
+  assert.equal(getAllOperationSlugs().length, 46);
+  assert.equal(getCatalogSummaries().length, 46);
+  assert.equal("bodyEn" in getCatalogSummaries()[0], false);
+  const actors = getDistinctActors();
+  assert.deepEqual(actors, [...new Set(actors)].sort());
+  assert.ok(actors.includes("CIA"));
+  const iceberg = getIcebergData();
+  assert.equal(iceberg.length, 46);
+  for (let i = 1; i < iceberg.length; i++) {
+    const [a, b] = [iceberg[i - 1], iceberg[i]];
+    assert.ok(
+      a.publishedAt > b.publishedAt || (a.publishedAt === b.publishedAt && a.title.localeCompare(b.title) <= 0),
+      `${a.slug} antes que ${b.slug}`,
+    );
+  }
 });
